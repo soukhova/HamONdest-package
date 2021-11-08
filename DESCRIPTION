@@ -1,0 +1,16 @@
+Package: HamONdest
+Title: Potential destinations in Hamilton, Ontario, Canada: for transportation planning
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Anastasia",
+           family = "Soukhov",
+           role = c("aut", "cre"),
+           email = "soukhoa@mcmaster.ca")
+Description: The goal of HamONdest is to compile all potential destinations (Schools, parks, municipally-owned land, libraries, etc.) in Hamilton, Ontario, Canada all in one data-package to facilitate the calculation of accessibility and mobility measures in the transportation planning context.
+License: CC BY 4.0 + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Depends: 
+    R (>= 2.10)

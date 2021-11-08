@@ -1,0 +1,1079 @@
+---
+title: "00-Data-Preparation"
+output:
+---
+## About
+In this Rmarkdown we clean and prepare the school points and produce 1 master School Point table and we produce 1 sf classes with the geometries of the catchment boundaries for visualizing purposes:
+ 
+```{r setup, include=FALSE}
+library(dplyr)
+library(leaflet)
+library(rgdal)
+library(sf)
+library(tidyverse)
+library(rgdal)
+library(units)
+#install.packages("fuzzyjoin")
+library(fuzzyjoin)
+library(rgeos)
+```
+
+## Importing Data
+ELEM, MID, HIGH, are elementary, middle school, and highschool catchment boundaries respectively. POINTS suffix are school points. All are 'sf' class:
+```{r import school points from shapefiles, source: HWDSB and HWDCSB, include=FALSE}
+#catholic school board
+CDSB_1011_POINTS<- read_sf("data-inputs/Historic-Schools-and-Catchments/HWCDSB-2010-2011/HWCDSB_2010_11_SCHOOLPOINTS.shp")
+Catch_ELEM_C_1011 <- read_sf("data-inputs/Historic-Schools-and-Catchments/HWCDSB-2010-2011/HWCDSB_2010_11_ELEM.shp")
+Catch_HIGH_C_1011 <- read_sf("data-inputs/Historic-Schools-and-Catchments/HWCDSB-2015-2016/HWCDSB_2015_16_HIGH.shp") #Catchment 2015-2016 is the same as 2010-2011
+
+CDSB_1516_POINTS<- read_sf("data-inputs/Historic-Schools-and-Catchments\\HWCDSB-2015-2016\\HWCDSB_2015_16_SCHOOLPOINTS.shp")
+Catch_ELEM_C_1516<- read_sf("data-inputs/Historic-Schools-and-Catchments/HWCDSB-2015-2016/HWCDSB_2015_16_ELEM.shp")
+Catch_HIGH_C_1516 <- read_sf("data-inputs/Historic-Schools-and-Catchments/HWCDSB-2015-2016/HWCDSB_2015_16_HIGH.shp") #Catchment 2015-2016 is the same as 2010-2011
+
+#Public school board
+DSB_1011_POINTS<- read_sf("data-inputs/Historic-Schools-and-Catchments\\HWDSB-2010-2011\\HWDSB_2010_11_SCHOOLPOINTS.shp")
+Catch_ELEM_1011 <- read_sf("data-inputs/Historic-Schools-and-Catchments/HWDSB-2010-2011/HWDSB_2010_11_ELEM.shp")
+Catch_HIGH_1011<- read_sf("data-inputs/Historic-Schools-and-Catchments/HWDSB-2010-2011/HWDSB_2010_11_HIGH.shp")
+
+DSB_1516_POINTS<- read_sf("data-inputs/Historic-Schools-and-Catchments\\HWDSB-2015-2016\\HWDSB_2015_16_SCHOOLPOINTS.shp")
+Catch_ELEM_1516<- read_sf("data-inputs/Historic-Schools-and-Catchments/HWDSB-2015-2016/HWDSB_2015_16_ELEM.shp")
+Catch_HIGH_1516 <- read_sf("data-inputs/Historic-Schools-and-Catchments/HWDSB-2015-2016/HWDSB_2015_16_HIGH.shp")
+```
+Note: these school locations and catchments are provided by the Hamilton Wentworth District School Board (HWDSB) and the Hamilton Wentworth Catholic District School Board (HWCDSB) for the respective academic years (2010-2011 and 2015-2016).
+
+
+Next, we import what's needed for the on-the-ground-capacity (OTGC) regression mode. 1) building footprint, 2) distance to CBD(this is just 1 coordinate, and the distance is calculated later), and 3) type of school (already imported with the school points)
+```{r import buidling footprints, source: 2011 from DMTI Spatial Inc. and 2021 from OSM, include=FALSE}
+load("data-inputs/Historic-Schools-and-Catchments/hamilton_schools_bfr_2011.RData")
+load("data-inputs/Historic-Schools-and-Catchments/hamilton_schools_bfr_2021.RData")
+#save as a .shp as well to be used in Google Earth for inspection
+# st_write(hamilton_schools_bfr_2011, "data-inputs/Historic-Schools-and-Catchments/hamilton_schools_bfr_2011.shp", append=FALSE)
+# st_write(hamilton_schools_bfr_2021, "data-inputs/Historic-Schools-and-Catchments/hamilton_schools_bfr_2021.shp", append=FALSE)
+```
+Note: these footprint data files are sourced from two different locations. 
+
+File `hamilton_schools_bfr_2011.RData` includes a simple features object. The source data is: Building Footprints Region,
+Producer: DMTI Spatial Inc.
+Date published: 2015-09-01 (publication), 2019-09-15 (revision)
+Retrieved from Scholars GeoPortal (January 17, 2021).
+
+File `hamilton_schools_bfr_2021.RData` includes a simple features object. The source data is OpenStreetMaps (retrieved January 17, 2021) and convert into .RData file. 
+
+Finally, we import the Hamilton city boundary (retrieved from Open Data Hamilton), and the Hamilton DA areas in 2011 and 2016 (retrieved from Statistics Canada)
+
+```{r}
+load("data-inputs/Boundaries/hamilton_cma.RData")
+load("data-inputs/Boundaries/Hamilton-DA-2011.RData")
+load("data-inputs/Boundaries/hamilton-DA-2016.RData")
+```
+
+
+## Joining building footprint to schools
+First 2011 then 2016 school points:
+```{r join building footprint area calculation to  points , include=FALSE}
+hamilton_schools_bfr_2011 <- hamilton_schools_bfr_2011 %>%
+  mutate(footprint = st_area(hamilton_schools_bfr_2011))
+hamilton_schools_bfr_2021 <- hamilton_schools_bfr_2021 %>%
+  mutate(footprint = st_area(hamilton_schools_bfr_2021))
+
+CDSB_1011_POINTS <- st_join(CDSB_1011_POINTS %>% st_sf(), 
+                            hamilton_schools_bfr_2011)
+DSB_1011_POINTS <- st_join(DSB_1011_POINTS %>% st_sf(), 
+                           hamilton_schools_bfr_2011)
+CDSB_1516_POINTS <- st_join(CDSB_1516_POINTS %>% st_sf(), 
+                            hamilton_schools_bfr_2021)
+DSB_1516_POINTS <- st_join(DSB_1516_POINTS %>% st_sf(), 
+                           hamilton_schools_bfr_2021)
+```
+How many building footprints are missing?
+```{r}
+CDSB_1011_POINTS$footprint %>%
+  summary() #29 NAs!
+DSB_1011_POINTS$footprint %>%
+  summary() #22 NAs!
+CDSB_1516_POINTS$footprint %>%
+  summary() #4 NAs!
+DSB_1516_POINTS$footprint %>%
+  summary() #20 NAs!
+```
+
+## Adding missing footprints to schools, pt. 1
+Now, since some schools have missing footprint information, they are manually digitzed using Google Earth Pro orthos (2010 and/or 2015).
+
+Note, if upon imagery inspection the footprint did not change  between 2010 and 2015 (i.e. no expansion), the footprint value from the year that is not missing is copied to the missing year's value. i.e. the original building footprint digitization supersedes the manual digitization whenever possible. 
+```{r making new school point objects}
+DSB_1011_Comp <- DSB_1011_POINTS
+DSB_1516_Comp <- DSB_1516_POINTS
+CDSB_1011_Comp <- CDSB_1011_POINTS
+CDSB_1516_Comp <- CDSB_1516_POINTS
+DSB_1516_Comp <- DSB_1516_Comp[-c(45:48,50:54,56,57)]
+```
+
+The footprint values digtized from Google Earth is assigned to each public 2010-2011 school with a missing footprint. 
+-Additionally, 2 schools, "New Binbrook school" is deleted as it had not opened yet (note: it opened as Bellmoore School in 2012)  and "New Winona Elementary" is deleted as it opens Jan 2012 and the (old) Winano Elementary school down the block is still open in 2010-2011,
+-Add Westmount Highschool to 2010-2011 dataset from the 2015-2016
+```{r adding missing footprint to public 2011 schools}
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Balaclava", "footprint"] <- as_units(3597, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Allan A. Greenleaf", "footprint"] <- as_units(3440, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Ancaster Meadow", "footprint"] <- as_units(3775, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Bennetto", "footprint"] <- as_units(4565.9087, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Cathy Wever", "footprint"] <- as_units(3742.0094, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Earl Kitchener", "footprint"] <- as_units(2003, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="G.L. Armstrong", "footprint"] <- as_units(3304.3245, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Gatestone", "footprint"] <- as_units(3596.1499, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Gordon Price", "footprint"] <- as_units(4000.7371, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Helen Detwiler", "footprint"] <- as_units(4649.3571, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="King George", "footprint"] <- as_units(1440, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Lawfield", "footprint"] <- as_units(3747.601, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Lincoln Alexander", "footprint"] <- as_units(3400, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Ray Lewis", "footprint"] <- as_units(3774.515, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Saltfleet", "footprint"] <- as_units(8995, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Sir John A. Macdonald", "footprint"] <- as_units(8808.542, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Sir Wilfrid Laurier", "footprint"] <- as_units(6971.12, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Sir William Osler", "footprint"] <- as_units(3746, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Strathcona", "footprint"] <- as_units(1598, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Templemead", "footprint"] <- as_units(5762, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Waterdown", "footprint"] <- as_units(8710, "m^2")
+
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Bell-Stone", "footprint"] <- as_units(2289.41, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Ridgemount", "footprint"] <- as_units(2792, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Winona", "footprint"] <- as_units(2726, "m^2")
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Orchard Park", "footprint"] <- as_units(14242, "m^2")
+
+#delete these two schools. Opened after 2010-2011.
+DSB_1011_Comp <- DSB_1011_Comp[!(DSB_1011_Comp$SCHNAME=="New Binbrook Elementary"),]
+DSB_1011_Comp <- DSB_1011_Comp[!(DSB_1011_Comp$SCHNAME=="New Winona Elementary"),]
+
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Glenwood", "ELEM"] <- "ELEM"
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Glenwood", "MID"] <- "MID"
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Norwood Park", "ELEM"] <- "ELEM"
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Norwood Park", "MID"] <- "MID"
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Westmount", "HIGH"] <- "HIGH"
+DSB_1011_Comp[DSB_1011_Comp$SCHNAME=="Mountain", "HIGH"] <- "HIGH"
+```
+Now let's check to see if all catchments have at least 1 school:
+```{r}
+st_join(Catch_HIGH_1011, DSB_1011_Comp %>% filter(SchoolType == "Secondary"),  join=st_contains)
+#highschool catchments all have schools, good. 
+st_join(Catch_ELEM_1011, DSB_1011_Comp %>% filter(SchoolType == "Elementary"),  join=st_contains)
+#from this join, we can see that SCHNAME.x (catchments) are all represented BUT there is 1 blank SCHNAME.y (school) associated with a Mount Albion Catchment. Let's investigate this.
+```
+Let's map Mount Albion catchments and Mount Albion school to see this mismatch another way:
+```{r}
+ggplot() +
+    geom_sf(data = Catch_ELEM_1011 %>% filter(SCHNAME =="Mount Albion" ),
+          shape = 1,
+          size = 0.2,
+          fill = "blue",
+          alpha = 0.2,
+          col = "black") +
+       geom_sf(data = DSB_1011_Comp %>% filter(SCHNAME =="Mount Albion" ),
+          shape = 1,
+          size = 1,
+          color  = "blue")
+#one Mount Albion catchment does not contain a school
+```
+Let's eliminate this no-school catchment by dissolving its boundaries into the catchment which contains it. First, let's spatially confirm that the boardering catchment has a school and check historical information to ensure this is the correct decision:
+```{r}
+ggplot() +
+    geom_sf(data = Catch_ELEM_1011 %>% filter(SCHNAME == "Bellmoore" | SCHNAME =="Mount Albion" ),
+          shape = 1,
+          size = 0.2,
+          fill = "blue",
+          alpha = 0.2,
+          col = "black") +
+      geom_sf(data = DSB_1011_Comp %>% filter(SCHNAME =="Mount Albion"),
+          shape = 1,
+          size = 1,
+          color  = "blue")+
+    geom_sf(data = DSB_1011_Comp %>% filter(SCHNAME =="Bellmoore"),
+          shape = 1,
+          size = 1,
+          color  = "green")+
+      geom_sf(data = DSB_1011_POINTS %>% filter(SCHNAME =="New Binbrook Elementary"), #using _POINTS object as it still contains this school point which I deleted previously
+          shape = 1,
+          size = 1,
+          color  = "red")
+```
+Perfect, so the green point is Bellmoore school. This school was still open in 2010-2011 and was only closed down and moved to the red point in 2012-2013 according to an archived Hamilton Spec article. Let's dissolve this mislabelled 'Mount Albion' catchment into the Bellmore catchment. Also worth mentioning, their is a Mount Albion catchment which does contain the Mount Albion school (blue point).  
+```{r}
+#dissolve the two catchments at row index 86 and 87 (the wrong Mount Albion and Bellmoore) and copy over the Bellmoore attributes
+diss <- raster::aggregate(Catch_ELEM_1011[86:87,] %>% as_Spatial()) %>% st_as_sf()
+diss <- bind_cols(diss, Catch_ELEM_1011%>% st_drop_geometry()) %>% filter(SCHNAME == "Bellmoore")
+
+#remove the wrong Mount Albonion catchment [86,] and the Bellmoore [87,]
+Catch_ELEM_1011 <- Catch_ELEM_1011[-c(86,87),] 
+
+#attach the new Bellmoore catchment (has updated geometry)
+Catch_ELEM_1011 <- rbind(Catch_ELEM_1011,diss)
+
+#plot to check the geometry is correct
+ggplot() +
+geom_sf(data = Catch_ELEM_1011 %>% filter(SCHNAME == "Bellmoore" | SCHNAME =="Mount Albion" ),
+          shape = 1,
+          size = 0.2,
+          fill = "blue",
+          alpha = 0.2,
+          col = "black") +
+      geom_sf(data = DSB_1011_Comp %>% filter(SCHNAME =="Mount Albion"),
+          shape = 1,
+          size = 1,
+          color  = "blue")+
+    geom_sf(data = DSB_1011_Comp %>% filter(SCHNAME =="Bellmoore"),
+          shape = 1,
+          size = 1,
+          color  = "green")
+
+```
+Woohoo! We have consolidated 2 catchments (into 1). 
+
+Now let's check the 2010-2011 catholic schools. No schools are deleted.
+```{r adding missing footprint to catholic 2011 schools}
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="St. Marguerite D'Youville", "footprint"] <- as_units(3215.616, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="St. Kateri Tekakwitha", "footprint"] <- as_units(3050.532, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="St. Joachim", "footprint"] <- as_units(4335.17, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="St. John the Baptist", "footprint"] <- as_units(2134.667, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="St. Bernadette", "footprint"] <- as_units(3736.623, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="Cardinal Newman", "footprint"] <- as_units(10612.046, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="St. Thomas More", "footprint"] <- as_units(8100.203, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="St. Mary", "footprint"] <- as_units(9389.788, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="St. Vincent de Paul", "footprint"] <- as_units(4243.388, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="Our Lady of Mount Carmel", "footprint"] <- as_units(4244.804, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="Our Lady of the Assumption", "footprint"] <- as_units(1266, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="Corpus Christi", "footprint"] <- as_units(1946.233, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="Sacred Heart of Jesus", "footprint"] <- as_units(1770.987, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="Guardian Angels", "footprint"] <- as_units(4252.213, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="St. Columba", "footprint"] <- as_units(1048, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="Blessed John Paul II", "footprint"] <- as_units(4226.368, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="Holy Name of Mary", "footprint"] <- as_units(4328.63, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="Immaculate Heart of Mary", "footprint"] <- as_units(5051.95, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="Blessed Teresa of Calcutta", "footprint"] <- as_units(3930.396, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="St. Mark", "footprint"] <- as_units(4046.773, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="Bishop Tonnos", "footprint"] <- as_units(9749.097, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="St. Thérèse of Lisieux", "footprint"] <- as_units(4359, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="St. Matthew", "footprint"] <- as_units(3646, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="Bishop Ryan (old)", "footprint"] <- as_units(13016, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="St. Catherine of Siena", "footprint"] <- as_units(2060, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="St. Jerome", "footprint"] <- as_units(2798, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="Annunciation of Our Lord", "footprint"] <- as_units(1418, "m^2")
+
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="Holy Name of Jesus", "footprint"] <- as_units(1800, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="St. Ann (Ancaster)", "footprint"] <- as_units(3370, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="Sts. Peter and Paul", "footprint"] <- as_units(2300, "m^2")
+
+#these schools closed mid-way through 2010-2011, so we'll keep them for now. 
+#CDSB_1011_Comp <- CDSB_1011_Comp[!(CDSB_1011_Comp$SCHNAME=="St. Catherine of Siena"),]	
+#CDSB_1011_Comp <- CDSB_1011_Comp[!(CDSB_1011_Comp$SCHNAME=="St. Jerome"),]	
+
+# CDSB_1011_Comp <- CDSB_1011_Comp[!(CDSB_1011_Comp$NAME=="St. Thomas the Apostle"),]
+# CDSB_1011_Comp <- CDSB_1011_Comp[!(CDSB_1011_Comp$NAME=="St. Ann (Hamilton)"),]
+# CDSB_1011_Comp <- CDSB_1011_Comp[!(CDSB_1011_Comp$NAME=="Immaculate Conception"),]
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="St. Thomas the Apostle", "footprint"] <- as_units(3915, "m^2")
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="Immaculate Conception", "footprint"] <- as_units(3781, "m^2")
+
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="Holy Family", "ELEM"] <- "ELEM"
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="St. Catherine of Siena", "ELEM"] <- "ELEM"
+CDSB_1011_Comp[CDSB_1011_Comp$NAME=="St. Jerome", "ELEM"] <- "ELEM"
+```
+Let's see if all catchments have a school:
+```{r}
+st_join(Catch_HIGH_C_1011, CDSB_1011_Comp %>% filter(GRADE == "Secondary"),  join=st_contains)
+#highschool catchments all have schools, good. 
+st_join(Catch_ELEM_C_1011, CDSB_1011_Comp %>% filter(GRADE == "Elementary"),  join=st_contains)
+#elem school catchments all have schools, good. 
+```
+
+Let's repeat these steps and checks for 2015-2016 public schools. 
+
+From the google historic images search, two schools are deleted (Tiffany Hills and Nora Frances Henderson) as they were constructed after 2015-2016 and a duplicated school (Bellmoore, the two rows have identifical information/location) is deleted and its footprint value is re-evaluated. 
+
+-Also, I am changing the SchoolIDs of Dr. Davey, Queen Victoria, and Barton, to match the SchoolID's of the same school in 2011. These schoolIDs do match their equivalent 2011 IDs; this is an issue as the rest of the schools' SchoolIDs (which did not change or undergo expansion) stay the same. 
+```{r adding missing footprint to public 2016 schools}
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Balaclava", "footprint"] <- as_units(3597, "m^2")
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Eastdale", "footprint"] <- as_units(1812.166, "m^2")
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Hillcrest", "footprint"] <- as_units(2460.666, "m^2")
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Allan A. Greenleaf", "footprint"] <- as_units(3440, "m^2")
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Earl Kitchener", "footprint"] <- as_units(2003, "m^2")
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Guy B. Brown", "footprint"] <- as_units(3386, "m^2")
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Lincoln Alexander", "footprint"] <- as_units(3400, "m^2")
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Pauline Johnson", "footprint"] <- as_units(2204.603, "m^2")
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Strathcona", "footprint"] <- as_units(1598, "m^2")
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Westwood", "footprint"] <- as_units(3518.067, "m^2")
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Greensville", "footprint"] <- as_units(2578.246, "m^2")
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Beverly Central", "footprint"] <- as_units(2685.9002, "m^2")
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Ancaster High", "footprint"] <- as_units(13662.803, "m^2")
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Waterdown", "footprint"] <- as_units(13429, "m^2")
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Ancaster Meadow", "footprint"] <- as_units(3775, "m^2")
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Templemead", "footprint"] <- as_units(5942, "m^2")
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Sir William Osler", "footprint"] <- as_units(3746, "m^2")
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Mountain", "footprint"] <- as_units(3002.62, "m^2")
+
+#we wil include these schools.
+DSB_1516_Comp <- DSB_1516_Comp[!(DSB_1516_Comp$SCHNAME=="Tiffany Hills"),]
+DSB_1516_Comp <- DSB_1516_Comp[!(DSB_1516_Comp$SCHNAME=="Nora Frances Henderson"),]
+DSB_1516_Comp <- DSB_1516_Comp[-c(101), ]  #deleting the Bellmore duplicate row
+
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Bellmoore", "footprint"] <- as_units(3791.6682, "m^2")
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Ridgemount", "footprint"] <- as_units(2792, "m^2")
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Orchard Park", "footprint"] <- as_units(14242, "m^2")
+
+#adding in these two highschools now, as Mountain highschool needs a manual footprint
+DSB_1011_Comp <- DSB_1011_Comp %>% bind_rows(DSB_1516_Comp %>% filter(SCHNAME == "Westmount" |SCHNAME == "Mountain") %>%
+                          transmute(SCHNAME=SCHNAME,
+                                    X = X,
+                                    Y = Y,
+                                    SchoolType = SchoolTy_1,
+                                    SchoolID = SchoolID,
+                                    ELEM = ELEM,
+                                    MID = MID,
+                                    HIGH = HIGH,
+                                    footprint = footprint) )
+
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Dr. J. Edgar Davey", "SchoolID"] <- 104
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Queen Victoria", "SchoolID"] <- 346
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Barton", "SchoolID"] <- 508
+	
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="École Élémentaire Michaëlle Jean", "ELEM"] <- "ELEM"
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="École Élémentaire Michaëlle Jean", "MID"] <- "MID"
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Glenwood", "ELEM"] <- "ELEM"
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Glenwood", "MID"] <- "MID"
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Norwood Park", "ELEM"] <- "ELEM"
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Norwood Park", "MID"] <- "MID"
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Barton", "HIGH"] <- "HIGH"
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Westmount", "HIGH"] <- "HIGH"
+DSB_1516_Comp[DSB_1516_Comp$SCHNAME=="Mountain", "HIGH"] <- "HIGH"
+```
+
+The deletion of schools causes an issue for the catchments. Let's take a look
+```{r}
+st_join(Catch_ELEM_1516, DSB_1516_Comp %>% filter(SchoolTy_1 != "Secondary"))
+#from this join, we can see that School (catchments) are all represented BUT there are 1 blank SCHNAME (school) associated with th Tiffany Falls catchment. This is the school I deleted above.
+
+st_join(Catch_HIGH_1516, DSB_1516_Comp %>% filter(SchoolTy_1 == "Secondary"),  join=st_contains)
+#from this join, we can see that SchoolName (catchments) are all represented BUT there are 1 blank SCHNAME (school) associated with th Nora Frances Henderson catchment. This is the school I deleted above.
+```
+```{r}
+#elementary schools
+ggplot() +
+geom_sf(data = Catch_ELEM_1516 %>% filter(SchoolName == "Tiffany Hills" |SchoolName == "Ancaster Meadow"| SchoolName == "Chedoke"),
+          shape = 1,
+          size = 0.2,
+          fill = "blue",
+          alpha = 0.2,
+          col = "black") +
+  geom_sf(data = DSB_1516_POINTS %>% filter(SCHNAME == "Ancaster Meadow" | SCHNAME == "Chedoke") ,
+          shape = 1,
+          size = 2,
+          color = "green",
+          alpha = 1)
+#The Tiffany Hills catchment will be dissolved into Ancaster Meadow as they are boardering eachother and Ancaster Meadow holds the majority of students who will transfer to Tiffany Hills went it opens 2016-2017 (https://www.toronto.com/news-story/7008729-ancaster-tiffany-hills-school-set-to-open-doors/). It is acknowledge that Chedoke school also will transfer some students to Tiffany Hills - but to reduce complexity this catchment is not touched. 
+```
+```{r}
+#dissolve the two catchments (Tiffany Hills and Ancaster Meadow) and copy over the Ancaster Meadow attributes
+diss <- raster::aggregate(Catch_ELEM_1516 %>% filter(SchoolName == "Tiffany Hills"|SchoolName == "Ancaster Meadow") %>% as_Spatial()) %>% st_as_sf()
+
+diss <- bind_cols(diss, Catch_ELEM_1516%>% st_drop_geometry()) %>% filter(SchoolName == "Ancaster Meadow")
+
+#remove Tiffany Hills [77,] and the Ancaster Meadow [78,]
+Catch_ELEM_1516 <- Catch_ELEM_1516[-c(77,78),] 
+
+#attach the new Ancaster Meadow catchment (has updated geometry)
+Catch_ELEM_1516 <- rbind(Catch_ELEM_1516,diss)
+
+#plot to check the geometry is correct
+ggplot() +
+geom_sf(data = Catch_ELEM_1516 %>% filter(SchoolName == "Ancaster Meadow" | SchoolName =="Tiffany Hills" ),
+          shape = 1,
+          size = 0.2,
+          fill = "blue",
+          alpha = 0.2,
+          col = "black") +
+      geom_sf(data = DSB_1516_Comp %>% filter(SCHNAME =="Tiffany Hills"),
+          shape = 1,
+          size = 1,
+          color  = "blue")+
+    geom_sf(data = DSB_1516_Comp %>% filter(SCHNAME =="Ancaster Meadow"),
+          shape = 1,
+          size = 1,
+          color  = "green")
+```
+Successfully merged! Now do this for 2015-2016 high schools, public:
+```{r}
+#high schools
+ggplot() +
+geom_sf(data = Catch_HIGH_1516 %>% filter(SchoolName == "Nora Frances Henderson"| SchoolName == "Sherwood"),
+        shape = 1,
+          size = 0.2,
+          fill = "blue",
+          alpha = 0.2,
+          col = "black") +
+  geom_sf(data = DSB_1516_POINTS %>% filter(SCHNAME == "Barton"| SCHNAME =="Sherwood"),
+          shape = 1,
+          size = 2,
+          color = "green",
+          alpha = 1)
+#The Nora Frances Henderson catchment will be dissolved into Sherwood catchment as they are boardering eachother and Barton school (in the Sherwood catchment) holds the majority of students who will transfer to Nora Frances Henderson went it opens 2019 (https://canada.constructconnect.com/dcn/news/projects/2017/03/tender-process-scheduled-for-new-hamilton-secondary-school-1022374w#:~:text=The%20soon%2Dto%2Dbe%2D,years%20later%20than%20originally%20planned.). It is acknowledge that Mountain school (nearby Mountain catchment) also will transfer some students to Nora Frances Henderson - but to reduce complexity this catchment is not changed. 
+```
+```{r}
+#dissolve the two catchments (Nora Frances Henderson and Sherwood) and copy over the Sherwood attributes
+diss <- raster::aggregate(Catch_HIGH_1516 %>% filter(SchoolName == "Nora Frances Henderson"|SchoolName == "Sherwood") %>% as_Spatial()) %>% st_as_sf()
+
+diss <- bind_cols(diss, Catch_HIGH_1516%>% st_drop_geometry()) %>% filter(SchoolName == "Sherwood")
+
+#remove Nora Frances Henderson [4,] and the Sherwood [7,]
+Catch_HIGH_1516 <- Catch_HIGH_1516[-c(4,7),] 
+
+#attach the new Sherwood catchment (has updated geometry)
+Catch_HIGH_1516 <- rbind(Catch_HIGH_1516,diss)
+
+#plot to check the geometry is correct
+ggplot() +
+geom_sf(data = Catch_HIGH_1516 %>% filter(SchoolName == "Sherwood"),
+          shape = 1,
+          size = 0.2,
+          fill = "blue",
+          alpha = 0.2,
+          col = "black") +
+      geom_sf(data = DSB_1516_Comp %>% filter(SCHNAME =="Barton"), #the holding school for Nora
+          shape = 1,
+          size = 1,
+          color  = "blue")+
+    geom_sf(data = DSB_1516_Comp %>% filter(SCHNAME =="Sherwood"),
+          shape = 1,
+          size = 1,
+          color  = "green")
+```
+Lastly, repeat the process for 2015-2016 catholic schools. 
+```{r adding missing footprint to public 2016 schools}
+CDSB_1516_Comp[CDSB_1516_Comp$NAME=="Annunciation of Our Lord", "footprint"] <- as_units(3528, "m^2")
+CDSB_1516_Comp[CDSB_1516_Comp$NAME=="Our Lady of the Assumption", "footprint"] <- as_units(1266, "m^2")
+CDSB_1516_Comp[CDSB_1516_Comp$NAME=="Wilma's Place Alternative Education", "footprint"] <- as_units(1048, "m^2")
+CDSB_1516_Comp[CDSB_1516_Comp$NAME=="St. Matthew", "footprint"] <- as_units(3646, "m^2")
+CDSB_1516_Comp[CDSB_1516_Comp$NAME=="St. Thomas More", "footprint"] <- as_units(9770, "m^2")
+CDSB_1516_Comp <- CDSB_1516_Comp[-33,] #deleting the second St. Eugene building, this is the church next to the school
+
+CDSB_1516_Comp[CDSB_1516_Comp$NAME=="Wilma's Place Alternative Education", "HIGH"] <- "HIGH"
+```
+
+Let's check to make sure all catchments have schools:
+```{r}
+st_join(Catch_ELEM_C_1516, CDSB_1516_Comp %>% filter(GRADE == "Elementary"),  join=st_contains)
+#elem school catchments all have schools, good. 
+
+st_join(Catch_HIGH_C_1516, CDSB_1516_Comp %>% filter(GRADE == "Secondary"),  join=st_contains)
+#high school catchments all have schools, good. 
+```
+No footprints are missing (no NAs!) from 2010-2011 and 2015-2016  schools.
+```{r check if NAs are missing}
+DSB_1011_Comp$footprint %>%
+  summary()
+DSB_1516_Comp$footprint %>%
+  summary()
+CDSB_1011_Comp$footprint %>%
+  summary()
+CDSB_1516_Comp$footprint %>%
+  summary()
+```
+
+## Add Catchment IDs to schools
+```{r adding a unique ID to catchments and cleaning up }
+Catch_ELEM_1011 <- st_sf(Catch_ELEM_1011) %>% transmute(CID = row_number(),geometry)
+
+Catch_HIGH_1011 <- st_sf(Catch_HIGH_1011) %>% transmute(CID = row_number()+nrow(Catch_ELEM_1011), geometry)
+
+Catch_ELEM_C_1011 <- st_sf(Catch_ELEM_C_1011) %>% transmute(CID = row_number() + nrow(Catch_ELEM_1011) + nrow(Catch_HIGH_1011),geometry)
+
+Catch_HIGH_C_1011 <- st_sf(Catch_HIGH_C_1011) %>% transmute(CID = row_number()+ nrow(Catch_ELEM_C_1011)+ nrow(Catch_ELEM_1011)+ nrow(Catch_HIGH_1011),geometry)
+
+Catch_ELEM_1516 <- st_sf(Catch_ELEM_1516) %>% transmute(CID = row_number()+ nrow(Catch_ELEM_C_1011)+ nrow(Catch_ELEM_1011)+ nrow(Catch_HIGH_1011) + nrow(Catch_HIGH_C_1011),
+                                                 geometry)
+Catch_HIGH_1516 <- st_sf(Catch_HIGH_1516) %>% transmute(CID = row_number() +nrow(Catch_ELEM_1516)+ nrow(Catch_ELEM_C_1011)+ nrow(Catch_ELEM_1011)+ nrow(Catch_HIGH_1011) + nrow(Catch_HIGH_C_1011),
+                                                 geometry)
+Catch_ELEM_C_1516 <- st_sf(Catch_ELEM_C_1516) %>% transmute(CID = row_number() +nrow(Catch_HIGH_1516) + nrow(Catch_ELEM_1516)+ nrow(Catch_ELEM_C_1011)+ nrow(Catch_ELEM_1011)+ nrow(Catch_HIGH_1011) + nrow(Catch_HIGH_C_1011),
+                                                     geometry)
+Catch_HIGH_C_1516 <- st_sf(Catch_HIGH_C_1516) %>% transmute(CID = row_number()+nrow(Catch_ELEM_C_1516)+nrow(Catch_HIGH_1516)+nrow(Catch_ELEM_1516)+ nrow(Catch_ELEM_C_1011)+ nrow(Catch_ELEM_1011)+ nrow(Catch_HIGH_1011) + nrow(Catch_HIGH_C_1011),
+                                                     geometry)
+```
+
+#Intersect schools with catchments to adding CID(catchment ID) to all schools:
+```{r}
+#Spatial join schools with catchments
+ELEM_DSB_1011_Comp <- st_join(DSB_1011_Comp %>% filter(SchoolType == "Elementary"),Catch_ELEM_1011, join = st_nearest_feature)
+HIGH_DSB_1011_Comp <- st_join(DSB_1011_Comp %>% filter(SchoolType == "Secondary"),Catch_HIGH_1011)
+ELEM_DSB_1516_Comp <- st_join(DSB_1516_Comp %>% filter(SchoolTy_1 == "Elementary" |SchoolTy_1 == "Jr Elem"|SchoolTy_1 =="Middle School"),Catch_ELEM_1516, join = st_nearest_feature)
+HIGH_DSB_1516_Comp <- st_join(DSB_1516_Comp %>% filter(SchoolTy_1 == "Secondary"),Catch_HIGH_1516, join = st_nearest_feature)
+
+ELEM_CDSB_1011_Comp <- st_join(CDSB_1011_Comp %>% filter(GRADE == "Elementary"),Catch_ELEM_C_1011, join = st_nearest_feature)
+HIGH_CDSB_1011_Comp <- st_join(CDSB_1011_Comp %>% filter(GRADE == "Secondary"),Catch_HIGH_C_1011, join = st_nearest_feature)
+ELEM_CDSB_1516_Comp <- st_join(CDSB_1516_Comp %>% filter(GRADE == "Elementary"),Catch_ELEM_C_1516, join = st_nearest_feature)
+HIGH_CDSB_1516_Comp <- st_join(CDSB_1516_Comp %>% filter(GRADE == "Secondary"),Catch_HIGH_C_1516, join = st_nearest_feature)
+```
+
+#Add real enrollement values
+```{r}
+#this will just be a check later to see if our student allocation is correct
+##note: as Enrollment data does not have matching IDs or geometry, this match had to be done on the School Name. There was a bit of manual editing of school names in the Enrollment data to match the sf school points.
+Enroll <- readxl::read_excel("data-inputs/Historic-Schools-and-Catchments/enrolment_by_school_en_-_sup_2015-2016.xlsx", "Hamilton_Enrolment 2015-16", range="A1:H164") %>% 
+  filter(`School Level` == "Elementary" & `School Type` == "Public") %>% 
+  transmute(SCHNAME = `School Name`, 
+            Enrolment = `Enrolment`) 
+ELEM_DSB_1516_Comp <- Enroll %>% fuzzyjoin::stringdist_right_join(ELEM_DSB_1516_Comp, by="SCHNAME", max_dist=2) %>% mutate (SCHNAME.x = SCHNAME.y) %>% select(-SCHNAME.y)
+
+Enroll <- readxl::read_excel("data-inputs/Historic-Schools-and-Catchments/enrolment_by_school_en_-_sup_2015-2016.xlsx", "Hamilton_Enrolment 2015-16", range="A1:H164") %>% 
+  filter(`School Level` == "Secondary" & `School Type` == "Public") %>% 
+  transmute(SCHNAME = `School Name`, 
+            Enrolment = `Enrolment`) 
+HIGH_DSB_1516_Comp <- Enroll %>% fuzzyjoin::stringdist_right_join(HIGH_DSB_1516_Comp, by="SCHNAME", max_dist=2)%>% mutate (SCHNAME.x = SCHNAME.y) %>% select(-SCHNAME.y)
+
+#catholic 
+Enroll <- readxl::read_excel("data-inputs/Historic-Schools-and-Catchments/enrolment_by_school_en_-_sup_2015-2016.xlsx", "Hamilton_Enrolment 2015-16", range="A1:H164") %>% 
+  filter(`School Level` == "Elementary" & `School Type` == "Roman Catholic") %>% 
+  transmute(NAME = `School Name`, 
+            Enrolment = `Enrolment`) 
+ELEM_CDSB_1516_Comp <- Enroll %>% fuzzyjoin::stringdist_right_join(ELEM_CDSB_1516_Comp, by="NAME", max_dist=2) %>% mutate (NAME.x = NAME.y) %>% select(-NAME.y)
+
+Enroll <- readxl::read_excel("data-inputs/Historic-Schools-and-Catchments/enrolment_by_school_en_-_sup_2015-2016.xlsx", "Hamilton_Enrolment 2015-16", range="A1:H164") %>% 
+  filter(`School Level` == "Secondary" & `School Type` == "Roman Catholic") %>% 
+  transmute(NAME = `School Name`, 
+            Enrolment = `Enrolment`) 
+HIGH_CDSB_1516_Comp <- Enroll %>% fuzzyjoin::stringdist_right_join(HIGH_CDSB_1516_Comp, by="NAME", max_dist=2) %>% mutate (NAME.x = NAME.y) %>% select(-NAME.y)
+```
+```{r}
+Enroll <- readxl::read_excel("data-inputs/Historic-Schools-and-Catchments/enrolment_by_school_2011-2012_en_0.xlsx", "Hamilton_Enrolment 2011-12", range="A1:H176") %>% 
+  filter(`School Level` == "Elementary" & `School Type` == "Public") %>% 
+  transmute(SCHNAME = `School Name`, 
+            Enrolment = `Enrolment`) 
+ELEM_DSB_1011_Comp <- Enroll %>% fuzzyjoin::stringdist_right_join(ELEM_DSB_1011_Comp, by="SCHNAME", max_dist=2) %>% mutate (SCHNAME.x = SCHNAME.y) %>% select(-SCHNAME.y)
+
+Enroll <- readxl::read_excel("data-inputs/Historic-Schools-and-Catchments/enrolment_by_school_2011-2012_en_0.xlsx", "Hamilton_Enrolment 2011-12", range="A1:H176") %>% 
+  filter(`School Level` == "Secondary" & `School Type` == "Public") %>% 
+  transmute(SCHNAME = `School Name`, 
+            Enrolment = `Enrolment`) 
+HIGH_DSB_1011_Comp <- Enroll %>% fuzzyjoin::stringdist_right_join(HIGH_DSB_1011_Comp, by="SCHNAME", max_dist=2) %>% mutate (SCHNAME.x = SCHNAME.y) %>% select(-SCHNAME.y)
+
+Enroll <- readxl::read_excel("data-inputs/Historic-Schools-and-Catchments/enrolment_by_school_2011-2012_en_0.xlsx", "Hamilton_Enrolment 2011-12", range="A1:H176") %>% 
+  filter(`School Level` == "Elementary" & `School Type` == "Roman Catholic") %>% 
+  transmute(NAME = `School Name`, 
+            Enrolment = `Enrolment`) 
+ELEM_CDSB_1011_Comp <- Enroll %>% fuzzyjoin::stringdist_right_join(ELEM_CDSB_1011_Comp, by="NAME", max_dist=2) %>% mutate (NAME.x = NAME.y) %>% select(-NAME.y)
+
+Enroll <- readxl::read_excel("data-inputs/Historic-Schools-and-Catchments/enrolment_by_school_2011-2012_en_0.xlsx", "Hamilton_Enrolment 2011-12", range="A1:H176") %>% 
+  filter(`School Level` == "Secondary" & `School Type` == "Roman Catholic") %>% 
+  transmute(NAME = `School Name`, 
+            Enrolment = `Enrolment`) 
+HIGH_CDSB_1011_Comp <- Enroll %>% fuzzyjoin::stringdist_right_join(HIGH_CDSB_1011_Comp, by="NAME", max_dist=2) %>% mutate (NAME.x = NAME.y) %>% select(-NAME.y)
+```
+
+## Consolidate school points into 2 master sf objects for each year:
+```{r}
+#clean up 2011 schools
+ELEM_DSB_1011_Comp <- ELEM_DSB_1011_Comp %>% rename("Name" = SCHNAME.x, "rl_Enrolment" = Enrolment )
+ELEM_CDSB_1011_Comp <- ELEM_CDSB_1011_Comp %>% rename("Name" = NAME.x, "rl_Enrolment" = Enrolment )
+HIGH_DSB_1011_Comp <- HIGH_DSB_1011_Comp %>% rename("Name" = SCHNAME.x, "rl_Enrolment" = Enrolment )
+HIGH_CDSB_1011_Comp <- HIGH_CDSB_1011_Comp %>% rename("Name" = NAME.x, "rl_Enrolment" = Enrolment )
+
+#conslidate 2011 schools
+ALL_SCHOOLS_1011 <- bind_rows(ELEM_DSB_1011_Comp %>% transmute(SchoolID = as.character(SchoolID), Name, CID,
+                                                           System = "Public", Level = "Elementary", 
+                                                           footprint, rl_Enrolment, X, Y, 
+                                                           ELEM, MID, HIGH, geometry),
+      ELEM_CDSB_1011_Comp %>% transmute(SchoolID = as.character(SFIS_Num), Name, CID, 
+                                        System = "Catholic", Level = "Elementary", 
+                                        footprint, rl_Enrolment,X,Y,
+                                        ELEM, HIGH, geometry),
+      HIGH_DSB_1011_Comp %>% transmute(SchoolID = as.character(SchoolID), Name, CID, 
+                                       System = "Public", Level = "High", 
+                                       footprint, rl_Enrolment,X,Y,
+                                       ELEM, MID, HIGH, geometry),
+      HIGH_CDSB_1011_Comp %>% transmute(SchoolID = as.character(SFIS_Num), Name, CID, 
+                                        System = "Catholic", Level = "High", 
+                                        footprint, rl_Enrolment, X,Y, 
+                                        ELEM, HIGH, geometry))
+```
+```{r}
+#clean up 2015-2016 schools
+ELEM_DSB_1516_Comp <- ELEM_DSB_1516_Comp %>% rename("Name" = SCHNAME.x, "rl_Enrolment" = Enrolment )
+ELEM_CDSB_1516_Comp <- ELEM_CDSB_1516_Comp %>% rename("Name" = NAME.x, "rl_Enrolment" = Enrolment )
+HIGH_DSB_1516_Comp <- HIGH_DSB_1516_Comp %>% rename("Name" = SCHNAME.x, "rl_Enrolment" = Enrolment )
+HIGH_CDSB_1516_Comp <- HIGH_CDSB_1516_Comp %>% rename("Name" = NAME.x, "rl_Enrolment" = Enrolment )
+
+#conslidate 2015-2016 schools
+ALL_SCHOOLS_1516 <- bind_rows(ELEM_DSB_1516_Comp %>% transmute(SchoolID = as.character(SchoolID), Name, CID,
+                                                           System = "Public", Level = "Elementary", 
+                                                           footprint, rl_Enrolment, X, Y, 
+                                                           ELEM, MID, HIGH, geometry),
+      ELEM_CDSB_1516_Comp %>% transmute(SchoolID = as.character(SFIS_Num), Name, CID, 
+                                        System = "Catholic", Level = "Elementary", 
+                                        footprint, rl_Enrolment,X,Y,
+                                        ELEM, HIGH, geometry),
+      HIGH_DSB_1516_Comp %>% transmute(SchoolID = as.character(SchoolID), Name, CID, 
+                                       System = "Public", Level = "High", 
+                                       footprint, rl_Enrolment,X,Y,
+                                       ELEM, MID, HIGH, geometry),
+      HIGH_CDSB_1516_Comp %>% transmute(SchoolID = as.character(SFIS_Num), Name, CID, 
+                                        System = "Catholic", Level = "High", 
+                                        footprint, rl_Enrolment, X,Y, 
+                                        ELEM, HIGH, geometry))
+```
+
+#Conslidate the school objects and add status and type of school categories
+Status either "New" (2016 only), "Removed" (2011 only), "Moved" (2011 and 2016 are at different locations), or NA... this will be transformed to "Building_Changed" (expansion), "No Change" (2011 and 2016) in next section:
+```{r}
+ALL_SCHOOLS <- as.data.frame(ALL_SCHOOLS_1011) %>%
+  mutate(Year = "2011") %>%
+  merge(as.data.frame(ALL_SCHOOLS_1516) %>%
+          mutate(Year="2016"),
+        by="SchoolID", all.x=TRUE, all.y=TRUE) %>%
+  mutate(Removed = ifelse(Year.x == "2011" & is.na(Year.y), "Removed", NA),
+         New = ifelse(is.na(Year.x) & Year.y == "2016", "New", NA),
+         Moved = 
+            ifelse(SchoolID == "11835" | SchoolID == "28" | SchoolID == "458" , "Moved", NA),
+         ELEM = coalesce(ELEM.x, ELEM.y),
+         MID = coalesce(MID.x, MID.y),
+         HIGH = coalesce(HIGH.x, HIGH.y),) 
+
+ALL_SCHOOLS_isNew <- ALL_SCHOOLS %>% filter(New == "New") %>%
+  transmute(SchoolID = SchoolID,
+            Name = Name.y,
+            CID2011 = CID.x,
+            CID2016 = CID.y,
+            System = System.y,
+            Level = Level.y,
+            Year = Year.y,
+            Status = New,
+            ON_Enrol_2016 = rl_Enrolment.y,
+            footprint2011 = footprint.x,
+            footprint2016 = footprint.y,
+            ELEM, MID, HIGH,
+            geometry = geometry.y) 
+
+ALL_SCHOOLS_isRemoved <- ALL_SCHOOLS %>% filter(Removed == "Removed") %>%
+  transmute(SchoolID = SchoolID,
+            Name = Name.x,
+            CID2011 = CID.x,
+            CID2016 = CID.y,
+            System = System.x,
+            Level = Level.x,
+            Year = Year.x,
+            Status = Removed,
+            ON_Enrol_2011 = rl_Enrolment.x,
+            footprint2011 = footprint.x,
+            footprint2016 = footprint.y,
+            ELEM, MID, HIGH,
+            geometry = geometry.x)
+
+ALL_SCHOOLS_else <- ALL_SCHOOLS %>% filter(is.na(Removed)& is.na(New)& is.na(Moved)) %>%
+  transmute(SchoolID = SchoolID,
+            Name = coalesce(Name.x,Name.y),
+            CID2011 = CID.x,
+            CID2016 = CID.y,
+            System = coalesce(System.x, System.y),
+            Level = coalesce(Level.x, Level.y),
+            Year = coalesce(Year.x, Year.y),
+            Status = NA,
+            ON_Enrol_2011 = rl_Enrolment.x,
+            ON_Enrol_2016 = rl_Enrolment.y,
+            footprint2011 = footprint.x,
+            footprint2016 = footprint.y,
+            ELEM, MID, HIGH,
+            geometry = geometry.x)
+
+ALL_SCHOOLS_isMoved1011 <- ALL_SCHOOLS %>% filter(!is.na(Moved)) %>%
+  transmute(SchoolID = paste0(SchoolID, ".1011"),
+            Name = Name.x,
+            CID2011 = CID.x,
+            CID2016 = CID.y,
+            System = System.x,
+            Level = Level.x,
+            Year = Year.x,
+            Status = Moved,
+            ON_Enrol_2011 = rl_Enrolment.x,
+            footprint2011 = footprint.x,
+            footprint2016 = footprint.y,
+            ELEM, MID, HIGH,
+            geometry = geometry.x) 
+
+ALL_SCHOOLS_isMoved1516 <- ALL_SCHOOLS %>% filter(!is.na(Moved)) %>%
+  transmute(SchoolID = paste0(SchoolID, ".1516"),
+            Name = Name.y,
+            CID2011 = CID.x,
+            CID2016 = CID.y,
+            System = System.y,
+            Level = Level.y,
+            Year = Year.y,
+            Status = Moved,
+            ON_Enrol_2016 = rl_Enrolment.y,
+            footprint2011 = footprint.x,
+            footprint2016 = footprint.y,
+            ELEM, MID, HIGH,
+            geometry = geometry.y)
+
+#The new school object!
+ALL_SCHOOLS <- bind_rows(ALL_SCHOOLS_isRemoved, 
+               bind_rows(ALL_SCHOOLS_isMoved1011, 
+                         bind_rows(ALL_SCHOOLS_isMoved1516,ALL_SCHOOLS_else,ALL_SCHOOLS_isNew)))%>% mutate(Year = ifelse(is.na(Status), "2011 and 2016", Year))
+```
+
+let's perform some checks:
+```{r}
+#let's check the status - as you can see, (6/2)+3+14+154 are the number of schools (177 school points existed between the two years). The number of Moved schools must be divided to get the true number of schools; Each Moved school is repeated two times with a added .1011 or a .1516 suffix to their School ID to indicate the year of the corresponding geometry (+ associated features). The NA schools are around in both 2011 and 2016 but they either expanded or stayed the same. This is determined in the next section.
+table(ALL_SCHOOLS$Status, useNA = "always")
+```
+```{r}
+(anyDuplicated(ALL_SCHOOLS$SchoolID)) # no duplicated SchoolIDs
+```
+
+## Adding missing footprints to schools, pt. 2
+Here we noticed that the footprints between schools which did NOT move/removed/new are often different between the two years. These discrepancies are due to a difference in digitization between the years but we SHOULD have the same footprint for the schools which did not change, and confirm the differences in footprints for the schools which in fact did change between the year. For this reason, all footprints were checked again (manually, on GOogle Earth with reference to the Ortho Historic Basemap available through Google) and the following excel sheet summarizes this information:
+```{r}
+Footprint <- readxl::read_excel("data-inputs/Historic-Schools-and-Catchments/Schools_Footprint_Changed_Check.xlsx", "Footprint_Codes", range="A1:C178")
+ALL_SCHOOLS <- Footprint %>% right_join(ALL_SCHOOLS, by="SchoolID") %>%
+  mutate(foot2011_1 = ifelse(BuildingSizeChange == "No" & WhichFootprint == "2021", footprint2016, NA),
+         foot2011_2 = ifelse(BuildingSizeChange == "No" & WhichFootprint == "2011", footprint2011, NA),
+         foot2011_3 = ifelse(BuildingSizeChange == "Yes" & WhichFootprint == "2011 and 2021",footprint2011, NA),
+         foot2016_1 = ifelse(BuildingSizeChange == "No" & WhichFootprint == "2021", footprint2016, NA),
+         foot2016_2 = ifelse(BuildingSizeChange == "No" & WhichFootprint == "2011", footprint2011, NA),
+         foot2016_3 = ifelse(BuildingSizeChange == "Yes" & WhichFootprint == "2011 and 2021",footprint2016, NA)) %>%
+  mutate(footprint2011 = coalesce(foot2011_1, foot2011_2, foot2011_3),
+         footprint2016 = coalesce(foot2016_1, foot2016_2, foot2016_3),
+    footprint2011 = 
+           ifelse(Year == "2016", NA, footprint2011),
+         footprint2016 = 
+           ifelse(Year == "2011", NA, footprint2016),
+         Status = 
+           ifelse(BuildingSizeChange == "Yes" & is.na(Status), "Expanded", Status),
+         Status = 
+           ifelse(BuildingSizeChange == "No" & is.na(Status), "NoChange", Status)) %>%
+  select(SchoolID, Name, CID2011, CID2016, System, Level, Year, Status, ON_Enrol_2011, ON_Enrol_2016, footprint2011, footprint2016, ELEM, MID, HIGH, geometry) %>% st_as_sf()
+```
+
+## Creating regression for OTGC estimation, note: only final models are shown
+# Preparing the School Profiles object and relating gross floor area to capacity
+
+The following .csv has OTGC for ~40 school OTGC values (only public). This file was compiled by Mary who manually gleaned information for the HWDSB School Information Profiles which are a product of the Accommodation Review Process (i.e., were considered for school closure)
+```{r read csv of school profiles (contains OTGC) and clean up}
+School_Profiles <- read.csv("data-inputs/Historic-Schools-and-Catchments/School-Profiles.csv")
+
+School_Profiles_u <- School_Profiles %>% #pass to new object name
+  rename(area = `Building.Gross..Ft2.`) %>%
+  distinct(capacity, 
+           area, 
+           .keep_all = TRUE) # Keep all columns
+
+#Drop a few inaccurate school records,  reformat the area column, and convert area from ft^2 to m^2 to match footprint units:
+School_Profiles_u <- School_Profiles_u %>%
+  drop_na(area)
+
+School_Profiles_u <- School_Profiles_u [ !(School_Profiles_u$school_name %in% "New Spencer Valley"),]
+School_Profiles_u <- School_Profiles_u [ !(School_Profiles_u$school_name %in% "Rockton Elementary"),]
+
+School_Profiles_u$area <- sub(",", "", School_Profiles_u$area) 
+School_Profiles_u$area <- as.numeric(as.character(School_Profiles_u$area))
+
+School_Profiles_u <- School_Profiles_u %>%
+    mutate(area = set_units(area, ft^2),
+         area = set_units(area, m^2))
+```
+
+Visualize area and capacity in a scatterplot:
+```{r}
+ggplot(data = School_Profiles_u %>%
+         mutate(area = drop_units(area)),
+       aes(x = area,
+           y = capacity)) +
+  geom_point()
+```
+As you see... Schools with larger gross floor areas have greater capacity, and there appears to be a strong linear relationship between these two variables. However, we do not have gross floor area for all schools but we do have building footrpint. As you see... 
+```{r plotting and correlation between area and building footprint vs. OTGC}
+School_Profiles_u <- School_Profiles_u %>%
+  left_join(ALL_SCHOOLS %>% filter(Year == "2011" | Year == "2011 and 2016"), by = c("school_name" = "Name"))
+#plot area vs. capacity and footprint vs. capacity
+School_Profiles_u %>%
+  mutate(area = drop_units(area),
+         footprint = footprint2011) %>%
+  ggplot() +
+    geom_point(aes(x = footprint, y = capacity), colour = 'red') +
+    geom_point(aes(x = area, y = capacity), colour = 'blue')
+#correlation
+School_Profiles_u %>%
+  select(capacity,
+         area,
+         footprint2011) %>%
+  drop_na() %>%
+  cor() # the correlation between area~footprint is 0.89 and OTGC~footprint is 0.87 (compared to the better fit of OTGC~area of .98). OTGC~footprint correlation is still high enough to try building the model. 
+```
+
+Adding predictor variables to the School Profiles object:
+```{r add distance to CBD}
+# add a 'proxy' for age of construction. Assuming schools constructed closer to the CBD (the lat-long coordinate of "King St W and James St S: (43.256684, -79.869039)) is older and further away is newer.
+urban_pt <- st_sfc(st_point(c(-79.869039, 43.256684)), crs=4326 )
+
+ALL_SCHOOLS_WSG84 <- st_transform(ALL_SCHOOLS, crs=4326)
+ALL_SCHOOLS$urban.dist <- st_distance(ALL_SCHOOLS_WSG84, y = urban_pt)
+
+School_Profiles_u <- left_join(School_Profiles_u,
+                               ALL_SCHOOLS %>% filter(Year == "2011" | Year == "2011 and 2016") %>% select(Name, urban.dist), 
+                               by = c("school_name" = "Name"))
+
+School_Profiles_u$geometry.x <- NULL
+```
+
+Next add School Type and school Grade dummy variables:
+```{r}
+School_Profiles_u <- School_Profiles_u %>%
+  mutate(Type.Elementary = ifelse(Type == "Elementary" | Type == "Middle", 1, 0),
+         Type.Secondary = ifelse(Type == "Secondary", 1, 0),
+         Grades.6to8 = ifelse(Grades == "(6-8)", 1, 0), 
+         Grades.JKto5 = ifelse(Grades == "(JK-5)", 1,0),
+         Grades.JKto6 = ifelse(Grades == "(JK-6)", 1, 0),
+         Grades.JKto5_6 = ifelse(Grades == "(JK-5)" | Grades == "(JK-6)", 1,0),
+         Grades.JKto8 = ifelse(Grades == "(JK-8)", 1, 0),
+         Grades.9to12 = ifelse(Grades == "(9-12)", 1, 0),
+         footprint = footprint2011)
+
+```
+
+Attempt different multi-variate regression models and decide upon this one:
+```{r}
+OTG_fit_DSB <- lm(log(capacity) ~ 0 + log(footprint) + Grades.JKto5_6 + Grades.JKto8 + Grades.6to8 + Grades.9to12 + urban.dist, 
+                            data = School_Profiles_u %>% 
+                drop_na(footprint))
+
+OTG_fit_CDSB <- lm(log(capacity) ~ 0 + log(footprint) + Type.Elementary + Type.Secondary + urban.dist, 
+                            data = School_Profiles_u %>% 
+                drop_na(footprint))
+
+stargazer::stargazer(OTG_fit_DSB,OTG_fit_CDSB, type = "text")
+```
+
+These two models have the most accurate adjusted R-Squared, lowest standard error and most significant predictors. DSB points have grade information while CDSB only have "elementary" or "secondary" denomonations, hence the two models. 
+
+Check the residuals for the models:
+```{r}
+ggplot(data.frame(e = OTG_fit_DSB$residuals, 
+                  capacity_pred = OTG_fit_DSB$fitted.values, 
+                  Grades = case_when(OTG_fit_DSB$model$Grades.JKto5_6 == 1 ~ "(JKto5_6)",
+                                     OTG_fit_DSB$model$Grades.6to8 == 1 ~ "(6to8)",
+                                     OTG_fit_DSB$model$Grades.JKto8 == 1 ~ "(JKto8)",
+                                     OTG_fit_DSB$model$Grades.9to12 == 1 ~ "(9to12)")),
+       aes(x = capacity_pred, y = e)) +
+  geom_point(aes(color = Grades)) + 
+  geom_smooth(method = "lm")
+
+ggplot(data.frame(e = OTG_fit_CDSB$residuals, 
+                  capacity_pred = OTG_fit_CDSB$fitted.values, 
+                  Grades = case_when(OTG_fit_CDSB$model$Type.Elementary == 1 ~ "ELEM",
+                                     OTG_fit_CDSB$model$Type.Secondary == 1 ~ "SEC")),
+       aes(x = capacity_pred, y = e)) +
+  geom_point(aes(color = Grades)) + 
+  geom_smooth(method = "lm")
+
+```
+Transform the predicted values back from their log transformation and plot:
+```{r}
+capacity_pred <- data.frame(capacity = exp(OTG_fit_DSB$model$`log(capacity)`), 
+                            capacity_pred = exp(OTG_fit_DSB$fitted.values))
+
+ggplot(capacity_pred,
+       aes(x = capacity, y = capacity_pred)) +
+  geom_point() +
+  geom_abline(intercept = 0, slope = 1)
+
+capacity_pred <- data.frame(capacity = exp(OTG_fit_CDSB$model$`log(capacity)`), 
+                            capacity_pred = exp(OTG_fit_CDSB$fitted.values))
+
+ggplot(capacity_pred,
+       aes(x = capacity, y = capacity_pred)) +
+  geom_point() +
+  geom_abline(intercept = 0, slope = 1)
+```
+
+## Predicting OTGC
+Let's populate the remaining OTGC in all four school point objects.
+
+The DSB Schools (Public) have fields corresponding to grades following this code:
+ELEM = JKto5 or JKto6 (i.e. Grades.JKto5_6)
+ELEM + MID = JKto8 (i.e. Grades.JKto8)
+MID = 6to8 -> (i.e Grades.6to8)
+HIGH = 9to12 (i.e. Grades.9to12)
+
+Now add dummy variables for the Grades:
+```{r}
+ALL_SCHOOLS <- ALL_SCHOOLS %>% 
+  mutate(ELEM = coalesce(ELEM, "0"),
+         MID = coalesce(MID, "0"),
+         HIGH = coalesce(HIGH, "0"))
+
+#Create dummy variables correspending to Grades (for Public) and for Type (for Catholic)
+ALL_SCHOOLS_OTGC <- ALL_SCHOOLS %>%
+  mutate(Grades.JKto5_6 = ifelse((ELEM == "ELEM" & MID == "0" & HIGH == "0"), 1, 0),
+         Grades.JKto8 = ifelse((ELEM == "ELEM" & MID == "MID" & HIGH == "0"), 1, 0),
+         Grades.6to8 = ifelse((ELEM == "0" & MID == "MID" & HIGH == "0"), 1, 0),
+         Grades.9to12 = ifelse((ELEM == "0" & MID == "0" & HIGH == "HIGH"), 1, 0),
+         Type.Elementary = ifelse(Level == "Elementary", 1, 0),
+         Type.Secondary = ifelse(Level == "High", 1, 0))
+```
+
+
+Now predict OTGC using the two models. First, the DSB points:
+```{r fill in OTGC for DSB 1011}
+DSB_1011_OTGC <- ALL_SCHOOLS_OTGC %>% filter((Year == "2011" | Year == "2011 and 2016") & System == "Public")
+
+#add a field with index numbers for merging predicted OTGC 
+DSB_1011_OTGC$rowID <- 1:nrow(DSB_1011_OTGC)
+
+t <- as.data.frame(DSB_1011_OTGC) %>%
+  transmute(footprint = footprint2011,Grades.JKto5_6,Grades.6to8,Grades.JKto8,Grades.9to12,urban.dist)
+t$urban.dist <- as.matrix(t$urban.dist)
+
+t2 <- predict(OTG_fit_DSB, newdata = t)
+t2 <- data.frame(OTGC2011 = exp(t2))
+t2$rowID <- 1:nrow(t2)
+
+DSB_1011_OTGC <- merge(DSB_1011_OTGC, t2, by= "rowID", all.x=TRUE )
+
+#Now add in the available OTGC and a dummy variable indicating the OTGC source (SIP or will be predicted)
+School_Profiles_u_select <- School_Profiles_u %>%
+  select(school_name, capacity)
+
+DSB_1011_OTGC <- DSB_1011_OTGC %>%
+  left_join(School_Profiles_u_select, by = c("Name" = "school_name" )) #The predicted OTGC is similar enough to the capacities from the School Information Profiles, great!
+```
+
+```{r fill in OTGC for DSB 1516}
+DSB_1516_OTGC <- ALL_SCHOOLS_OTGC %>% filter((Year == "2016" | Year == "2011 and 2016") & System == "Public")
+#add a field with index numbers for merging predicted OTGC 
+DSB_1516_OTGC$rowID <- 1:nrow(DSB_1516_OTGC)
+
+t <- as.data.frame(DSB_1516_OTGC) %>%
+  transmute(footprint = footprint2016,
+            Grades.JKto5_6,Grades.6to8,Grades.JKto8,Grades.9to12,urban.dist)
+t$urban.dist <- as.matrix(t$urban.dist)
+
+t2 <- predict(OTG_fit_DSB, newdata = t)
+t2 <- data.frame(OTGC2016 = exp(t2))
+t2$rowID <- 1:nrow(t2)
+
+DSB_1516_OTGC <- merge(DSB_1516_OTGC, t2, by= "rowID", all.x=TRUE)
+```
+
+Next, CDSB points:
+```{r fill in OTGC for CDSB 1011}
+CDSB_1011_OTGC <- ALL_SCHOOLS_OTGC %>% filter((Year == "2011" | Year == "2011 and 2016") & System == "Catholic")
+#add a field with index numbers for merging predicted OTGC 
+CDSB_1011_OTGC$rowID <- 1:nrow(CDSB_1011_OTGC)
+
+t <- as.data.frame(CDSB_1011_OTGC) %>%
+  transmute(footprint = footprint2011,Type.Elementary,Type.Secondary, urban.dist)
+t$urban.dist <- as.matrix(t$urban.dist)
+
+t2 <- predict(OTG_fit_CDSB, newdata = t)
+t2 <- data.frame(OTGC2011 = exp(t2))
+t2$rowID <- 1:nrow(t2)
+
+CDSB_1011_OTGC <- merge(CDSB_1011_OTGC, t2, by= "rowID", all.x=TRUE)
+```
+
+```{r fill in OTGC for CDSB 1516}
+CDSB_1516_OTGC <- ALL_SCHOOLS_OTGC %>% filter((Year == "2016" | Year == "2011 and 2016") & System == "Catholic")
+#add a field with index numbers for merging predicted OTGC 
+CDSB_1516_OTGC$rowID <- 1:nrow(CDSB_1516_OTGC)
+
+t <- as.data.frame(CDSB_1516_OTGC) %>%
+  transmute(footprint = footprint2016, Type.Elementary,Type.Secondary, urban.dist)
+t$urban.dist <- as.matrix(t$urban.dist)
+
+t2 <- predict(OTG_fit_CDSB, newdata = t)
+t2 <- data.frame(OTGC2016 = exp(t2))
+t2$rowID <- 1:nrow(t2)
+
+CDSB_1516_OTGC <- merge(CDSB_1516_OTGC, t2, by= "rowID", all.x=TRUE)
+```
+
+Merge all OTGC options back together into 1 school object and clean up:
+```{r}
+t1 <- DSB_1011_OTGC %>% select(SchoolID, OTGC2011, capacity) %>% st_drop_geometry()
+t2 <- DSB_1516_OTGC %>% select(SchoolID, OTGC2016) %>% st_drop_geometry()
+t3 <- CDSB_1011_OTGC %>% select(SchoolID, OTGC2011) %>% st_drop_geometry()
+t4 <- CDSB_1516_OTGC %>% select(SchoolID, OTGC2016) %>% st_drop_geometry()
+
+ALL_SCHOOLS <- ALL_SCHOOLS %>% left_join(t1, by="SchoolID")
+ALL_SCHOOLS <- ALL_SCHOOLS %>% left_join(t2, by="SchoolID")
+ALL_SCHOOLS <- ALL_SCHOOLS %>% left_join(t3, by="SchoolID")
+ALL_SCHOOLS <- ALL_SCHOOLS %>% left_join(t4, by="SchoolID")
+ALL_SCHOOLS <- ALL_SCHOOLS %>% mutate(OTGC2011 = coalesce(OTGC2011.x, OTGC2011.y),
+                  OTGC2016 = coalesce(OTGC2016.x, OTGC2016.y)) %>% 
+  select(-OTGC2011.x, -OTGC2011.y, -OTGC2016.x, -OTGC2016.y)
+```
+
+Replace the predicted OTGC with the training (real) capacity when possible:
+```{r}
+rlOTGC <- ALL_SCHOOLS %>% 
+  transmute(SchoolID,
+            Status,
+            capacity,
+            OTGC2011,
+            OTGC2016,
+            rlOTGC2011 = ifelse((Status == "Expanded") & ((OTGC2016 > capacity) & !is.na(capacity)), capacity,
+                                ifelse(Status == "Removed" | Status == "NoChange"| Status == "Moved", coalesce(capacity,OTGC2011),
+                                       ifelse(is.na(OTGC2011),NA,OTGC2011))),
+            rlOTGC2016 = ifelse((Status == "Expanded") & ((capacity > OTGC2011) & !is.na(capacity)), capacity,
+                                ifelse(is.na(OTGC2016),NA,
+                                ifelse(Status == "Removed" | Status == "NoChange"| Status == "Moved", coalesce(capacity,OTGC2016),
+                                              OTGC2016))))%>% 
+  st_drop_geometry()
+
+rlOTGC #the rlOTGC2011 and rlOTGC2016 correctly encorporates the capacity-> take a look
+```
+
+```{r}
+ALL_SCHOOLS <- left_join(ALL_SCHOOLS %>% select(-OTGC2011, -OTGC2016, -capacity), rlOTGC %>% select(SchoolID, OTGC2011 = rlOTGC2011, OTGC2016 = rlOTGC2016), by="SchoolID")
+```
+
+#clean up catchments to use for mapping in analysis if needed:
+```{r}
+Catch_ELEM_1011 <- Catch_ELEM_1011 %>% mutate(Year = "2011",
+                           Level = "Elementary",
+                           System = "Public")
+Catch_HIGH_1011 <- Catch_HIGH_1011 %>% mutate(Year = "2011",
+                           Level = "Secondary",
+                           System = "Public")
+Catch_ELEM_C_1011 <- Catch_ELEM_C_1011 %>% mutate(Year = "2011",
+                           Level = "Elementary",
+                           System = "Catholic")
+Catch_HIGH_C_1011 <- Catch_HIGH_C_1011 %>% mutate(Year = "2011",
+                           Level = "Secondary",
+                           System = "Catholic")
+Catch_ELEM_1516 <- Catch_ELEM_1516 %>% mutate(Year = "2016",
+                           Level = "Elementary",
+                           System = "Public")
+Catch_HIGH_1516 <- Catch_HIGH_1516 %>% mutate(Year = "2016",
+                           Level = "Secondary",
+                           System = "Public")
+Catch_ELEM_C_1516 <- Catch_ELEM_C_1516 %>% mutate(Year = "2016",
+                           Level = "Elementary",
+                           System = "Catholic")
+Catch_HIGH_C_1516 <- Catch_HIGH_C_1516 %>% mutate(Year = "2016",
+                           Level = "Secondary",
+                           System = "Catholic")
+ALL_CATCHS <- rbind(Catch_ELEM_1011,Catch_HIGH_1011,Catch_ELEM_C_1011,Catch_HIGH_C_1011,
+                    Catch_ELEM_1516,Catch_HIGH_1516,Catch_ELEM_C_1516, Catch_HIGH_C_1516) 
+```
+
+
+## Saving
+```{r saving...}
+Schools_Catchments_201516_201011 <- ALL_CATCHS
+Schools_201516_201011 <- ALL_SCHOOLS
+
+Ham_CityBound <- hamilton_cma
+HamCMA_DABound_2011 <- hamilton_da_2011
+HamCMA_DABound_2016 <- hamilton_da_2016
+
+usethis::use_data(Schools_Catchments_201516_201011, overwrite = T)
+usethis::use_data(Schools_201516_201011, overwrite = T)
+usethis::use_data(Ham_CityBound, overwrite = T)
+usethis::use_data(HamCMA_DABound_2011, overwrite = T)
+usethis::use_data(HamCMA_DABound_2016, overwrite = T)
+```
+
