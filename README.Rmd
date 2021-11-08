@@ -49,7 +49,7 @@ Ham_CityBound <- HamONdest::Ham_CityBound
 The data package contains the following destinations in Hamilton, Ontario.
 
 Elementary and Secondary Public and Public Catholic Schools in 2011, size based on on-the-ground-capacity (OTGC)
-```{r, eval=TRUE}
+```{r schools 2011, eval=TRUE}
 ggplot() +
   geom_sf(data = Ham_CityBound,
           size = 0.5,
@@ -64,7 +64,7 @@ ggplot() +
 ```
 
 Elementary and Secondary Public and Public Catholic Schools in 2016, size based on on-the-ground-capacity (OTGC)
-``` {r, eval=TRUE}
+``` {r schools 2016, eval=TRUE}
 ggplot() +
   geom_sf(data = Ham_CityBound,
           size = 0.5,
@@ -79,7 +79,7 @@ ggplot() +
 ```
 
 The change in Elementary and Secondary Public and Public Catholic Schools between 2011 and 2016.
-```{r, eval=TRUE}
+```{r schools changed 2011 and 2016, eval=TRUE, warning=FALSE}
 ggplot() +
   geom_sf(data = Ham_CityBound,
           size = 0.5,
@@ -92,7 +92,7 @@ ggplot() +
 ```
 
 Coordinate system and projection
-```{r, eval=TRUE}
+```{r coordinates, eval=TRUE}
 sf::st_crs(Schools_201516_201011)
 ```
 

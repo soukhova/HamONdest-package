@@ -68,7 +68,7 @@ ggplot() +
   scale_color_distiller(palette = "Spectral")
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+<img src="man/figures/README-schools 2011-1.png" width="100%" />
 
 Elementary and Secondary Public and Public Catholic Schools in 2016,
 size based on on-the-ground-capacity (OTGC)
@@ -87,7 +87,7 @@ ggplot() +
   scale_color_distiller(palette = "Spectral")
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-schools 2016-1.png" width="100%" />
 
 The change in Elementary and Secondary Public and Public Catholic
 Schools between 2011 and 2016.
@@ -102,10 +102,9 @@ ggplot() +
   geom_sf(data = Schools_201516_201011 %>% filter(Status != "NoChange"),
           aes(col = Status, size = Level),
           shape = 1) 
-#> Warning: Using size for a discrete variable is not advised.
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-schools changed 2011 and 2016-1.png" width="100%" />
 
 Coordinate system and projection
 
