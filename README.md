@@ -25,61 +25,131 @@ if(!require(remotes)){
     install.packages("remotes")
     library(remotes)
 }
-remotes::install_github("soukhova/HamONdest")
+remotes::install_github("soukhova/HamONdest-package")
 ```
 
-## Example
+## Examples
+
+``` r
+library(HamONdest)
+library(ggplot2)
+library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
+
+Schools_201516_201011 <- HamONdest::Schools_201516_201011
+Schools_Catchments_201516_201011 <- HamONdest::Schools_Catchments_201516_201011
+Ham_CityBound <- HamONdest::Ham_CityBound
+```
 
 The data package contains the following destinations in Hamilton,
 Ontario.
 
-``` r
-library(HamONdest)
-library(dplyr)
+Elementary and Secondary Public and Public Catholic Schools in 2011,
+size based on on-the-ground-capacity (OTGC)
 
-#Elementary and Secondary Public and Public Catholic Schools in 2011, size based on on-the-ground-capacity (OTGC)
-ggplot2::ggplot() +
-  ggplot2::geom_sf(data = HamONdest::Ham_CityBound,
+``` r
+ggplot() +
+  geom_sf(data = Ham_CityBound,
           size = 0.5,
           alpha = 0.5,
           color  = "black",
-          fill = "white")+
-  ggplot2::geom_sf(data = filter(HamONdest::Schools_201516_201011, Year != "2016"),
-          ggplot2::aes(col = OTGC2011),
+          fill = "white") +
+  geom_sf(data = Schools_201516_201011 %>% filter(Year != "2016"),
+          aes(col = OTGC2011),
           shape = 1,
           size = 3) +
-  ggplot2::scale_color_distiller(palette = "Spectral")
+  scale_color_distiller(palette = "Spectral")
 ```
 
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+
+Elementary and Secondary Public and Public Catholic Schools in 2016,
+size based on on-the-ground-capacity (OTGC)
+
 ``` r
-#Elementary and Secondary Public and Public Catholic Schools in 2016, size based on on-the-ground-capacity (OTGC)
-ggplot2::ggplot() +
-  ggplot2::geom_sf(data = HamONdest::Ham_CityBound,
+ggplot() +
+  geom_sf(data = Ham_CityBound,
           size = 0.5,
           alpha = 0.5,
           color  = "black",
           fill = "white")+
-  ggplot2::geom_sf(data = filter(HamONdest::Schools_201516_201011, Year != "2011"),
-          ggplot2::aes(col = OTGC2016),
+  geom_sf(data = Schools_201516_201011 %>% filter(Year != "2011"),
+          aes(col = OTGC2016),
           shape = 1,
           size = 3) +
-  ggplot2::scale_color_distiller(palette = "Spectral")
+  scale_color_distiller(palette = "Spectral")
 ```
 
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+
+The change in Elementary and Secondary Public and Public Catholic
+Schools between 2011 and 2016.
+
 ``` r
-#The change in Elementary and Secondary Public and Public Catholic Schools between 2011 and 2016.)
-ggplot2::ggplot() +
-  ggplot2::geom_sf(data = HamONdest::Ham_CityBound,
+ggplot() +
+  geom_sf(data = Ham_CityBound,
           size = 0.5,
           alpha = 0.5,
           color  = "black",
           fill = "white")+
-  ggplot2::geom_sf(data = filter(HamONdest::Schools_201516_201011, Status != "NoChange"),
-          ggplot2::aes(col = Status, size = Level),
+  geom_sf(data = Schools_201516_201011 %>% filter(Status != "NoChange"),
+          aes(col = Status, size = Level),
           shape = 1) 
+#> Warning: Using size for a discrete variable is not advised.
 ```
 
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+
+Coordinate system and projection
+
 ``` r
-#Coordinate system and projection
-sf::st_crs(HamONdest::Schools_201516_201011)
+sf::st_crs(Schools_201516_201011)
+#> Coordinate Reference System:
+#>   User input: NAD83 / UTM zone 17N 
+#>   wkt:
+#> PROJCRS["NAD83 / UTM zone 17N",
+#>     BASEGEOGCRS["NAD83",
+#>         DATUM["North American Datum 1983",
+#>             ELLIPSOID["GRS 1980",6378137,298.257222101,
+#>                 LENGTHUNIT["metre",1]]],
+#>         PRIMEM["Greenwich",0,
+#>             ANGLEUNIT["degree",0.0174532925199433]],
+#>         ID["EPSG",4269]],
+#>     CONVERSION["UTM zone 17N",
+#>         METHOD["Transverse Mercator",
+#>             ID["EPSG",9807]],
+#>         PARAMETER["Latitude of natural origin",0,
+#>             ANGLEUNIT["Degree",0.0174532925199433],
+#>             ID["EPSG",8801]],
+#>         PARAMETER["Longitude of natural origin",-81,
+#>             ANGLEUNIT["Degree",0.0174532925199433],
+#>             ID["EPSG",8802]],
+#>         PARAMETER["Scale factor at natural origin",0.9996,
+#>             SCALEUNIT["unity",1],
+#>             ID["EPSG",8805]],
+#>         PARAMETER["False easting",500000,
+#>             LENGTHUNIT["metre",1],
+#>             ID["EPSG",8806]],
+#>         PARAMETER["False northing",0,
+#>             LENGTHUNIT["metre",1],
+#>             ID["EPSG",8807]]],
+#>     CS[Cartesian,2],
+#>         AXIS["(E)",east,
+#>             ORDER[1],
+#>             LENGTHUNIT["metre",1]],
+#>         AXIS["(N)",north,
+#>             ORDER[2],
+#>             LENGTHUNIT["metre",1]],
+#>     ID["EPSG",26917]]
 ```
+
+## More Information
+
+This data package is still a work in progress.

@@ -25,64 +25,77 @@ The goal of HamONdest is to compile all potential destinations (Schools, municip
 
 You can install the released version of HamONdest using:
 
-``` r
+``` {r, eval = FALSE}
 if(!require(remotes)){
     install.packages("remotes")
     library(remotes)
 }
-remotes::install_github("soukhova/HamONdest")
+remotes::install_github("soukhova/HamONdest-package")
 ```
 
-## Example
+## Examples
 
-The data package contains the following destinations in Hamilton, Ontario. 
-
-``` r
+```{r libraries, eval=TRUE}
 library(HamONdest)
+library(ggplot2)
 library(dplyr)
 
-#Elementary and Secondary Public and Public Catholic Schools in 2011, size based on on-the-ground-capacity (OTGC)
-ggplot2::ggplot() +
-  ggplot2::geom_sf(data = HamONdest::Ham_CityBound,
-          size = 0.5,
-          alpha = 0.5,
-          color  = "black",
-          fill = "white")+
-  ggplot2::geom_sf(data = filter(HamONdest::Schools_201516_201011, Year != "2016"),
-          ggplot2::aes(col = OTGC2011),
-          shape = 1,
-          size = 3) +
-  ggplot2::scale_color_distiller(palette = "Spectral")
-```
-``` r
-#Elementary and Secondary Public and Public Catholic Schools in 2016, size based on on-the-ground-capacity (OTGC)
-ggplot2::ggplot() +
-  ggplot2::geom_sf(data = HamONdest::Ham_CityBound,
-          size = 0.5,
-          alpha = 0.5,
-          color  = "black",
-          fill = "white")+
-  ggplot2::geom_sf(data = filter(HamONdest::Schools_201516_201011, Year != "2011"),
-          ggplot2::aes(col = OTGC2016),
-          shape = 1,
-          size = 3) +
-  ggplot2::scale_color_distiller(palette = "Spectral")
+Schools_201516_201011 <- HamONdest::Schools_201516_201011
+Schools_Catchments_201516_201011 <- HamONdest::Schools_Catchments_201516_201011
+Ham_CityBound <- HamONdest::Ham_CityBound
 ```
 
-```r
-#The change in Elementary and Secondary Public and Public Catholic Schools between 2011 and 2016.)
-ggplot2::ggplot() +
-  ggplot2::geom_sf(data = HamONdest::Ham_CityBound,
+
+The data package contains the following destinations in Hamilton, Ontario.
+
+Elementary and Secondary Public and Public Catholic Schools in 2011, size based on on-the-ground-capacity (OTGC)
+```{r, eval=TRUE}
+ggplot() +
+  geom_sf(data = Ham_CityBound,
+          size = 0.5,
+          alpha = 0.5,
+          color  = "black",
+          fill = "white") +
+  geom_sf(data = Schools_201516_201011 %>% filter(Year != "2016"),
+          aes(col = OTGC2011),
+          shape = 1,
+          size = 3) +
+  scale_color_distiller(palette = "Spectral")
+```
+
+Elementary and Secondary Public and Public Catholic Schools in 2016, size based on on-the-ground-capacity (OTGC)
+``` {r, eval=TRUE}
+ggplot() +
+  geom_sf(data = Ham_CityBound,
           size = 0.5,
           alpha = 0.5,
           color  = "black",
           fill = "white")+
-  ggplot2::geom_sf(data = filter(HamONdest::Schools_201516_201011, Status != "NoChange"),
-          ggplot2::aes(col = Status, size = Level),
+  geom_sf(data = Schools_201516_201011 %>% filter(Year != "2011"),
+          aes(col = OTGC2016),
+          shape = 1,
+          size = 3) +
+  scale_color_distiller(palette = "Spectral")
+```
+
+The change in Elementary and Secondary Public and Public Catholic Schools between 2011 and 2016.
+```{r, eval=TRUE}
+ggplot() +
+  geom_sf(data = Ham_CityBound,
+          size = 0.5,
+          alpha = 0.5,
+          color  = "black",
+          fill = "white")+
+  geom_sf(data = Schools_201516_201011 %>% filter(Status != "NoChange"),
+          aes(col = Status, size = Level),
           shape = 1) 
 ```
 
-```r
-#Coordinate system and projection
-sf::st_crs(HamONdest::Schools_201516_201011)
+Coordinate system and projection
+```{r, eval=TRUE}
+sf::st_crs(Schools_201516_201011)
 ```
+
+## More Information 
+
+This data package is still a work in progress.
