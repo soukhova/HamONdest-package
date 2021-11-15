@@ -48,6 +48,7 @@ library(sf)
 The data package contains the following destinations in Hamilton, Ontario.
 
 ### Schools
+
 Elementary and Secondary Public and Public Catholic Schools in **2011**, size based on on-the-ground-capacity (OTGC)
 ```{r schools-2011, eval=TRUE}
 ggplot() +
@@ -79,6 +80,7 @@ ggplot() +
 ```
 
 ### Municipally-Owned Properties (Parks, Open Space, Vacant Land, + Properties with civil services like fire stations, police station, community centres, etc.)
+
 Up-to-date City-Owned Property with person destination potential. Sourced from Open Data Hamilton.
 ```{r city-owned-properties, eval=TRUE, warning=FALSE}
 ggplot() +

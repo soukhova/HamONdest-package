@@ -19,7 +19,6 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr
 Imports: 
-    HamONdest,
     ggplot2,
     dplyr,
     sf
