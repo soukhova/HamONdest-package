@@ -38,7 +38,7 @@ remotes::install_github("soukhova/HamONdest-package",
 
 ## Examples
 
-```{r libraries, eval=TRUE, echo=FALSE}
+```{r libraries, eval=TRUE, echo=FALSE, results = FALSE}
 library(HamONdest)
 library(ggplot2)
 library(dplyr)
