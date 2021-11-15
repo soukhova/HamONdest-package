@@ -35,6 +35,13 @@ remotes::install_github("soukhova/HamONdest-package",
 
 ## Examples
 
+``` r
+library(HamONdest)
+library(ggplot2)
+library(dplyr)
+library(sf)
+```
+
 The data package contains the following destinations in Hamilton,
 Ontario.
 
