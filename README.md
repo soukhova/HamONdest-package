@@ -7,14 +7,18 @@
 <!-- badges: end -->
 
 The goal of HamONdest is to compile all potential destinations (Schools,
-municipally-owned land, parks, libraries, etc.) and their estimated
-‘supplies’ in Hamilton, Ontario, Canada all in one data-package to
-facilitate the calculation of accessibility and mobility measures in the
-transportation planning context. The majority of data is sourced from
-[Hamilton’s Open Data Portal](https://open.hamilton.ca/) and is
-augmented with additional open data from higher levels of government
-(provincial and federal), predicted values, and/or data from
+municipally-owned land, health care and residential care facilities,
+etc.) and their estimated ‘supplies’ in Hamilton, Ontario, Canada all in
+one data-package to facilitate the calculation of accessibility and
+mobility measures in the transportation planning context. The majority
+of data is sourced from [Hamilton’s Open Data
+Portal](https://open.hamilton.ca/) and is augmented with additional open
+data from higher levels of government (provincial and federal),
+predicted values, and/or data from
 [OpenStreetMap](https://www.openstreetmap.org).
+
+The HamONdest package is still a work in progress and is available
+[here](https://github.com/soukhova/HamONDest-package)
 
 ## Installation
 
@@ -31,21 +35,12 @@ remotes::install_github("soukhova/HamONdest-package",
 
 ## Examples
 
-    #> 
-    #> Attaching package: 'dplyr'
-    #> The following objects are masked from 'package:stats':
-    #> 
-    #>     filter, lag
-    #> The following objects are masked from 'package:base':
-    #> 
-    #>     intersect, setdiff, setequal, union
-
 The data package contains the following destinations in Hamilton,
 Ontario.
 
 ### Schools
 
-Elementary and Secondary Public and Public Catholic Schools in 2011,
+Elementary and Secondary Public and Public Catholic Schools in **2011**,
 size based on on-the-ground-capacity (OTGC)
 
 ``` r
@@ -64,7 +59,7 @@ ggplot() +
 
 <img src="man/figures/README-schools-2011-1.png" width="100%" />
 
-Elementary and Secondary Public and Public Catholic Schools in 2016,
+Elementary and Secondary Public and Public Catholic Schools in **2016**,
 size based on on-the-ground-capacity (OTGC)
 
 ``` r
@@ -81,11 +76,12 @@ ggplot() +
   scale_color_distiller(palette = "Spectral")
 ```
 
-<img src="man/figures/README-schools-2016-1.png" width="100%" /> \#\#\#
-Municipally-Owned Properties (Parks, Open Space, Vacant Land, +
-Properties with civil services like fire stations, police station,
-community centres, etc.) Up-to-date City-Owned Property with person
-destination potential. Sourced from Open Data Hamilton.
+<img src="man/figures/README-schools-2016-1.png" width="100%" />
+
+### Municipally-Owned Properties (Parks, Open Space, Vacant Land, + Properties with civil services like fire stations, police station, community centres, etc.)
+
+Up-to-date City-Owned Property with person destination potential.
+Sourced from Open Data Hamilton.
 
 ``` r
 ggplot() +
@@ -95,13 +91,46 @@ ggplot() +
           color  = "black",
           fill = "white")+
   geom_sf(data = City_Owned_Property,
-          aes(col = CATEGORY),
+          aes(col = CATEGORY_TYPE),
           shape = 1) 
 ```
 
 <img src="man/figures/README-city-owned-properties-1.png" width="100%" />
 
-### Healthcare services (Clincs, Hospitals)
+### Health and community care service providers (Clincs, Hospitals, Residential Care Facilties, Community )
+
+All Health and community care service providers as sourced from City of
+Hamilton Open Data and Ontario GeoHub:
+
+``` r
+ggplot() +
+  geom_sf(data = Ham_CityBound,
+          size = 0.5,
+          alpha = 0.5,
+          color  = "black",
+          fill = "white")+
+  geom_sf(data = Care_Facilities,
+          aes(col = Type),
+          shape = 1) 
+```
+
+<img src="man/figures/README-all-care-facilities-1.png" width="100%" />
+Let’s see locations for a specific, service provider type, like
+Hospital:
+
+``` r
+ggplot() +
+  geom_sf(data = Ham_CityBound,
+          size = 0.5,
+          alpha = 0.5,
+          color  = "black",
+          fill = "white")+
+  geom_sf(data = Care_Facilities %>% filter(Type == "Hospital"),
+          color = 2,
+          shape = 1)
+```
+
+<img src="man/figures/README-hospitals-1.png" width="100%" />
 
 ## More Information
 
@@ -134,38 +163,3 @@ sf::st_crs(Schools_201516_201011)
 
 This data package is still a work in progress. See additional
 visualizations and uses in the Vignettes.
-
-------------------------------------------------------------------------
-
-The change in Elementary and Secondary Public and Public Catholic
-Schools between 2011 and 2016.
-
-``` r
-ggplot() +
-  geom_sf(data = Ham_CityBound,
-          size = 0.5,
-          alpha = 0.5,
-          color  = "black",
-          fill = "white")+
-  geom_sf(data = Schools_201516_201011 %>% filter(Status != "NoChange"),
-          aes(col = Status, size = Level),
-          shape = 1) 
-```
-
-<img src="man/figures/README-schools-changed-2011-2016-1.png" width="100%" />
-
-City-Owned Property with person destination potential
-
-``` r
-ggplot() +
-  geom_sf(data = Ham_CityBound,
-          size = 0.5,
-          alpha = 0.5,
-          color  = "black",
-          fill = "white")+
-  geom_sf(data = City_Owned_Property %>% filter(CATEGORY_TYPE != "Remove" & CATEGORY_TYPE != "Parking Lots"),
-          aes(col = CATEGORY_TYPE, size = PROP_AREA),
-          shape = 1) 
-```
-
-<img src="man/figures/README-city-owned-properties-detail-1.png" width="100%" />
