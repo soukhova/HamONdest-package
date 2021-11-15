@@ -64,8 +64,7 @@
 <a href="#hamondest" class="anchor"></a>HamONdest</h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>The goal of HamONdest is to compile all potential destinations (Schools, municipally-owned land, health care and residential care facilities, etc.) and their estimated ‘supplies’ in Hamilton, Ontario, Canada all in one data-package to facilitate the calculation of accessibility and mobility measures in the transportation planning context. The majority of data is sourced from <a href="https://open.hamilton.ca/">Hamilton’s Open Data Portal</a> and is augmented with additional open data from higher levels of government (provincial and federal), predicted values, and/or data from <a href="https://www.openstreetmap.org">OpenStreetMap</a>.</p>
-<p>The HamONdest package is still a work in progress and is available <a href="https://github.com/soukhova/HamONDest-package">here</a></p>
+<p>The goal of HamONdest is to compile all potential destinations (Schools, municipally-owned land, parks, libraries, etc.) and their estimated ‘supplies’ in Hamilton, Ontario, Canada all in one data-package to facilitate the calculation of accessibility and mobility measures in the transportation planning context. The majority of data is sourced from <a href="https://open.hamilton.ca/">Hamilton’s Open Data Portal</a> and is augmented with additional open data from higher levels of government (provincial and federal), predicted values, and/or data from <a href="https://www.openstreetmap.org">OpenStreetMap</a>.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -81,12 +80,20 @@
 <div id="examples" class="section level2">
 <h2 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt; </span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt;     filter, lag</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#&gt; </span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span></code></pre></div>
 <p>The data package contains the following destinations in Hamilton, Ontario.</p>
 <div id="schools" class="section level3">
 <h3 class="hasAnchor">
 <a href="#schools" class="anchor"></a>Schools</h3>
-<p>Elementary and Secondary Public and Public Catholic Schools in <strong>2011</strong>, size based on on-the-ground-capacity (OTGC)</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<p>Elementary and Secondary Public and Public Catholic Schools in 2011, size based on on-the-ground-capacity (OTGC)</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">Ham_CityBound</span>,
           size <span class="op">=</span> <span class="fl">0.5</span>,
@@ -99,8 +106,8 @@
           size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_color_distiller</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Spectral"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-schools-2011-1.png" width="100%"></p>
-<p>Elementary and Secondary Public and Public Catholic Schools in <strong>2016</strong>, size based on on-the-ground-capacity (OTGC)</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p>Elementary and Secondary Public and Public Catholic Schools in 2016, size based on on-the-ground-capacity (OTGC)</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">Ham_CityBound</span>,
           size <span class="op">=</span> <span class="fl">0.5</span>,
@@ -112,28 +119,7 @@
           shape <span class="op">=</span> <span class="fl">1</span>,
           size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_color_distiller</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Spectral"</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-schools-2016-1.png" width="100%"></p>
-</div>
-<div id="municipally-owned-properties-parks-open-space-vacant-land--properties-with-civil-services-like-fire-stations-police-station-community-centres-etc" class="section level3">
-<h3 class="hasAnchor">
-<a href="#municipally-owned-properties-parks-open-space-vacant-land--properties-with-civil-services-like-fire-stations-police-station-community-centres-etc" class="anchor"></a>Municipally-Owned Properties (Parks, Open Space, Vacant Land, + Properties with civil services like fire stations, police station, community centres, etc.)</h3>
-<p>Up-to-date City-Owned Property with person destination potential. Sourced from Open Data Hamilton.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">Ham_CityBound</span>,
-          size <span class="op">=</span> <span class="fl">0.5</span>,
-          alpha <span class="op">=</span> <span class="fl">0.5</span>,
-          color  <span class="op">=</span> <span class="st">"black"</span>,
-          fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">+</span>
-  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">City_Owned_Property</span>,
-          <span class="fu">aes</span><span class="op">(</span>col <span class="op">=</span> <span class="va">CATEGORY_TYPE</span><span class="op">)</span>,
-          shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> </code></pre></div>
-<p><img src="reference/figures/README-city-owned-properties-1.png" width="100%"></p>
-</div>
-<div id="health-and-community-care-service-providers-clincs-hospitals-residential-care-facilties-community-" class="section level3">
-<h3 class="hasAnchor">
-<a href="#health-and-community-care-service-providers-clincs-hospitals-residential-care-facilties-community-" class="anchor"></a>Health and community care service providers (Clincs, Hospitals, Residential Care Facilties, Community )</h3>
-<p>All Health and community care service providers as sourced from City of Hamilton Open Data and Ontario GeoHub:</p>
+<p><img src="reference/figures/README-schools-2016-1.png" width="100%"> ### Municipally-Owned Properties (Parks, Open Space, Vacant Land, + Properties with civil services like fire stations, police station, community centres, etc.) Up-to-date City-Owned Property with person destination potential. Sourced from Open Data Hamilton.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">Ham_CityBound</span>,
@@ -141,28 +127,21 @@
           alpha <span class="op">=</span> <span class="fl">0.5</span>,
           color  <span class="op">=</span> <span class="st">"black"</span>,
           fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">+</span>
-  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">Care_Facilities</span>,
-          <span class="fu">aes</span><span class="op">(</span>col <span class="op">=</span> <span class="va">Type</span><span class="op">)</span>,
+  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">City_Owned_Property</span>,
+          <span class="fu">aes</span><span class="op">(</span>col <span class="op">=</span> <span class="va">CATEGORY</span><span class="op">)</span>,
           shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> </code></pre></div>
-<p><img src="reference/figures/README-all-care-facilities-1.png" width="100%"> Let’s see locations for a specific, service provider type, like Hospital:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">Ham_CityBound</span>,
-          size <span class="op">=</span> <span class="fl">0.5</span>,
-          alpha <span class="op">=</span> <span class="fl">0.5</span>,
-          color  <span class="op">=</span> <span class="st">"black"</span>,
-          fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">+</span>
-  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">Care_Facilities</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Type</span> <span class="op">==</span> <span class="st">"Hospital"</span><span class="op">)</span>,
-          color <span class="op">=</span> <span class="fl">2</span>,
-          shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-hospitals-1.png" width="100%"></p>
+<p><img src="reference/figures/README-city-owned-properties-1.png" width="100%"></p>
+</div>
+<div id="healthcare-services-clincs-hospitals" class="section level3">
+<h3 class="hasAnchor">
+<a href="#healthcare-services-clincs-hospitals" class="anchor"></a>Healthcare services (Clincs, Hospitals)</h3>
 </div>
 </div>
 <div id="more-information" class="section level2">
 <h2 class="hasAnchor">
 <a href="#more-information" class="anchor"></a>More Information</h2>
 <p>Coordinate system of all data:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">Schools_201516_201011</span><span class="op">)</span>
 <span class="co">#&gt; Coordinate Reference System:</span>
 <span class="co">#&gt;   User input: EPSG:4326 </span>
@@ -186,6 +165,31 @@
 <span class="co">#&gt;         BBOX[-90,-180,90,180]],</span>
 <span class="co">#&gt;     ID["EPSG",4326]]</span></code></pre></div>
 <p>This data package is still a work in progress. See additional visualizations and uses in the Vignettes.</p>
+<hr>
+<p>The change in Elementary and Secondary Public and Public Catholic Schools between 2011 and 2016.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">Ham_CityBound</span>,
+          size <span class="op">=</span> <span class="fl">0.5</span>,
+          alpha <span class="op">=</span> <span class="fl">0.5</span>,
+          color  <span class="op">=</span> <span class="st">"black"</span>,
+          fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">Schools_201516_201011</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Status</span> <span class="op">!=</span> <span class="st">"NoChange"</span><span class="op">)</span>,
+          <span class="fu">aes</span><span class="op">(</span>col <span class="op">=</span> <span class="va">Status</span>, size <span class="op">=</span> <span class="va">Level</span><span class="op">)</span>,
+          shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> </code></pre></div>
+<p><img src="reference/figures/README-schools-changed-2011-2016-1.png" width="100%"></p>
+<p>City-Owned Property with person destination potential</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">Ham_CityBound</span>,
+          size <span class="op">=</span> <span class="fl">0.5</span>,
+          alpha <span class="op">=</span> <span class="fl">0.5</span>,
+          color  <span class="op">=</span> <span class="st">"black"</span>,
+          fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">City_Owned_Property</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">CATEGORY_TYPE</span> <span class="op">!=</span> <span class="st">"Remove"</span> <span class="op">&amp;</span> <span class="va">CATEGORY_TYPE</span> <span class="op">!=</span> <span class="st">"Parking Lots"</span><span class="op">)</span>,
+          <span class="fu">aes</span><span class="op">(</span>col <span class="op">=</span> <span class="va">CATEGORY_TYPE</span>, size <span class="op">=</span> <span class="va">PROP_AREA</span><span class="op">)</span>,
+          shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> </code></pre></div>
+<p><img src="reference/figures/README-city-owned-properties-detail-1.png" width="100%"></p>
 </div>
 </div>
   </div>
