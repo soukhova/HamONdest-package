@@ -62,6 +62,8 @@ ggplot() +
           shape = 1,
           size = 3) +
   scale_color_distiller(palette = "Spectral")
+#> old-style crs object detected; please recreate object with a recent sf::st_crs()
+#> old-style crs object detected; please recreate object with a recent sf::st_crs()
 ```
 
 <img src="man/figures/README-schools-2011-1.png" width="100%" />
@@ -81,6 +83,8 @@ ggplot() +
           shape = 1,
           size = 3) +
   scale_color_distiller(palette = "Spectral")
+#> old-style crs object detected; please recreate object with a recent sf::st_crs()
+#> old-style crs object detected; please recreate object with a recent sf::st_crs()
 ```
 
 <img src="man/figures/README-schools-2016-1.png" width="100%" />
@@ -100,6 +104,8 @@ ggplot() +
   geom_sf(data = City_Owned_Property,
           aes(col = CATEGORY_TYPE),
           shape = 1) 
+#> old-style crs object detected; please recreate object with a recent sf::st_crs()
+#> old-style crs object detected; please recreate object with a recent sf::st_crs()
 ```
 
 <img src="man/figures/README-city-owned-properties-1.png" width="100%" />
@@ -119,6 +125,8 @@ ggplot() +
   geom_sf(data = Care_Facilities,
           aes(col = Type),
           shape = 1) 
+#> old-style crs object detected; please recreate object with a recent sf::st_crs()
+#> old-style crs object detected; please recreate object with a recent sf::st_crs()
 ```
 
 <img src="man/figures/README-all-care-facilities-1.png" width="100%" />
@@ -135,6 +143,8 @@ ggplot() +
   geom_sf(data = Care_Facilities %>% filter(Type == "Hospital"),
           color = 2,
           shape = 1)
+#> old-style crs object detected; please recreate object with a recent sf::st_crs()
+#> old-style crs object detected; please recreate object with a recent sf::st_crs()
 ```
 
 <img src="man/figures/README-hospitals-1.png" width="100%" />
