@@ -8,13 +8,13 @@
 A simple feature class (sfc) multipolygon object containing 1 row.
 }
 \source{
-"City boundary" from Hamilton Open Data (https://open.hamilton.ca/datasets/489f656072f44f34b07bf53efa0d8e4f_13/about) accessed November 8 2021.
+"City boundary" from \href{https://open.hamilton.ca/datasets/489f656072f44f34b07bf53efa0d8e4f_13/about}{Hamilton Open Data} accessed November 8 2021.
 }
 \usage{
 data(Ham_CityBound)
 }
 \description{
-This object define the spatial boundary of the City of Hamilton.
+This object defines the spatial boundary of the City of Hamilton.
 }
 \keyword{Hamilton}
 \keyword{boundary}

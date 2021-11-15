@@ -13,12 +13,18 @@ library(sf)
 library(tidyverse)
 library(rgdal)
 library(units)
-#install.packages("fuzzyjoin")
 library(fuzzyjoin)
 library(rgeos)
+library(geojsonio)
+library(jsonlite)
+library(tibble)
+library(tidygeocoder)
+library(tools)
 ```
 
-## Importing Data
+#A) Schools, Catchments, and Boundaries
+
+## Importing School, Catchment, and Boundary Data
 ELEM, MID, HIGH, are elementary, middle school, and highschool catchment boundaries respectively. POINTS suffix are school points. All are 'sf' class:
 ```{r import school points from shapefiles, source: HWDSB and HWDCSB, include=FALSE}
 #catholic school board
@@ -59,12 +65,14 @@ Retrieved from Scholars GeoPortal (January 17, 2021).
 
 File `hamilton_schools_bfr_2021.RData` includes a simple features object. The source data is OpenStreetMaps (retrieved January 17, 2021) and convert into .RData file. 
 
-Finally, we import the Hamilton city boundary (retrieved from Open Data Hamilton), and the Hamilton DA areas in 2011 and 2016 (retrieved from Statistics Canada)
-
+Finally, we import the Hamilton city boundary and ward boundaries (retrieved from Open Data Hamilton) and the Hamilton DA areas in 2011 and 2016 (retrieved from Statistics Canada)
 ```{r}
 load("data-inputs/Boundaries/hamilton_cma.RData")
 load("data-inputs/Boundaries/Hamilton-DA-2011.RData")
 load("data-inputs/Boundaries/hamilton-DA-2016.RData")
+
+hamilton_ward <- geojson_read("https://opendata.arcgis.com/datasets/8b0b1f2bf8bb4e1da3a1bf567b17b77f_7.geojson",  what = "sp")
+hamilton_ward <- st_as_sf(hamilton_ward) %>% st_transform(crs = 4326)
 ```
 
 
@@ -1061,19 +1069,237 @@ ALL_CATCHS <- rbind(Catch_ELEM_1011,Catch_HIGH_1011,Catch_ELEM_C_1011,Catch_HIGH
 ```
 
 
-## Saving
+## Saving Schools, Catchments, and Boundaries
 ```{r saving...}
-Schools_Catchments_201516_201011 <- ALL_CATCHS
-Schools_201516_201011 <- ALL_SCHOOLS
+Schools_Catchments_201516_201011 <- ALL_CATCHS %>% st_transform(crs = 4326)
+Schools_201516_201011 <- ALL_SCHOOLS %>% st_transform(crs = 4326)
 
-Ham_CityBound <- hamilton_cma
-HamCMA_DABound_2011 <- hamilton_da_2011
-HamCMA_DABound_2016 <- hamilton_da_2016
+Ham_CityBound <- hamilton_cma %>% st_transform(crs = 4326)
+HamCMA_DABound_2011 <- hamilton_da_2011 %>% st_transform(crs = 4326)
+HamCMA_DABound_2016 <- hamilton_da_2016 %>% st_transform(crs = 4326)
+Ham_WardBound <- hamilton_ward %>% select(-OBJECTID) %>% st_transform(crs = 4326)
 
 usethis::use_data(Schools_Catchments_201516_201011, overwrite = T)
 usethis::use_data(Schools_201516_201011, overwrite = T)
 usethis::use_data(Ham_CityBound, overwrite = T)
 usethis::use_data(HamCMA_DABound_2011, overwrite = T)
 usethis::use_data(HamCMA_DABound_2016, overwrite = T)
+usethis::use_data(Ham_WardBound, overwrite = T)
 ```
 
+# B) City-Owned Properties
+## load additional libraries
+
+## Importing City-owned properties from Open Data
+
+City-owned properties downloaded from Open Data Hamilton:
+```{r}
+City_Owned_Property <- geojson_read("https://opendata.arcgis.com/datasets/14fabf23a4d34c30836a70a22ccd8fb0_14.geojson",  what = "sp")
+City_Owned_Property <- st_as_sf(City_Owned_Property) %>% st_transform(crs = 4326)
+```
+
+Fiill in any NAs (based on a manual Google Maps Streetview inspection) and add additional category type field to the data:
+```{r}
+City_Owned_Property <- City_Owned_Property %>% mutate(CATEGORY = case_when(OBJECTID == "25258" ~ "Recreation",
+                                                               OBJECTID == "26388" ~ "Proposed Park", 
+                                                               (OBJECTID != "25258" | OBJECTID != "26388")~ CATEGORY))
+
+City_Owned_Property <- City_Owned_Property %>% 
+  mutate(CATEGORY_TYPE = 
+           ifelse(CATEGORY == "Accessway" | CATEGORY ==  "Utility" | CATEGORY == "Road" | CATEGORY == "Road/Proposed Use" | CATEGORY == "Proposed Road", "Remove",
+                  ifelse(CATEGORY == "Cemetery"|CATEGORY == "Land"| CATEGORY == "Proposed Park", 
+                         "Underdeveloped Outdoor",
+                         ifelse(CATEGORY == "Cemetery/Civic"| CATEGORY == "Civic/parks And Open Space" | CATEGORY == "Parks and Open Space" | CATEGORY == "Parks and Open Space/Civic" | CATEGORY == "Parks and Open Space/Road" | CATEGORY == "Parks and Open Space/Utility", 
+                                "Developed Outdoor",
+                                ifelse(CATEGORY == "Civic", 
+                                       "Civic Service",
+                                       ifelse(CATEGORY == "Cultural" | CATEGORY == "Recreation" | CATEGORY == "Recreation/Utility", 
+                                              "Recreation/Cultural",
+                                              ifelse(CATEGORY == "Open Space", 
+                                                     "Natural/Open Space",
+                                                     ifelse(CATEGORY == "Parking Lot" | CATEGORY == "Parking Lot/Parks and Open Space",
+                                                            "Parking Lots", "NOOO"
+                                                            ))))))))
+```
+
+_Note: the author determined the following 7 category types. Google Map Streetview was used to spot-check a few rows to ensure their determined category fit into the assigned category type_
+
+Remove - not a destination; road, utility, accessway (an egress or ingress)
+
+Underdeveloped Outdoor - cementeries with no infrastructure, flat land with mowed grass, proposed park space
+
+Developed Outdoor - parks, open space, cementery, with civic infrastructure
+
+Civic Service - fire station, townhall, police station, airport
+
+Recreation/Cultural - library, historical buildings open to the public, golf courses, community centers, recreation centres, environmental education centres, stadiums.
+
+Natural/Open Space - natural areas, hydro lines, areas around storm management ponds, post-agricultural land
+
+Parking Lots - any property with parking lots
+
+## Saving City-Owned Property points
+```{r saving...}
+City_Owned_Property <- City_Owned_Property %>% select(-OBJECTID, -LONGITUDE, -LATITUDE)
+usethis::use_data(City_Owned_Property, overwrite = T)
+```
+
+#C) Care locations
+## Importing Care Locations
+
+<!-- Location of family-medicine doctors (clinics and walk-ins) in the City of Hamilton were scrapped from the [College of Physicians and Surgeons of Ontario] (https://doctors.cpso.on.ca/) database in 2018. They are imported: -->
+<!-- ```{r} -->
+<!-- Fam_Docs_2018 <- read.csv("data-inputs/Family-Doctor-Locations/ON-Family-Doctors-Scrapped-2018.csv") %>% filter(HAM_CMA == "1") %>% select(-OBJECTID, -ID, -HAM_CMA) #family doctors outside of Hamilton CMA are filter out -->
+<!-- ``` -->
+
+<!-- Hospitals are pulled from Hamilton Open Data using GEOJSON API resource link: -->
+<!-- ```{r} -->
+<!-- #Hospitals: -->
+<!-- Hopsitals <- geojson_read("https://opendata.arcgis.com/datasets/a5867b5375544ceb8f06544a5ed349a5_15.geojson",  what = "sp") -->
+<!-- ``` -->
+
+Licensed residential care facilities (RCFs) can also be retrieved from Hamilton Open Data but they are missing spatial geometries! They only have an address.
+Import RCFs and clean:
+```{r}
+#Licensed Residential Care Facilities
+RCF <- fromJSON("https://opendata.arcgis.com/datasets/e37b13a002544e359350c31b2d48ee47_10.geojson") %>% as.data.frame()
+RCF <- do.call(rbind, RCF)
+RCF <- RCF[6:86,c(1:3,6)] #getting ride of unneeded rows and columns
+head(RCF)
+```
+Looking past the "features.properties" suffix for the indexing, there are no coordinates just locations! This is okay as we can geocode from the addresses.
+
+## Cleaning Care Locations
+
+<!-- First, family-medicine doctors: -->
+<!-- ```{r} -->
+<!-- #rename -->
+<!-- Fam_Docs_2018 <- Fam_Docs_2018 %>% rename(Supply = Sum_count) %>% mutate(Type = "Family Medicine", -->
+<!--                                                                          Supply = as.character(Supply)) -->
+
+<!-- #make header names lower case then title case -->
+<!-- names(Fam_Docs_2018) <- tolower(names(Fam_Docs_2018)) %>% toTitleCase() -->
+
+<!-- #convert to sf object -->
+<!-- Fam_Docs_2018 <- Fam_Docs_2018 %>% st_as_sf(coords = c("Longitude", "Latitude"),crs = 4326) -->
+<!-- ``` -->
+
+<!-- Next, hospitals: -->
+<!-- ```{r} -->
+<!-- t <- geojson_read("https://opendata.arcgis.com/datasets/a5867b5375544ceb8f06544a5ed349a5_15.geojson",  what = "sp") -->
+
+<!-- #make header names lower case then title case -->
+<!-- names(t) <- tolower(names(t)) %>% toTitleCase() -->
+
+<!-- #convert to sf object and remove unneeded columns -->
+<!-- Hospitals <- st_as_sf(t) %>% st_transform(crs = 4326)  -->
+
+<!-- Hospitals <- Hospitals %>% rename(Category = Type) %>% mutate(Type = "Hospital") %>% select(Name, Address, Category, Type) -->
+<!-- ``` -->
+
+Next, RCFs:
+
+First, I use tidygeocoder package to geocode the addresses as this object has no coordinates/is not spatial yet. I am using method "arcgis" as the City internally using arcgis products and this method yields no lat-long NAs while "osm" method yields some NAs.  
+```{r}
+BUSINESS_ADDRESS <- tibble(longaddress = RCF$BUSINESS_ADDRESS) #setting up geocode input .tbl 
+lat_long <- BUSINESS_ADDRESS %>% geocode(address = longaddress, method = "arcgis") #geocode
+
+#merge the two datasets and convert to sf
+RCF <- RCF %>% merge(lat_long, by.y="longaddress", by.x="BUSINESS_ADDRESS", all.x = T) 
+RCF <- RCF %>% st_as_sf(coords = c("long", "lat"),crs = 4326)
+```
+
+Now clean and rename RCF fields:
+```{r}
+#renaming and adding a new Type column
+RCF <- RCF %>% rename(Address = "BUSINESS_ADDRESS",
+                      Name = "BUSINESS_NAME") %>% mutate(Type = "Residential Care Facility")
+
+#reformatting and adding the Supply column
+RCF$Supply <- stringr::str_replace_all(RCF$LICENSE_TYPE, c("Residential Care Facility" = '',
+                                         '\\(' = "",
+                                         '\\)' = ""))
+
+#remove unneeded columns
+RCF <- RCF %>% select(Name, Address, Type, Supply)
+```
+
+*Note*: I wanted to add more to this 'care' locations but I'm having trouble accessing finding child-care and long-term care facilitates  on Hamilton Open Date... for another day I guess. 
+
+<!-- Let's combine all *three* care objects we gathered so far and tag them: -->
+<!-- ```{r} -->
+<!-- Care_Facilities <- bind_rows(as.data.frame(Hospitals), as.data.frame(Fam_Docs_2018), as.data.frame(RCF)) %>% st_sf() -->
+<!-- ``` -->
+
+So... Recently I discovered the "Ministry of Health service provider locations" database available through the [Ontario Open Data Portal](https://geohub.lio.gov.on.ca/datasets/lio::ministry-of-health-service-provider-locations/about). Let's see what this dataset contains, when filtered to the Hamilton CMA, and compare what we retrieved from the City of Hamilton Open Data portal/scrapping the CPSO database. 
+
+```{r}
+t <- geojson_read("https://opendata.arcgis.com/datasets/d67220ebba164afa9cf38c0f525f2c0a_0.geojson",  what = "sp")
+
+# #make header names lower case then title case
+# names(t) <- tolower(names(t)) %>% toTitleCase()
+
+#convert to sf object and remove unneeded columns
+Care_Facilities_ONT <- st_as_sf(t) %>% st_transform(crs = 4326) 
+
+test <- Care_Facilities_ONT %>% st_intersection(Ham_CityBound)
+
+```
+Summarize the service type field:
+```{r}
+Care_Facilities_ONT <- test %>% 
+  mutate(Type = 
+           ifelse(SERV_TYPE == "AIDS Bureau" | SERV_TYPE ==  "Children's Treatment Centre" | SERV_TYPE == "Community Support Service" | SERV_TYPE == "Mental Health and Addiction Organization" | SERV_TYPE == "Senior Active Living Centre" , "Community or Health Support Service",
+                  ifelse(SERV_TYPE == "Community Health Centre" | SERV_TYPE == "Family Health Team - Contract" | SERV_TYPE == "Midwifery Clinic", "Primary Health Service",
+                         ifelse(SERV_TYPE == "Long-Term Care Home", "Long-Term Care Home",
+                                ifelse(SERV_TYPE == "Hospital - Corporation" | SERV_TYPE == "Hospital - Site", "Hospital",
+                                       ifelse(SERV_TYPE == "Independent Health Facility", "Fee-Based Independent Health Facility",
+                                              ifelse(SERV_TYPE == "Laboratory - Community Private" | SERV_TYPE == "Laboratory - Hospital" | SERV_TYPE == "Local Health Integration Network Office" | SERV_TYPE == "Public Health Unit Office" | SERV_TYPE == "Public Health Unit Office" | SERV_TYPE == "Retirement Home" ,"Remove",
+                                                     ifelse(SERV_TYPE == "Laboratory - Specimen Collection Centre" , "Laboratory - Specimen Collection Centre",
+                                                            ifelse(SERV_TYPE == "Pharmacy" , "Pharmacy",
+                                                            "NOOO"
+                                                            )))))))))
+#tagging "Retirement Home" as "remove"; these rows offer no additional information. I manually checked a few items and all are present in the RCF (Hamilton) dataset. 
+```
+
+Map:
+```{r}
+ggplot() +
+  geom_sf(data = Ham_CityBound,
+          size = 0.5,
+          alpha = 0.5,
+          color  = "black",
+          fill = "white")+
+  geom_sf(data = Care_Facilities_ONT %>% filter(Type != "Remove"),
+          aes(col = Type),
+          shape = 1) 
+```
+This data set available from Ontario open data includes a lot more locations than available on the City of Hamilton Website. Let's add the "RCF" to this dataset and remove type "Remove". 
+
+```{r}
+Care_Facilities_ONT <- Care_Facilities_ONT %>% select(-FID, -OGF_ID, -MOH_PRO_ID, -FR_NAME, -FR_ALT, -GEO_UPT_DT, -EFF_DATE)
+
+Care_Facilities_ONT <- Care_Facilities_ONT %>% transmute(Name = EN_NAME,
+                                                      Service_Type = SERV_TYPE,
+                                                      Service_Desc = SERV_DET,
+                                                      Address = ADDRESS_1,
+                                                      Address_2 = ADDRESS_2,
+                                                      Postalcode = POSTALCODE,
+                                                      Address_Desc = ADDR_DESCR,
+                                                      Community = COMMUNITY,
+                                                      Type)
+
+Care_Facilities_ONT <- Care_Facilities_ONT %>% filter(Type != "Remove")
+
+Care_Facilities_ONT <-  bind_rows(Care_Facilities_ONT, RCF)
+
+```
+
+```{r}
+Care_Facilities <- Care_Facilities_ONT
+```
+
+## Save Care Locations
+```{r}
+usethis::use_data(Care_Facilities, overwrite = T)
+```

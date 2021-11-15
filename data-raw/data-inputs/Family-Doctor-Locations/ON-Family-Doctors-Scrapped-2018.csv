@@ -1,0 +1,582 @@
+OBJECTID,ADDRESS,Longitude,ID,Latitude,HAM_CMA,Sum_count
+1,"1 Elizabeth St, Orangeville, ON L9W 7N7, Canada",-80.0993215,1,43.9212702,0,1
+2,"1 Manley St, Ayr, ON N0B 1E0, Canada",-80.4521942,2,43.2875112,0,2
+3,"1 Princess Anne Dr, Georgetown, ON L7G 2B5, Canada",-79.9339445,3,43.6447663,0,6
+4,"1 Young St, Hamilton, ON L8N 1T8, Canada",-79.87094,4,43.2514312,1,6
+5,"10 Eastern Ave, Acton, ON L7J 2E6, Canada",-80.0357966,5,43.6333798,0,4
+6,"10 Fieldstone Cir, Brantford, ON N3R 6S7, Canada",-80.2649326,6,43.1790955,0,1
+7,"10 George St, Hamilton, ON L8P 1C8, Canada",-79.8747461,7,43.2574938,1,1
+8,"10 Northtown Way, North York, ON M2N 7L4, Canada",-79.413286,8,43.7759301,0,1
+9,"10 Parkside Dr, St. Jacobs, ON N0B 2N0, Canada",-80.5509198,9,43.5441699,0,8
+10,"10 Victoria St S, Kitchener, ON N2G 1C5, Canada",-80.4987777,10,43.4527226,0,10
+11,"10 Westheights Dr, Kitchener, ON N2N 2A8, Canada",-80.5309525,11,43.4293991,0,4
+12,"100 Highland Rd W, Kitchener, ON N2M 3B5, Canada",-80.5020572,12,43.4414794,0,5
+13,"100 Humber College Blvd, Etobicoke, ON M9V 5G4, Canada",-79.5991889,13,43.7314795,0,1
+14,"100 Main St E, Hamilton, ON L8N 3W4, Canada",-79.8652871,14,43.2541433,1,1
+15,"100 Main St W, Hamilton, ON L8P 1H6, Canada",-79.8735212,15,43.2569357,1,27
+16,"100 Queensway W, Mississauga, ON L5B 1B8, Canada",-79.6085507,16,43.5714273,0,2
+17,"100 The Boardwalk, Kitchener, ON N2N 0B1, Canada",-80.5580808,17,43.4337075,0,5
+18,"100 West 5th Street, Hamilton, ON L8P 3R2, Canada",-79.8841077,18,43.240445,1,3
+19,"100 Westmount Rd, Guelph, ON N1H 5H8, Canada",-80.2718886,19,43.5502119,0,4
+20,"1000 Upper Gage Ave, Hamilton, ON L8V 5B7, Canada",-79.8462179,20,43.2136357,1,1
+21,"101 Queensway W, Mississauga, ON L5B 2P7, Canada",-79.6108171,21,43.5721311,0,1
+22,"1010 Hopewell Creek Rd, Breslau, ON N0B 1M0, Canada",-80.3926344,22,43.5095409,0,1
+23,"1010 Kennedy Cir #1D, Milton, ON L9T 0J9, Canada",-79.8399005,23,43.5082907,0,1
+24,"1015 Bronte St S, Milton, ON L9T 8X3, Canada",-79.8588204,24,43.4883416,0,1
+25,"1015 Cawthra Rd, Mississauga, ON L5G 4K3, Canada",-79.5666044,25,43.5703204,0,2
+26,"1018 Pape Ave, East York, ON M4K 3V9, Canada",-79.3488585,26,43.6890201,0,1
+27,"102 North Dr, Dundas, ON L9H 6P7, Canada",-79.9135214,27,43.303838,1,1
+28,"1035 Bay St, Port Rowan, ON N0E 1M0, Canada",-80.4511004,28,42.6245225,0,1
+29,"104-265 King George Rd, Brantford, ON N3R 6Y1, Canada",-80.2804002,29,43.1762602,0,1
+30,"105 Main Street of Delhi, Delhi, ON N4B 2L8, Canada",-80.4970464,30,42.8562581,0,1
+31,"105 Wilson St E, Ancaster, ON L9G 2B7, Canada",-79.9828333,31,43.2210289,1,1
+32,"1051 Garner Rd W, Ancaster, ON L9G 3K9, Canada",-80.0136667,32,43.1978431,1,2
+33,"1051 Upper James St, Hamilton, ON L9C 3A6, Canada",-79.8843701,33,43.2207825,1,1
+34,"1057 Main St W, Hamilton, ON L8S 1B7, Canada",-79.9086442,34,43.2580036,1,1
+35,"106 Silvercreek Pkwy N, Guelph, ON N1H 7B4, Canada",-80.2796502,35,43.5380499,0,1
+36,"1060 Speers Rd #121, Oakville, ON L6L 2X4, Canada",-79.7036103,36,43.431356,0,1
+37,"1060 Speers Rd, Oakville, ON L6L 2X4, Canada",-79.703658,37,43.4313561,0,15
+38,"1063 King St W, Hamilton, ON L8S 4S3, Canada",-79.9073279,38,43.2610561,1,1
+39,"107 King St W #204, Dundas, ON L9H 1V1, Canada",-79.9582205,39,43.2667395,1,1
+40,"107 King St W, Dundas, ON L9H 1V1, Canada",-79.9582205,40,43.2667395,1,5
+41,"1079 Maple Ave, Milton, ON L9T 0A5, Canada",-79.8745711,41,43.5375295,0,6
+42,"1084 Rest Acres Rd, Paris, ON N3L 0B5, Canada",-80.3852042,42,43.1792574,0,1
+43,"109 King St W, Dundas, ON L9H 1V1, Canada",-79.9582707,43,43.2668612,1,3
+44,"10b Victoria St S, Kitchener, ON N2G 1C5, Canada",-80.4991559,44,43.4522692,0,7
+45,"11 A - 969 Upper Ottawa St, Hamilton, ON L8T 4V9, Canada",-79.8347952,45,43.2107107,1,1
+46,"11 George St S, Cambridge, ON N1S 2N3, Canada",-80.3184341,46,43.3576328,0,2
+47,"110 King St W, Hamilton, ON L8P 4V3, Canada",-79.8711186,47,43.2578582,1,3
+48,"110 Weber St N, Waterloo, ON N2J 3G8, Canada",-80.5135449,48,43.47196,0,1
+49,"1100 Burloak Dr, Burlington, ON L7L 6B2, Canada",-79.7597018,49,43.3964257,1,2
+50,"1100 Walkers Line, Burlington, ON L7N 2G3, Canada",-79.79203,50,43.3684973,1,3
+51,"1131 Nottinghill Gate, Oakville, ON L6M, Canada",-79.7194362,51,43.4404616,0,3
+52,"1144 Wilson St W, Ancaster, ON L9G 3K9, Canada",-80.0186023,52,43.1969655,1,2
+53,"1145 Concession Rd, Cambridge, ON N3H 4L6, Canada",-80.3441999,53,43.3970068,0,2
+54,"115 Christopher Dr, Cambridge, ON N1R 4S1, Canada",-80.2984152,54,43.3472412,0,1
+55,"115 Delhi St, Guelph, ON N1E 4J5, Canada",-80.2535473,55,43.5563618,0,6
+56,"115 Downey Rd, Guelph, ON N1C 1A2, Canada",-80.23749,56,43.4994328,0,4
+57,"115 Hamilton St N, Waterdown, ON L0R 2H5, Canada",-79.90245,57,43.3355,1,3
+58,"115 Woolwich St, Guelph, ON N1H 3V1, Canada",-80.248969,58,43.5479259,0,1
+59,"1150 Franklin Blvd, Cambridge, ON N1R 7J2, Canada",-80.3053802,59,43.3999746,0,4
+60,"1151 Bronte Rd, Oakville, ON L6M 3L1, Canada",-79.7440183,60,43.4149206,0,1
+61,"1180 Queens Bush Rd, Wellesley, ON N0B 2T0, Canada",-80.7634861,61,43.477177,0,4
+62,"12 John St W, Waterloo, ON N2L 1A7, Canada",-80.5183837,62,43.4590032,0,1
+63,"12 McKay St E, Cayuga, ON N0A 1E0, Canada",-79.8533879,63,42.9497097,0,1
+64,"1200 Main St W, Hamilton, ON L8P 1H1, Canada",-79.9174697,64,43.259495,1,10
+65,"121 Charles St W, Kitchener, ON N2G 1H7, Canada",-80.4978594,65,43.4511316,0,3
+66,"1221 Lakeshore Rd, Burlington, ON L7S 0A1, Canada",-79.8017882,66,43.3152246,1,11
+67,"1225 Maple Ave, Milton, ON L9T 5Y9, Canada",-79.8665349,67,43.5391118,0,2
+68,"1230 North Shore Blvd E, Burlington, ON L7S 1C4, Canada",-79.8026739,68,43.3170252,1,14
+69,"1235 Fairview St, Burlington, ON L7S 2K9, Canada",-79.8194314,69,43.3310383,1,3
+70,"1235 Trafalgar Rd, Oakville, ON L6H 3P1, Canada",-79.6904635,70,43.467519,0,2
+71,"1235 Wilson Ave, North York, ON M3M 0B2, Canada",-79.4893709,71,43.7237634,0,2
+72,"124 Charing Cross St, Brantford, ON N3R 2J1, Canada",-80.2640603,72,43.1587273,0,4
+73,"124 Weber St S, Waterloo, ON N2J 2A7, Canada",-80.5053886,73,43.4655568,0,2
+74,"1275 Rymal Rd E, Hamilton, ON L8W 3N1, Canada",-79.8365897,74,43.1894097,1,1
+75,"128 Emerald St S, Hamilton, ON L8N 2V5, Canada",-79.8560544,75,43.2493435,1,5
+76,"1280 Main St W, Hamilton, ON L8S 4L8, Canada",-79.9202861,76,43.2622445,1,39
+77,"1288 Danforth Ave, Toronto, ON M4J 1M6, Canada",-79.3302011,77,43.6821687,0,5
+78,"129 Central Dr, Ancaster, ON L9G 2A3, Canada",-79.998734,78,43.2135108,1,1
+79,"130 Dunn Ave, Toronto, ON M6K 2R7, Canada",-79.4327094,79,43.6348034,0,1
+80,"130 Wilson St, Hamilton, ON L8R 1E2, Canada",-79.8620242,80,43.2571474,1,9
+81,"1300 Cornwall Rd, Oakville, ON L6J 7W5, Canada",-79.6645072,81,43.472605,0,1
+82,"132 Parkdale Ave S #207, Hamilton, ON L8K 3P3, Canada",-79.7937837,82,43.233124,1,1
+83,"132 Parkdale Ave S, Hamilton, ON L8K 3P3, Canada",-79.7937837,83,43.233124,1,5
+84,"1320 Barton St E, Hamilton, ON L8H 2W1, Canada",-79.8066425,84,43.2491067,1,2
+85,"133 King St W, Dundas, ON L9H 1V3, Canada",-79.959576,85,43.2671167,1,4
+86,"135 Union St E, Waterloo, ON N2J 1C4, Canada",-80.5091941,86,43.4634382,0,1
+87,"1361 Hazelton Blvd, Burlington, ON L7P 4T9, Canada",-79.8519845,87,43.3573723,1,1
+88,"1390 Main St E, Hamilton, ON L8K 1C1, Canada",-79.8103914,88,43.2402737,1,1
+89,"14 John St N, Hamilton, ON L8R 1G9, Canada",-79.8660617,89,43.2563267,1,2
+90,"140 Centennial Pkwy N, Hamilton, ON L8E, Canada",-79.7609284,90,43.233076,1,3
+91,"1400 Weber St E, Kitchener, ON N2A 3Z8, Canada",-80.438998,91,43.432829,0,2
+92,"143 Metcalfe St, Elora, ON N0B, Canada",-80.4301935,92,43.6830101,0,12
+93,"1433 Ontario St, Burlington, ON L7S 1G5, Canada",-79.8005404,93,43.3255152,1,1
+94,"1436 Brock Rd, Dundas, ON L9H 5E4, Canada",-80.0297027,94,43.369438,1,1
+95,"144 Main St S, Brampton, ON L6W 2C9, Canada",-79.75013,95,43.6790168,0,1
+96,"1447 Upper Ottawa St, Hamilton, ON L8W 3J6, Canada",-79.8410579,96,43.1959785,1,4
+97,"1450 Block Line Rd, Kitchener, ON N2C 0A5, Canada",-80.4691717,97,43.419066,0,6
+98,"1475 Upper Ottawa St, Hamilton, ON L8W 3J6, Canada",-79.8413134,98,43.1952188,1,31
+99,"1483 Main St W, Hamilton, ON L8S 1E1, Canada",-79.9251675,99,43.2574135,1,1
+100,"149 Union St E, Waterloo, ON N2J 1C4, Canada",-80.5084701,100,43.4634918,0,4
+101,"1493 Centre Rd, Carlisle, ON L0R 1H2, Canada",-79.9825311,101,43.3950612,1,11
+102,"1495 Cornwall Rd, Oakville, ON L6J 0B2, Canada",-79.6597273,102,43.4783864,0,1
+103,"15 Lockport Way, Stoney Creek, ON L8E, Canada",-79.6338938,103,43.2181847,1,1
+104,"15 Mountain Ave S, Stoney Creek, ON L8G 2V6, Canada",-79.7563288,104,43.2157096,1,8
+105,"150 Brant Ave, Brantford, ON N3T 3H7, Canada",-80.274316,105,43.1441686,0,1
+106,"150 Main St E, Grimsby, ON L3M 1P1, Canada",-79.5448831,106,43.1878019,1,9
+107,"1515 King St E, Cambridge, ON N3H 3R6, Canada",-80.3455052,107,43.3900236,0,1
+108,"155 James St S, Hamilton, ON L8P 3A4, Canada",-79.8708022,108,43.2519693,1,5
+109,"1568 Main St W, Hamilton, ON L8S 1E2, Canada",-79.9268158,109,43.2576615,1,1
+110,"16 Andrew St, Kitchener, ON N2H 5R2, Canada",-80.5056827,110,43.4560971,0,13
+111,"16 Cross St, Dundas, ON L9H 2R4, Canada",-79.9536407,111,43.2667539,1,1
+112,"160 Chancellors Way, Guelph, ON N1G 1Y2, Canada",-80.2337092,112,43.5248649,0,2
+113,"160 Dundurn St S, Hamilton, ON L8P 4K3, Canada",-79.8901583,113,43.2579465,1,5
+114,"160 Kortright Rd W, Guelph, ON N1G 4V7, Canada",-80.2181014,114,43.5137432,0,1
+115,"1605 Main St W, Hamilton, ON L8S 1E6, Canada",-79.9295465,115,43.2568718,1,1
+116,"164 Colborne St W, Brantford, ON N3T 1L2, Canada",-80.2763408,116,43.1315653,0,3
+117,"165 Barton St E, Hamilton, ON L8L 2W6, Canada",-79.8587185,117,43.2632033,1,1
+118,"167 Hespeler Rd, Cambridge, ON N1R 3H6, Canada",-80.3193521,118,43.381414,0,22
+119,"167 Main St E, Grimsby, ON L3M 1P2, Canada",-79.5418552,119,43.1883933,1,1
+120,"1685 Main St W, Hamilton, ON L8S 1G5, Canada",-79.9342231,120,43.256644,1,7
+121,"169 Main St E, Grimsby, ON L3M 1P3, Canada",-79.541906,121,43.188256,1,7
+122,"17 King St W, Stoney Creek, ON L8G 1H1, Canada",-79.7603589,122,43.2172706,1,1
+123,"170 Rebecca St Unit D, Oakville, ON L6K 1J6, Canada",-79.6780563,123,43.4387185,0,1
+124,"170 University Ave W, Waterloo, ON N2L 3E9, Canada",-80.537806,124,43.4720785,0,5
+125,"1745 Chiefswood Rd, Ohsweken, ON N0A 1M0, Canada",-80.116513,125,43.0722284,0,2
+126,"175 Alma St, Guelph/Eramosa, ON N0B, Canada",-80.1466065,126,43.6165299,0,4
+127,"175 Longwood Rd S, Hamilton, ON L8P 0A1, Canada",-79.900641,127,43.2568062,1,1
+128,"175 Stone Rd W, Guelph, ON N1G 5L4, Canada",-80.2330255,128,43.5231186,0,2
+129,"176 Wyndham St N, Guelph, ON N1H 8N9, Canada",-80.251461,129,43.547773,0,4
+130,"1769 Chiefswood Rd, Ohsweken, ON N0A 1M0, Canada",-80.1155937,130,43.0733948,0,1
+131,"179 James St S, Hamilton, ON L8P 4V1, Canada",-79.87094,131,43.2514312,1,3
+132,"18 Pine St, Kitchener, ON N2H 3R1, Canada",-80.5113064,132,43.4578344,0,3
+133,"18 Plains Rd W, Burlington, ON L7T, Canada",-79.8527382,133,43.3061881,1,2
+134,"180 James St S, Hamilton, ON L8P 4V1, Canada",-79.8717143,134,43.2512422,1,1
+135,"181 Green Ln E, Newmarket, ON L3Y, Canada",-79.4819014,135,44.0731978,0,1
+136,"1821 Walkers Line, Burlington, ON L7M 0H6, Canada",-79.8046916,136,43.3789986,1,3
+137,"1842 Village Green, Burlington, ON L7P 2X9, Canada",-79.8426809,137,43.3431323,1,1
+138,"1900 Appleby Line, Burlington, ON L7L 6A1, Canada",-79.7885131,138,43.3921102,1,1
+139,"1930 Fowler Dr, Mississauga, ON L5K 0A1, Canada",-79.6503287,139,43.5268239,0,1
+140,"194 Terrace Hill St, Brantford, ON N3R 1G7, Canada",-80.274474,140,43.151859,0,1
+141,"1960 Appleby Line, Burlington, ON L7L 0B7, Canada",-79.7898344,141,43.3928736,1,28
+142,"198 Barton St, Stoney Creek, ON L8E 2K2, Canada",-79.7367243,142,43.2315007,1,3
+143,"1995 Lens Ave, Windsor, ON N8W 1L9, Canada",-82.9971991,143,42.2999029,0,2
+144,"2 King St W, Stoney Creek, ON L8G 1G8, Canada",-79.7581411,144,43.2171739,1,1
+145,"2 Sunnyside Dr, Saint George, ON N0E 1N0, Canada",-80.2534787,145,43.2467047,0,1
+146,"20 Hobson St, Cambridge, ON N1S 2M6, Canada",-80.3181335,146,43.3634564,0,5
+147,"20 Railway St, Hamilton, ON L8R 2R3, Canada",-79.8726651,147,43.2627333,1,1
+148,"20 Shelldale Crescent, Guelph, ON N1H 1C8, Canada",-80.277003,148,43.5450721,0,2
+149,"200 Bay St, Toronto, ON M5J 2J1, Canada",-79.380377,149,43.6468449,0,1
+150,"200 James St S, Hamilton, ON L8P 3A9, Canada",-79.8721947,150,43.2505958,1,9
+151,"200 Lorraine Ave, Kitchener, ON N2B 3R3, Canada",-80.4410402,151,43.4608256,0,2
+152,"200 Main St E, Hamilton, ON L8N 1H3, Canada",-79.8618395,152,43.2530136,1,3
+153,"200 Mill St, Milton, ON L9T 1S2, Canada",-79.8841093,153,43.5135288,0,1
+154,"200 Terrace Hill St, Brantford, ON N3R 1G9, Canada",-80.276363,154,43.1525048,0,58
+155,"200 University Ave W, Waterloo, ON N2L 3G1, Canada",-80.5412466,155,43.4695172,0,8
+156,"2000 Appleby Line, Burlington, ON L7L 6M6, Canada",-79.7912357,156,43.3938947,1,1
+157,"2015 Kingsridge Dr, Oakville, ON L6M 4Y7, Canada",-79.7572925,157,43.4461187,0,6
+158,"2019 Caroline St, Burlington, ON L7R 1L2, Canada",-79.800108,158,43.3282514,1,5
+159,"2025 Guelph Line, Burlington, ON L7P 4M8, Canada",-79.8224957,159,43.3667792,1,4
+160,"204 King St W, Dundas, ON L9H 1V4, Canada",-79.9626958,160,43.2673792,1,1
+161,"204 Queenston Rd, Hamilton, ON L8K, Canada",-79.7956871,161,43.2351217,1,1
+162,"205 Colborne St, Brantford, ON N3T 2H2, Canada",-80.2622311,162,43.1383882,0,1
+163,"205 Pandora Crescent, Kitchener, ON N2H 3E5, Canada",-80.4721364,163,43.4492365,0,1
+164,"205, 10220 Derry Rd, Milton, ON L9T 7J3, Canada",-79.8370535,164,43.5286418,0,3
+165,"206 John St, Dunnville, ON N1A, Canada",-79.6249815,165,42.9049347,0,5
+166,"206 Locke St S, Hamilton, ON L8P 4B4, Canada",-79.8861059,166,43.2546542,1,2
+167,"2065 Fairview St, Burlington, ON L7R 2J6, Canada",-79.8119893,167,43.3377649,1,1
+168,"2079 Lakeshore Rd, Burlington, ON L7R 1E2, Canada",-79.7931581,168,43.3262974,1,4
+169,"21 College Ave W, Guelph, ON N1G 1R7, Canada",-80.2346748,169,43.5310422,0,1
+170,"21 Surrey St W, Guelph, ON N1H 3R3, Canada",-80.2467139,170,43.540627,0,5
+171,"21 Yarmouth St, Guelph, ON N1H 4G2, Canada",-80.2521265,171,43.5462627,0,1
+172,"210 Lorraine Ave, Kitchener, ON N2B 3T4, Canada",-80.4402504,172,43.4611234,0,4
+173,"2100 Bovaird Dr E, Brampton, ON L6R 3J7, Canada",-79.7430207,173,43.7472961,0,1
+174,"211 Dawson Rd, Guelph, ON N1H 1A3, Canada",-80.2865732,174,43.5555016,0,1
+175,"2121 Main St N, Jarvis, ON N0A 1J0, Canada",-80.1107968,175,42.8914064,0,1
+176,"2125 Wyecroft Rd, Oakville, ON L6L 5L7, Canada",-79.726404,176,43.4186213,0,1
+177,"215 Highland Rd W, Kitchener, ON N2M 3C1, Canada",-80.5059433,177,43.4401513,0,1
+178,"215 Main St W, Hamilton, ON L8P 1J4, Canada",-79.8787161,178,43.2574584,1,1
+179,"217 Governors Rd, Dundas, ON L9H 3J7, Canada",-79.9655461,179,43.2610089,1,1
+180,"217 Terrace Hill St, Brantford, ON N3R 1G8, Canada",-80.2749205,180,43.152453,0,5
+181,"2190 Lakeshore Rd, Burlington, ON L7R 1A6, Canada",-79.788537,181,43.3280871,1,2
+182,"220 Main St W, Hamilton, ON L8P 1J3, Canada",-79.8787489,182,43.2578318,1,2
+183,"220 Wales Crescent, Oakville, ON L6L 3X7, Canada",-79.704758,183,43.4079824,0,1
+184,"2200 Eglinton Ave W, Mississauga, ON L5M 2N1, Canada",-79.703268,184,43.5586088,0,1
+185,"2200 Fairview St, Burlington, ON L7R 4H9, Canada",-79.8050282,185,43.3409862,1,12
+186,"221 Brant Ave, Brantford, ON N3T 3J2, Canada",-80.2759489,186,43.1470282,0,17
+187,"222 Fairview Dr, Brantford, ON N3R 2W9, Canada",-80.2613821,187,43.1698457,0,4
+188,"223 Briar Hill Crescent, Ancaster, ON L9G 3M9, Canada",-79.965629,188,43.2309634,1,1
+189,"225 John St S, Hamilton, ON L8N 2C7, Canada",-79.868472,189,43.249929,1,2
+190,"23 Admiral Rd, Brantford, ON N3R 1L3, Canada",-80.2838302,190,43.1568923,0,1
+191,"23 Main St S, Waterford, ON N0E 1Y0, Canada",-80.2905406,191,42.9349745,0,3
+192,"230 Canborough St, Smithville, ON L0R 2A0, Canada",-79.5485347,192,43.0956658,0,11
+193,"2315 Bristol Cir, Oakville, ON L6H 6P8, Canada",-79.6749854,193,43.516804,0,5
+194,"232 Stonehenge Dr, Ancaster, ON L9K 1R5, Canada",-79.9488517,194,43.2172269,1,1
+195,"2338 Hurontario St, Mississauga, ON L5B 1N1, Canada",-79.6091669,195,43.574484,0,2
+196,"235 Union St E, Fergus, ON N1M 1W2, Canada",-80.3733752,196,43.7055191,0,1
+197,"237 Barton St E, Hamilton, ON L8L 2X2, Canada",-79.8543243,197,43.2617528,1,38
+198,"237 Barton St, Stoney Creek, ON L8E 2K4, Canada",-79.7328893,198,43.2314428,1,2
+199,"238 Grand River St N, Paris, ON N3L 2N7, Canada",-80.3870839,199,43.2045736,0,6
+200,"238 King St N, Waterloo, ON N2J 2Y7, Canada",-80.5245319,200,43.4756175,0,5
+201,"24 Queens Square, Cambridge, ON N1S 1H6, Canada",-80.317176,201,43.3585929,0,1
+202,"240 Roncesvalles Ave, Toronto, ON M6R 1M3, Canada",-79.4493105,202,43.6455281,0,1
+203,"2400 Brant St, Burlington, ON L7P 4N3, Canada",-79.8480996,203,43.3596279,1,2
+204,"245 Argyle St S, Caledonia, ON N3W 1K7, Canada",-79.9587495,204,43.0657275,0,2
+205,"246 Dundas St S, Cambridge, ON N1R 8A8, Canada",-80.2889679,205,43.3549912,0,3
+206,"248 Argyle St S, Caledonia, ON N3W 1K7, Canada",-79.9579566,206,43.0652157,0,1
+207,"25 Charlton Ave E, Hamilton, ON L8N 1Y2, Canada",-79.8711283,207,43.2498154,1,2
+208,"25 Great Lakes Dr, Brampton, ON L6R 2S5, Canada",-79.7604465,208,43.7315552,0,1
+209,"250 Dundas St E, Waterdown, ON L0R 2H4, Canada",-79.8972515,209,43.3290787,1,2
+210,"250 Laurelwood Dr, Waterloo, ON N2V 2R4, Canada",-80.5703181,210,43.4767294,0,4
+211,"2501 Third Line, Oakville, ON L6M 5A9, Canada",-79.758646,211,43.4498505,0,4
+212,"252 Dundas St E, Waterdown, ON L0R 2H6, Canada",-79.8970328,212,43.3292834,1,1
+213,"2524 Third Line, Oakville, ON L6M 0G8, Canada",-79.7601837,213,43.4494343,0,3
+214,"2525 Old Bronte Rd, Oakville, ON L6M 4J2, Canada",-79.7755914,214,43.4356583,0,12
+215,"2537 Hamilton Regional Rd 56, Binbrook, ON L0R 1C0, Canada",-79.8017076,215,43.1248464,1,1
+216,"2540 Postmaster Dr, Oakville, ON L6M 0N2, Canada",-79.7684185,216,43.4427255,0,9
+217,"255 Dundas St E, Waterdown, ON L0R 2H6, Canada",-79.8976856,217,43.3309438,1,2
+218,"255 Main St W, Hamilton, ON L8P 1J5, Canada",-79.88028,218,43.2576689,1,1
+219,"26 Forbes St, Cambridge, ON N3C 2E2, Canada",-80.3069908,219,43.4297801,0,5
+220,"26 Legend Ct, Ancaster, ON L9K 1J3, Canada",-79.9475124,220,43.2274344,1,1
+221,"260 Nebo Rd, Hamilton, ON L8W 3K5, Canada",-79.8390406,221,43.1915765,1,7
+222,"264 Concession St, Hamilton, ON L9A 1B2, Canada",-79.8647054,222,43.2438605,1,1
+223,"265 King George Rd, Brantford, ON N3R 5L5, Canada",-80.2800386,223,43.176491,0,3
+224,"265 Yorkland Blvd, North York, ON M2J 5C7, Canada",-79.3359501,224,43.773342,0,2
+225,"267 Bay Thorn Dr, Thornhill, ON L3T 3V8, Canada",-79.4252462,225,43.8255263,0,1
+226,"269 King St W, Dundas, ON L9H 1W2, Canada",-79.9661535,226,43.2691752,1,1
+227,"269 Magnolia Pl, Waterloo, ON N2V 2A3, Canada",-80.5649157,227,43.4983336,0,1
+228,"27 Ruth Ave, Brampton, ON L6Z 4R2, Canada",-79.7873707,228,43.7227095,0,1
+229,"2732 Barton St E, Hamilton, ON L8E 4M6, Canada",-79.7460852,229,43.233364,1,2
+230,"2757 King St E, Hamilton, ON L8G 5E4, Canada",-79.7743945,230,43.2216826,1,5
+231,"277 Wilson St E, Ancaster, ON L9G 2B8, Canada",-79.9778103,231,43.2248978,1,2
+232,"28 Brock Rd N, Guelph, ON N1H 6H9, Canada",-80.1569539,232,43.4760838,0,4
+233,"28 Sovereign St E, Waterford, ON N0E 1Y0, Canada",-80.291457,233,42.938445,0,2
+234,"280 Queenston Rd, Hamilton, ON L8K 1H1, Canada",-79.7924618,234,43.2338188,1,12
+235,"281 Stone Rd E, Guelph, ON N1G 5K9, Canada",-80.2151819,235,43.533038,0,7
+236,"285 Riverside Dr, Welland, ON L3C 5E6, Canada",-79.2712125,236,42.9794428,0,1
+237,"288 Dundas St E, Waterdown, ON L0R 2H4, Canada",-79.8944086,237,43.3316646,1,2
+238,"289 Charlton Ave W, Hamilton, ON L8P 2E4, Canada",-79.8856605,238,43.2528362,1,1
+239,"289 Frederick St, Kitchener, ON N2H 2N3, Canada",-80.4778205,239,43.4555762,0,1
+240,"2951 Walkers Line, Burlington, ON L7M 4Y1, Canada",-79.8216451,240,43.3920988,1,28
+241,"2958 Greenfield Rd, Ayr, ON N0B 1E0, Canada",-80.462376,241,43.3018099,0,6
+242,"298 Lawrence Ave, Kitchener, ON N2M 1Y4, Canada",-80.5129779,242,43.4414846,0,6
+243,"2983 Westoak Trails Blvd, Oakville, ON L6M 5E9, Canada",-79.7649144,243,43.4290692,0,4
+244,"3 Maple Ave N, Brant, ON N0E, Canada",-80.4298052,244,43.1040149,0,4
+245,"3 Wilson St E, Ancaster, ON L9G 2B3, Canada",-79.987046,245,43.2182741,1,1
+246,"30 Derry Rd E, Milton, ON L9T 2X6, Canada",-79.8742994,246,43.4973471,0,3
+247,"30 Dupont St E, Waterloo, ON N2J 2G9, Canada",-80.5207934,247,43.4665331,0,2
+248,"30 Regent Ave, Hamilton, ON L9B 1R6, Canada",-79.9102404,248,43.2135551,1,1
+249,"30 The Queensway, Toronto, ON M6R 1B5, Canada",-79.4500166,249,43.6405498,0,1
+250,"300 North Service Rd W, Oakville, ON L6M 2R9, Canada",-79.7046661,250,43.4458661,0,3
+251,"3001 Hospital Gate, Oakville, ON L6M 0L8, Canada",-79.7647495,251,43.450405,0,54
+252,"301 High Tech Rd, Richmond Hill, ON L4B 0A3, Canada",-79.4104277,252,43.8428871,0,1
+253,"304 Stone Rd W, Guelph, ON N1G 3C4, Canada",-80.234375,253,43.5184384,0,2
+254,"304 Victoria Ave N, Hamilton, ON L8L 5G4, Canada",-79.85235,254,43.262161,1,1
+255,"3047 A Hurontario St, Mississauga, ON L5A 2G9, Canada",-79.6174386,255,43.5815694,0,1
+256,"305 Helena St, Dunnville, ON N1A 2S9, Canada",-79.6260722,256,42.9071211,0,2
+257,"3050 Argentia Rd, Mississauga, ON L5N 8E1, Canada",-79.7839664,257,43.5956503,0,1
+258,"3055 Homestead Dr, Mount Hope, ON L0R 1W0, Canada",-79.9125799,258,43.1598014,1,1
+259,"3080 Windwood Dr, Mississauga, ON L5N 2K5, Canada",-79.7490566,259,43.5760449,0,1
+260,"310 Juliana Dr, Woodstock, ON N4V 0A4, Canada",-80.7538992,260,43.106565,0,1
+261,"310 King St E, Kitchener, ON N2H 2V5, Canada",-80.4835327,261,43.4476053,0,3
+262,"311 Commercial St, Milton, ON L9T 1A8, Canada",-79.8721649,262,43.5095219,0,2
+263,"311 Fruitland Rd, Stoney Creek, ON L8E 5M8, Canada",-79.7004581,263,43.2228193,1,3
+264,"311 Wilson St E, Ancaster, ON L9G 2B8, Canada",-79.9770973,264,43.2259477,1,1
+265,"3137 Hwy 56, Hamilton, ON L8J, Canada",-79.7766787,265,43.1732386,1,2
+266,"3155 Harvester Rd, Burlington, ON L7N 3V2, Canada",-79.7974097,266,43.3541897,1,22
+267,"318 Ontario St, St. Catharines, ON L2R 5L8, Canada",-79.2632437,267,43.1697885,0,2
+268,"318 Spruce St, Waterloo, ON N2L 3M7, Canada",-80.5264592,268,43.4791059,0,1
+269,"32 Princess St, Dundas, ON L9H 2X7, Canada",-79.9601442,269,43.2698973,1,1
+270,"321 Appleby Line, Burlington, ON L7L 2X6, Canada",-79.7497465,270,43.3645654,1,1
+271,"323 Wilson St E, Ancaster, ON L9G 4A8, Canada",-79.976931,271,43.2263173,1,4
+272,"325 Dundurn St S, Hamilton, ON L8P 2M6, Canada",-79.8923139,272,43.2516024,1,1
+273,"325 Winterberry Dr, Stoney Creek, ON L8J 2N5, Canada",-79.8070422,273,43.1939156,1,5
+274,"326 Wilson St E, Ancaster, ON L9G 2C2, Canada",-79.9764229,274,43.2261887,1,3
+275,"33 Dundas St, Dundas, ON L9H 1A1, Canada",-79.9498073,275,43.2640275,1,4
+276,"33 Farley Dr, Guelph, ON N1L 0B7, Canada",-80.187454,276,43.502844,0,7
+277,"330 Bronte St S, Milton, ON L9T 7X1, Canada",-79.8791645,277,43.5011388,0,4
+278,"3305 Harvester Rd, Burlington, ON L7N 3M8, Canada",-79.7924618,278,43.3580375,1,11
+279,"333 Market Dr, Milton, ON L9T 4Z7, Canada",-79.91162,279,43.520666,0,1
+280,"333 Wilson Ave, North York, ON M3H 1T2, Canada",-79.4353999,280,43.7368072,0,1
+281,"334 Broad St W, Dunnville, ON N1A 1T2, Canada",-79.6246375,281,42.9054911,0,5
+282,"3355 Hurontario St #13, Mississauga, ON L5A 4E7, Canada",-79.6255588,282,43.5877435,0,1
+283,"337 Queenston Rd, Hamilton, ON L8K 1H7, Canada",-79.7894622,283,43.2337924,1,7
+284,"34 King St E, Stoney Creek, ON L8G 1J8, Canada",-79.756745,284,43.2164769,1,1
+285,"3420 Rebecca St, Oakville, ON L6L 6W2, Canada",-79.7335929,285,43.3849369,0,5
+286,"347 Colborne St, Brantford, ON N3S 3N2, Canada",-80.2563836,286,43.1389035,0,7
+287,"35 Hatt St, Dundas, ON L9H 2G2, Canada",-79.9561888,287,43.2653399,1,1
+288,"35 Primrose Ln, Guelph, ON N1H 7V9, Canada",-80.2937787,288,43.5329104,0,1
+289,"35 Springbank Ave, Woodstock, ON N4S 7P6, Canada",-80.7296472,289,43.1349144,0,1
+290,"35 Stone Church Rd, Ancaster, ON L9K 1S4, Canada",-79.935958,290,43.2278555,1,1
+291,"35 Upper Centennial Pkwy, Stoney Creek, ON L8J 3W2, Canada",-79.7766964,291,43.1768445,1,14
+292,"350 Conestoga Blvd, Cambridge, ON N1R 8P4, Canada",-80.3136558,292,43.3900938,0,26
+293,"350 Hespeler Rd #5, Cambridge, ON N1R 6J6, Canada",-80.3241591,293,43.3909279,0,1
+294,"350 Hespeler Rd, Cambridge, ON N1R 6J6, Canada",-80.3241591,294,43.3909279,0,3
+295,"350 Main St E, Milton, ON L9T 1P6, Canada",-79.8795801,295,43.5160071,0,2
+296,"353 Isaac Brock Drive Stoney Creek, 353 Isaac Brock Dr, Stoney Creek, ON L8J 2J3, Canada",-79.7895939,296,43.1935133,1,1
+297,"353 St Paul Ave, Brantford, ON N3R 4N3, Canada",-80.2748755,297,43.1552145,0,4
+298,"3534 6th Line, Ohsweken, ON N0A 1M0, Canada",-80.0043591,298,43.0679222,0,1
+299,"3570 King St E, Kitchener, ON N2A 2W6, Canada",-80.4125694,299,43.4251888,0,13
+300,"36 King St, Brantford, ON N3T 3C4, Canada",-80.267538,300,43.1399636,0,3
+301,"36 Toronto St, Toronto, ON M5C 2C5, Canada",-79.3765364,301,43.6505779,0,1
+302,"36 Vodden St E, Brampton, ON L6V 4H4, Canada",-79.7682892,302,43.6947634,0,1
+303,"360 Hamilton Regional Rd 8, Hamilton, ON L8K 1H8, Canada",-79.7268806,303,43.2187153,1,1
+304,"360 Queenston Rd, Hamilton, ON L8K 1H9, Canada",-79.7884218,304,43.2330482,1,2
+305,"363 Colborne St, Brantford, ON N3S 3N2, Canada",-80.2558723,305,43.1388191,0,5
+306,"365 West St, Simcoe, ON N3Y 1T7, Canada",-80.3143207,306,42.8351572,0,3
+307,"37 Quinte Crescent, Kitchener, ON N2A 3K3, Canada",-80.4173297,307,43.4328107,0,1
+308,"3742 Nafziger Rd, Wellesley, ON N0B 2T0, Canada",-80.7645881,308,43.4782601,0,3
+309,"3773 6th Line, Ohsweken, ON N0A 1M0, Canada",-79.9910455,309,43.0632469,0,1
+310,"38 King St W, Dundas, ON L9H 1T7, Canada",-79.955604,310,43.2660994,1,3
+311,"384 Guelph Line, Burlington, ON L7R 3L4, Canada",-79.7835941,311,43.3368011,1,1
+312,"385 Fairway Rd S, Kitchener, ON N2C 2N9, Canada",-80.4411741,312,43.4203158,0,7
+313,"385 Frederick St, Kitchener, ON N2H 2P2, Canada",-80.4727587,313,43.4572853,0,20
+314,"393 Rymal Rd W, Hamilton, ON L9B 1V2, Canada",-79.9103112,314,43.2051155,1,2
+315,"394 Guelph Line, Burlington, ON L7R 3L4, Canada",-79.7839773,315,43.3370689,1,1
+316,"395 Greenbrook Dr, Kitchener, ON N2M 4K1, Canada",-80.5108719,316,43.426027,0,3
+317,"3951 Nineteenth St, Jordan Station, ON L0R 1S0, Canada",-79.3689222,317,43.1544067,0,1
+318,"40 George St N, Cambridge, ON N1S 2M8, Canada",-80.319091,318,43.360101,0,2
+319,"40 James St S, Hamilton, ON L8P 4W6, Canada",-79.8697072,319,43.2556281,1,2
+320,"40 Shellington Pl, Brantford, ON N3S 7Y1, Canada",-80.2159663,320,43.1727491,0,17
+321,"400 Bronte St S, Milton, ON L9T 0H7, Canada",-79.8779396,321,43.4998364,0,6
+322,"400 Main St E, Milton, ON L9T 4X5, Canada",-79.877644,322,43.5176059,0,2
+323,"400 Queen St W, Brampton, ON L6X 1B3, Canada",-79.772371,323,43.67568,0,1
+324,"4001 Leslie St, North York, ON M2K 1E1, Canada",-79.3625826,324,43.7694685,0,1
+325,"401 Laurel St, Cambridge, ON N3H 3Y7, Canada",-80.353988,325,43.399519,0,1
+326,"403 Arkell Rd, Puslinch, ON N1L, Canada",-80.1855319,326,43.5236111,0,3
+327,"4052 New St, Burlington, ON L7L 1S9, Canada",-79.7676414,327,43.3540901,1,1
+328,"41 Caithness St W, Caledonia, ON N3W, Canada",-79.9535007,328,43.0739186,0,1
+329,"410 Lock St W, Dunnville, ON N1A 1V6, Canada",-79.6257727,329,42.9048396,0,1
+330,"410 Main St, Port Dover, ON N0A 1N0, Canada",-80.2050664,330,42.7877743,0,1
+331,"410 North Service Rd E, Oakville, ON L6H 5R2, Canada",-79.6830259,331,43.4642995,0,1
+332,"4100 Upper Middle Rd, Burlington, ON L7M 4W8, Canada",-79.7992778,332,43.3839701,1,1
+333,"414 Victoria Ave N, Hamilton, ON L8L 5G8, Canada",-79.850594,333,43.2655116,1,10
+334,"4145 N Service Rd, Burlington, ON L7L 4X6, Canada",-79.7838788,334,43.3717453,1,1
+335,"4170 Fairview St, Burlington, ON L7L 0G7, Canada",-79.7745856,335,43.3639894,1,1
+336,"420 Erb St W, Waterloo, ON N2L 6K6, Canada",-80.5534805,336,43.4534005,0,1
+337,"421 Greenbrook Dr, Kitchener, ON N2M 4L3, Canada",-80.5106027,337,43.4252063,0,25
+338,"425 University Ave, Waterloo, ON N2K 3J4, Canada",-80.4918661,338,43.4896015,0,6
+339,"4265 Thomas Alton Blvd, Burlington, ON L7M 0M9, Canada",-79.8231085,339,43.4006343,1,1
+340,"4279 Hixon St, Beamsville, ON L0R 1B7, Canada",-79.4746312,340,43.1641824,0,12
+341,"43 Marilyn Dr, Guelph, ON N1H 1G9, Canada",-80.2716089,341,43.5628124,0,1
+342,"430 The Boardwalk, Waterloo, ON N2J 3Z4, Canada",-80.5640846,342,43.4386187,0,42
+343,"432 Main St E, Hamilton, ON L8N 1J9, Canada",-79.8530025,343,43.2509403,1,1
+344,"438 Hughson St N, Hamilton, ON L8L 4N5, Canada",-79.8609455,344,43.2703065,1,3
+345,"44 Francis St S, Kitchener, ON N2G 2A2, Canada",-80.49752,345,43.4505504,0,3
+346,"44 Kelly Dr, Kitchener, ON N2M 1V6, Canada",-80.517906,346,43.432438,0,1
+347,"44 Queen St N, Kincardine, ON N2Z, Canada",-81.6283318,347,44.1862335,0,1
+348,"444 Concession St, Hamilton, ON L9A 1C2, Canada",-79.8568489,348,43.2420421,1,1
+349,"445 Beechwood Pl, Waterloo, ON N2T 1Z2, Canada",-80.556875,349,43.451685,0,1
+350,"4481 Queen St, Niagara Falls, ON L2E 2L4, Canada",-79.067176,350,43.106824,0,1
+351,"45 Kenilworth Ave N, Hamilton, ON L8H 4R4, Canada",-79.8097792,351,43.2419663,1,1
+352,"45 Stanley St, Ayr, ON N0B 1E0, Canada",-80.4512091,352,43.2851192,0,1
+353,"450 Bronte St S, Milton, ON L9T 5B7, Canada",-79.8769772,353,43.4996037,0,1
+354,"450 Westheights Dr #11, Kitchener, ON N2N 2B9, Canada",-80.5361185,354,43.4177723,0,1
+355,"450 Westheights Dr, Kitchener, ON N2N 2B9, Canada",-80.5361185,355,43.4177723,0,7
+356,"455 Tipperary Ave, Burlington, ON L7L 2L1, Canada",-79.760118,356,43.362086,1,1
+357,"46 Adam St, Cambridge, ON N3C 2K3, Canada",-80.3093087,357,43.430099,0,3
+358,"46 General Hospital Dr, Stratford, ON N5A 2Y6, Canada",-80.995481,358,43.368168,0,1
+359,"460 Brant St, Burlington, ON L7R 4B6, Canada",-79.7998617,359,43.3267055,1,1
+360,"460 Main St E, Hamilton, ON L8N 1K4, Canada",-79.851911,360,43.2505732,1,5
+361,"464 Locust St, Burlington, ON L7S 1V1, Canada",-79.7994054,361,43.3251996,1,2
+362,"4640 Jane St, North York, ON M3N 2K5, Canada",-79.5207798,362,43.7684556,0,1
+363,"470 Bronte St S, Milton, ON L9T 2J4, Canada",-79.876496,363,43.4988536,0,6
+364,"471 Burlington Ave, Burlington, ON L7S 1R6, Canada",-79.8005842,364,43.3242493,1,1
+365,"472 Woodlawn Rd E, Guelph, ON N1E 1B9, Canada",-80.261128,365,43.577515,0,1
+366,"475 Park St, Kitchener, ON N2G 4V5, Canada",-80.5134121,366,43.4555485,0,1
+367,"479 Dundas St W, Oakville, ON L6H 7L8, Canada",-79.7444098,367,43.4669318,0,1
+368,"484 West St, Brantford, ON N3R 3W7, Canada",-80.2533243,368,43.1631145,0,1
+369,"4903 Thomas Alton Blvd, Burlington, ON L7M 0M9, Canada",-79.8141782,369,43.4105733,1,1
+370,"4941 Wellington County Rd 29, Guelph/Eramosa, ON N0B 1P0, Canada",-80.1562967,370,43.575097,0,1
+371,"497 Laurier Ave, Milton, ON L9T 3K8, Canada",-79.8626457,371,43.5089275,0,3
+372,"5 Bond St, St. Catharines, ON L2R 4Z1, Canada",-79.2412516,372,43.1597408,0,2
+373,"5 Erb St W, Waterloo, ON N2J 1N9, Canada",-80.5233551,373,43.4647812,0,1
+374,"5 Harvey Ct, Brantford, ON N3R 7W6, Canada",-80.2822627,374,43.1768593,0,1
+375,"5 Manitou Dr, Kitchener, ON N2C 2J6, Canada",-80.4544908,375,43.418259,0,2
+376,"50 Charlton Ave E, Hamilton, ON L8N 4A6, Canada",-79.8712441,376,43.2483458,1,19
+377,"50 College Dr, North Bay, ON P1B 8G5, Canada",-79.4947205,377,46.3349613,0,1
+378,"50 Dundurn St S, Hamilton, ON L8P 4W3, Canada",-79.8893413,378,43.2612203,1,3
+379,"50 George St N, Cambridge, ON N1S 1G6, Canada",-80.3189387,379,43.3606671,0,1
+380,"50 Lorne Crescent, Brantford, ON N3T 4L7, Canada",-80.2767139,380,43.1437199,0,1
+381,"50 Stone Rd E, Guelph, ON N1G 2M7, Canada",-80.2327032,381,43.5343207,0,3
+382,"50 Stone Rd W, Guelph, ON N1G 5L3, Canada",-80.2245503,382,43.5259151,0,1
+383,"500 Centennial Pkwy N, Hamilton, ON L8E 0G2, Canada",-79.7536566,383,43.2414738,1,2
+384,"500 King St N, Waterloo, ON N2J 4C6, Canada",-80.52596,384,43.491162,0,1
+385,"501 Plains Rd E, Burlington, ON L7T 2E2, Canada",-79.8364924,385,43.3193383,1,5
+386,"501 St George St, Port Dover, ON N0A 1N0, Canada",-80.2078608,386,42.7878811,0,1
+387,"503 Concession St, Hamilton, ON L9A 1C1, Canada",-79.8538759,387,43.2416778,1,5
+388,"505 King St W, Hamilton, ON L8P 1B9, Canada",-79.8840971,388,43.2606949,1,8
+389,"505 Rymal Rd E, Hamilton, ON L8W 1B3, Canada",-79.870736,389,43.197387,1,2
+390,"5050 Hillside Dr, Beamsville, ON L0R 1B2, Canada",-79.4765943,390,43.1518682,0,1
+391,"506 King St E, Cambridge, ON N3H 3N2, Canada",-80.3611452,391,43.3969327,0,5
+392,"509 Park St, Kitchener, ON N2G 1N8, Canada",-80.5148667,392,43.4560242,0,2
+393,"51 James Snow Pkwy N, Milton, ON L9T 0R3, Canada",-79.856648,393,43.5390843,0,1
+394,"510 Centennial Pkwy N, Hamilton, ON L8E 0G2, Canada",-79.7564199,394,43.2421355,1,1
+395,"5100 Erin Mills Pkwy, Mississauga, ON L5M 4Z5, Canada",-79.7117817,395,43.5584112,0,2
+396,"52 King St E, Dundas, ON L9H 5N5, Canada",-79.9513544,396,43.2656384,1,1
+397,"520 University Ave W, Waterloo, ON N2T 2L9, Canada",-80.5600337,397,43.4378629,0,8
+398,"521 Hamilton Regional Rd 8, Stoney Creek, ON L8G 1G4, Canada",-79.71344,398,43.2162882,1,1
+399,"525 Belmont Ave W, Kitchener, ON N2M 5E2, Canada",-80.5148884,399,43.447763,0,5
+400,"525 Highland Rd W, Kitchener, ON N2M 5K1, Canada",-80.5155076,400,43.4345755,0,2
+401,"525 Park Rd N, Brantford, ON N3R 7K8, Canada",-80.2493388,401,43.182364,0,3
+402,"525 Saginaw Pkwy, Cambridge, ON N1T 2A6, Canada",-80.2827852,402,43.3899441,0,2
+403,"526 Guelph Line, Burlington, ON L7R 3M4, Canada",-79.7883127,403,43.3401285,1,1
+404,"53 Argyle St N, Caledonia, ON N3W 1B8, Canada",-79.9517675,404,43.0744185,0,1
+405,"53 Yonge St, Toronto, ON M5E 1X8, Canada",-79.3772174,405,43.6482223,0,1
+406,"531 Queenston Rd, Hamilton, ON L8K 1J7, Canada",-79.7789039,406,43.231559,1,1
+407,"535 Belmont Ave W, Kitchener, ON N2M 5E9, Canada",-80.51567,407,43.4487235,0,10
+408,"535 Park St, Kitchener, ON N2G 1N8, Canada",-80.51567,408,43.4563337,0,1
+409,"5353 Lakeshore Rd, Burlington, ON L7L 4N9, Canada",-79.732714,409,43.3683245,1,1
+410,"537 Frederick St, Kitchener, ON N2B 2A7, Canada",-80.4687193,410,43.4591588,0,3
+411,"540 Lakeshore Rd W, Oakville, ON L6K 1G5, Canada",-79.6859232,411,43.4261098,0,1
+412,"540 Lee Ave, Waterloo, ON N2K 1Y3, Canada",-80.5139696,412,43.500739,0,1
+413,"5400 Portage Rd, Niagara Falls, ON L2G 5X9, Canada",-79.0905864,413,43.0954172,0,1
+414,"541 Queen St S, Kitchener, ON N2G 1W9, Canada",-80.4951079,414,43.4437048,0,1
+415,"5420 ON-6, Guelph, ON N1H 6J2, Canada",-80.2837431,415,43.5698817,0,1
+416,"547 Upper James St Unit B, Hamilton, ON L9C 2Y5, Canada",-79.8761023,416,43.2408918,1,1
+417,"55 Argyle St N, Caledonia, ON N3W 1B8, Canada",-79.9518628,417,43.0746118,0,1
+418,"55 King St W, Kitchener, ON N2G 1A1, Canada",-80.4904389,418,43.4499365,0,1
+419,"55 Wyndham St N, Guelph, ON N1H 4E7, Canada",-80.2484079,419,43.5460188,0,11
+420,"550 King St E, Kitchener, ON N2G 2L8, Canada",-80.4799707,420,43.4458895,0,2
+421,"5500 N Service Rd, Burlington, ON L7L 6W6, Canada",-79.7612788,421,43.3961204,1,1
+422,"5546 Portage Rd, Niagara Falls, ON L2G 5Y2, Canada",-79.0904709,422,43.094176,0,1
+423,"555 Concession St, Hamilton, ON L8V 1A8, Canada",-79.8517755,423,43.2411909,1,1
+424,"558 Belmont Ave W, Kitchener, ON N2M 5E3, Canada",-80.5150621,424,43.4495682,0,1
+425,"56 Governors Rd, Dundas, ON L9H 5G7, Canada",-79.9576976,425,43.2617504,1,1
+426,"56 Grand Ave N, Cambridge, ON N1S 2K9, Canada",-80.3179594,426,43.3611254,0,1
+427,"564 Belmont Ave W, Kitchener, ON N2M 5N6, Canada",-80.5154529,427,43.450235,0,4
+428,"565 Sanatorium Rd, Hamilton, ON L9C 5K8, Canada",-79.9153819,428,43.2399407,1,1
+429,"567 Scenic Dr, Hamilton, ON L9C 1G9, Canada",-79.9066544,429,43.2435166,1,1
+430,"570 University Ave, Waterloo, ON N2K 4P2, Canada",-80.490752,430,43.495254,0,5
+431,"5731 Hwy 7, Woodbridge, ON L4L 4Y9, Canada",-79.6121669,431,43.7742187,0,1
+432,"574 Upper James St, Hamilton, ON L9C 2Y6, Canada",-79.8773004,432,43.240174,1,3
+433,"576 Main St E, Hamilton, ON L8M 1J2, Canada",-79.847616,433,43.2495932,1,4
+434,"580 Lancaster St W, Kitchener, ON N2K 1M3, Canada",-80.4839373,434,43.4799568,0,2
+435,"581 Argus Rd, Oakville, ON L6J 3J3, Canada",-79.6846247,435,43.457397,0,1
+436,"585 Ontario St S, Milton, ON L9T 2N2, Canada",-79.8608287,436,43.508182,0,2
+437,"585 Queen St S, Kitchener, ON N2G 4S4, Canada",-80.4955205,437,43.4430863,0,1
+438,"586 Concession 5 Rd, Fisherville, ON N0A 1G0, Canada",-79.8940465,438,42.8830277,0,1
+439,"592 Rathburn Rd W, Mississauga, ON L5B 3A4, Canada",-79.6532689,439,43.5842015,0,1
+440,"594 Glengrove Ave W, North York, ON M6B 2H8, Canada",-79.4366764,440,43.7126837,0,1
+441,"5959 New St, Burlington, ON L7L 6W5, Canada",-79.7393741,441,43.3814618,1,1
+442,"6 Coronation Blvd, Cambridge, ON N1R 3E9, Canada",-80.3194497,442,43.3739615,0,1
+443,"6 Thompson Crescent, Erin, ON N0B 1T0, Canada",-80.077955,443,43.7817859,0,8
+444,"60 Centennial Pkwy S, Stoney Creek, ON L8G 2C5, Canada",-79.7651773,444,43.2247405,1,4
+445,"60 Hatt St, Dundas, ON L9H 7T6, Canada",-79.9574344,445,43.2652442,1,1
+446,"600 Hespeler Rd, Cambridge, ON N1R 6J8, Canada",-80.3289701,446,43.404597,0,3
+447,"605 James St N, Hamilton, ON L8L 1J9, Canada",-79.8622571,447,43.2732517,1,5
+448,"609 Upper James St, Hamilton, ON L9C 2Y9, Canada",-79.8767574,448,43.2393309,1,1
+449,"61 James St, St. Catharines, ON L2R 5B9, Canada",-79.2455426,449,43.1587429,0,5
+450,"61 Wilson St W, Ancaster, ON L9G, Canada",-79.9902414,450,43.2170764,1,1
+451,"611 Holly Ave, Milton, ON L9T 0G3, Canada",-79.8554512,451,43.5114537,0,6
+452,"614 Coronation Blvd, Cambridge, ON N1R 7E3, Canada",-80.3245312,452,43.376365,0,7
+453,"6175 Dunn St, Niagara Falls, ON L2G 2P4, Canada",-79.096441,453,43.079303,0,1
+454,"62 King St W, Dundas, ON L9H 1T8, Canada",-79.9564073,454,43.2662569,1,3
+455,"62 Norma Crescent, Ancaster, ON L9G 4P2, Canada",-80.0022659,455,43.2124589,1,1
+456,"625 Greenhill Ave, Hamilton, ON L8K 5N8, Canada",-79.7867409,456,43.2102722,1,1
+457,"631 Queenston Rd, Hamilton, ON L8K 6R5, Canada",-79.7751636,457,43.2308038,1,7
+458,"632 Queenston Rd, Hamilton, ON L8K 1K2, Canada",-79.7744111,458,43.2301283,1,1
+459,"642 Burning Bush Rd, Waterloo, ON N2V 2C4, Canada",-80.5697324,459,43.4995159,0,1
+460,"645 Plains Rd E, Burlington, ON L7T 4J5, Canada",-79.8320209,460,43.3229457,1,3
+461,"65 Third St, Welland, ON L3B 5X9, Canada",-79.2485612,461,42.9798733,0,2
+462,"65 University Ave, Waterloo, ON N2J 3H5, Canada",-80.5204086,462,43.4773909,0,2
+463,"6521 Derry Rd, Milton, ON L9T 7W1, Canada",-79.8787371,463,43.4920152,0,2
+464,"666 Appleby Line, Burlington, ON L7L 5Y3, Canada",-79.7611687,464,43.3719299,1,1
+465,"67 Caroline St S, Hamilton, ON L8P 3K6, Canada",-79.8761898,465,43.2563132,1,1
+466,"67 Kenilworth Ave N, Hamilton, ON L8H 4R6, Canada",-79.8094063,466,43.2425611,1,12
+467,"672 Brant St, Burlington, ON L7R 2H3, Canada",-79.8060873,467,43.3308187,1,5
+468,"672 Upper James St, Hamilton, ON L9C 2Z3, Canada",-79.8793614,468,43.2349518,1,1
+469,"675 Queen St S, Kitchener, ON N2M 1A1, Canada",-80.4961332,469,43.4421529,0,3
+470,"675 Upper James St, Hamilton, ON L9C 2Z5, Canada",-79.8778084,470,43.234196,1,1
+471,"678 Guelph Line, Burlington, ON L7R 3M8, Canada",-79.7935127,471,43.3436481,1,1
+472,"678 Main St E, Hamilton, ON L8M 1K2, Canada",-79.8431107,472,43.248348,1,2
+473,"68 Centennial Pkwy N, Hamilton, ON L8E 1H6, Canada",-79.7628742,473,43.230163,1,1
+474,"685 Adelaide St N, London, ON N5Y 2L4, Canada",-81.2362863,474,42.9976695,0,2
+475,"687 King St W, Kitchener, ON N2H 5L8, Canada",-80.5048534,475,43.454747,0,2
+476,"688 Brant St, Burlington, ON, Canada",-79.806473,476,43.331071,1,1
+477,"690 Main St W, Hamilton, ON L8S 1A4, Canada",-79.8981919,477,43.260329,1,1
+478,"6941 Derry Rd W, Milton, ON L9T 7H5, Canada",-79.8743358,478,43.4973385,0,3
+479,"695 Coronation Blvd, Cambridge, ON N1R 7R1, Canada",-80.3291057,479,43.3807909,0,2
+480,"699 Concession St, Hamilton, ON L8V 4X2, Canada",-79.8461713,480,43.239889,1,9
+481,"6990 Derry Rd, Milton, ON L9T 7H3, Canada",-79.8720425,481,43.4958722,0,2
+482,"70 King St E, Stoney Creek, ON L8G 1K2, Canada",-79.7539533,482,43.2163723,1,2
+483,"70 Victoria St, Elora, ON N0B, Canada",-80.428517,483,43.6780261,0,4
+484,"700 Coronation Blvd, Cambridge, ON N1R 3G2, Canada",-80.3281935,484,43.3780171,0,30
+485,"700 Main St E, Hamilton, ON L8M 1K7, Canada",-79.8418853,485,43.2480139,1,7
+486,"700 Strasburg Rd, Kitchener, ON N2E 2M2, Canada",-80.4788413,486,43.4130283,0,1
+487,"701 Main St W, Hamilton, ON L8S 1A2, Canada",-79.8978857,487,43.2598155,1,1
+488,"701 Upper Sherman Ave, Hamilton, ON L8V 3M7, Canada",-79.8486697,488,43.2256679,1,1
+489,"7030 Derry Rd E, Milton, ON L9T 7J7, Canada",-79.8185014,489,43.5459073,0,5
+490,"7030 Derry Rd, Milton, ON L9T 7H6, Canada",-79.8701087,490,43.4965716,0,10
+491,"71 King St W, Mississauga, ON L5B 4A2, Canada",-79.6165649,491,43.5776723,0,1
+492,"71 Rebecca St, Hamilton, ON L8R 1B6, Canada",-79.8649448,492,43.2575883,1,3
+493,"711 Concession St, Hamilton, ON L8V 5C2, Canada",-79.8449394,493,43.2399717,1,10
+494,"715 Coronation Blvd, Cambridge, ON N1R 7R1, Canada",-80.3300477,494,43.3807297,0,7
+495,"715180 Oxford Road 4, Woodstock, ON N4S 7V9, Canada",-80.705155,495,43.1535549,0,1
+496,"72 Brant Ave, Brantford, ON N3T 5Z8, Canada",-80.2714637,496,43.1409794,0,4
+497,"72 King St W, Stoney Creek, ON L8G 1H8, Canada",-79.7648049,497,43.2186631,1,2
+498,"720 Guelph Line, Burlington, ON L7R 4E2, Canada",-79.7945636,498,43.3446386,1,1
+499,"723 Rymal Rd W, Hamilton, ON L9B 2W1, Canada",-79.9264942,499,43.2098724,1,6
+500,"73 Water St N, Cambridge, ON N1R, Canada",-80.314521,500,43.3613929,0,1
+501,"749 King St W, Kitchener, ON N2G 1E5, Canada",-80.5069855,501,43.4555067,0,1
+502,"75 King St S, Waterloo, ON N2J 1P2, Canada",-80.523355,502,43.4636511,0,1
+503,"75 Parkview Rd, Hagersville, ON N0A 1H0, Canada",-80.0447523,503,42.958683,0,6
+504,"75 University Ave W, Waterloo, ON N2L 3C5, Canada",-80.5274824,504,43.473843,0,1
+505,"750 Ottawa St S, Kitchener, ON N2E 1B6, Canada",-80.4873985,505,43.4237858,0,1
+506,"751 Victoria St S, Kitchener, ON N2M 5N4, Canada",-80.5210717,506,43.4387617,0,4
+507,"755 Concession St, Hamilton, ON L8V 1C4, Canada",-79.8434389,507,43.238968,1,1
+508,"7600 Weston Rd, Woodbridge, ON L4L 8B7, Canada",-79.5476019,508,43.7880426,0,1
+509,"761 Brant St, Burlington, ON L7R 2H7, Canada",-79.8081805,509,43.3332782,1,2
+510,"77 Westmount Rd, Guelph, ON N1H 5J1, Canada",-80.2689814,510,43.5499775,0,12
+511,"770 Mohawk Rd W, Hamilton, ON L9C 6P6, Canada",-79.920786,511,43.2341151,1,2
+512,"773 Dunbar Rd, Kitchener, ON N2M 2X9, Canada",-80.5232465,512,43.4538879,0,2
+513,"777 Simcoe St S, Oshawa, ON L1H 4K5, Canada",-78.8524469,513,43.8783826,0,1
+514,"7785 Wellington County Rd 34, Puslinch, ON N0B 2J0, Canada",-80.1093677,514,43.5066525,0,1
+515,"78 Barton St W, Hamilton, ON L8L 1A6, Canada",-79.8690744,515,43.2650528,1,1
+516,"78 Jones St, Oakville, ON L6L 6C5, Canada",-79.7095313,516,43.3951341,0,7
+517,"78 Regina St N, Waterloo, ON N2J 3A5, Canada",-80.5221177,517,43.4697948,0,1
+518,"79 Lynden Rd, Hamilton, ON L0R, Canada",-80.1464564,518,43.2340185,1,2
+519,"79 South St W, Dundas, ON L9H 4C7, Canada",-79.9524926,519,43.2593843,1,1
+520,"8 York St, Toronto, ON M5J 2Y2, Canada",-79.380939,520,43.6406456,0,1
+521,"80 King St, St. Catharines, ON L2R 7G1, Canada",-79.2460841,521,43.1580826,0,1
+522,"80 Maria St, Tavistock, ON N0B 2R0, Canada",-80.8348848,522,43.3174653,0,5
+523,"800 Queenston Rd, Stoney Creek, ON L8G 2N4, Canada",-79.7663599,523,43.2280278,1,1
+524,"801 Mohawk Rd W, Hamilton, ON L9C 5V8, Canada",-79.9230305,524,43.2330512,1,9
+525,"8023 ON-7, Guelph/Eramosa, ON N0B, Canada",-80.1841083,525,43.582872,0,1
+526,"807 St George St, Port Dover, ON N0A 1N0, Canada",-80.212718,526,42.7912831,0,2
+527,"809 Brant St, Burlington, ON L7R 2J4, Canada",-79.8100193,527,43.3343395,1,3
+528,"81 Wilson St W, Ancaster, ON L9G 1N1, Canada",-79.9905578,528,43.2159967,1,1
+529,"810 E Main St, Welland, ON L3B 3Y4, Canada",-79.2318544,529,42.9937593,0,1
+530,"82 Stinson St, Hamilton, ON L8N 1S2, Canada",-79.8577075,530,43.2486817,1,1
+531,"820 Main St E, Milton, ON L9T 0J4, Canada",-79.8662586,531,43.5254047,0,4
+532,"825 Coxwell Ave, East York, ON M4C 3E7, Canada",-79.3248582,532,43.6898713,0,1
+533,"83 Dawson Rd, Guelph, ON N1H 1B1, Canada",-80.2774771,533,43.5497214,0,29
+534,"835 King St W, Kitchener, ON N2G 4K9, Canada",-80.512013,534,43.4561999,0,74
+535,"836 Upper James St, Hamilton, ON L9C 3A4, Canada",-79.8827516,535,43.228087,1,4
+536,"848 Main St E, Hamilton, ON L8M 1L9, Canada",-79.8357581,536,43.2463436,1,1
+537,"849 Upper Wentworth St, Hamilton, ON L9A 5H4, Canada",-79.8609499,537,43.2218017,1,11
+538,"85 Norfolk St, Guelph, ON N1H 4J4, Canada",-80.2512827,538,43.54505,0,17
+539,"851 Fischer-Hallman Rd, Kitchener, ON N2M 5N8, Canada",-80.5446396,539,43.4425533,0,1
+540,"86 St Andrews St, Cambridge, ON N1S 1M4, Canada",-80.321656,540,43.355068,0,1
+541,"867 Upper Paradise Rd, Hamilton, ON L9C 5R3, Canada",-79.9176276,541,43.2193222,1,1
+542,"87 Birch Hill Ln, Oakville, ON L6K 2P1, Canada",-79.6841724,542,43.4298666,0,1
+543,"875 Highland Rd W, Kitchener, ON N2N 2Y2, Canada",-80.5262185,543,43.4293347,0,2
+544,"875 Main St E, Milton, ON L9T 3Z3, Canada",-79.8683149,544,43.5274112,0,1
+545,"8754 First Line Nassagaweya, Milton, ON L0P, Canada",-80.0051611,545,43.4618711,0,1
+546,"88 Maplewood Ave, Hamilton, ON L8M 1W9, Canada",-79.8371314,546,43.2448007,1,5
+547,"880 Upper Wentworth St, Hamilton, ON L9A 5H2, Canada",-79.8635459,547,43.2213221,1,2
+548,"884 Concession St, Hamilton, ON L8V 1E6, Canada",-79.838841,548,43.237491,1,1
+549,"89 Queensway W, Mississauga, ON L5B 2V2, Canada",-79.6104222,549,43.5725779,0,1
+550,"890 Glasgow St, Kitchener, ON N2N 2Y6, Canada",-80.5431071,550,43.4425018,0,3
+551,"9 James St, Milton, ON L9T 2P3, Canada",-79.8852505,551,43.5118272,0,1
+552,"9 Pine St N, Thorold, ON L2V 4J6, Canada",-79.2045148,552,43.1258905,0,1
+553,"90 Chedmac Dr, Hamilton, ON L9C 7W1, Canada",-79.9213626,553,43.2372918,1,2
+554,"90 Dundas St E, Waterdown, ON L0R 2H2, Canada",-79.9086005,554,43.3156109,1,3
+555,"90 Main St E, Milton, ON L9T 1N3, Canada",-79.8860241,555,43.5103628,0,3
+556,"906 Brant St, Burlington, ON L7R 2J5, Canada",-79.8139375,556,43.336166,1,2
+557,"908 Garth St, Hamilton, ON L9C 4L2, Canada",-79.9010108,557,43.2333683,1,1
+558,"91 Queen St S, Kitchener, ON N2G 1V9, Canada",-80.4899611,558,43.4485908,0,1
+559,"911 Queen St S, Kitchener, ON N2M 1A5, Canada",-80.4978192,559,43.4411039,0,3
+560,"911 Queen's Blvd, Kitchener, ON N2M 1B2, Canada",-80.501644,560,43.4378146,0,23
+561,"928 Barton St E, Hamilton, ON L8L 3C3, Canada",-79.824357,561,43.253203,1,1
+562,"944 King St W, Kitchener, ON N2G 1G4, Canada",-80.5136075,562,43.4580454,0,2
+563,"944 Queen's Blvd, Kitchener, ON N2M 1B4, Canada",-80.5022156,563,43.4384752,0,1
+564,"95 Darling St, Brantford, ON N3T 2K7, Canada",-80.2627471,564,43.1402283,0,3
+565,"95 Hamilton St N, Waterdown, ON L0R 2H6, Canada",-79.901365,565,43.3342308,1,4
+566,"960 Cumberland Ave, Burlington, ON L7N 3J7, Canada",-79.7951766,566,43.3571618,1,2
+567,"969 Upper Ottawa St, Hamilton, ON L8T 4V9, Canada",-79.8348556,567,43.2103228,1,5
+568,"980 Queenston Rd, Stoney Creek, ON L8G 1B9, Canada",-79.7494947,568,43.2242993,1,2
+569,"987 King St E, Hamilton, ON L8M 1C6, Canada",-79.8346202,569,43.2511797,1,1
+570,"99 Wayne Gretzky Pkwy, Brantford, ON N3S 7P1, Canada",-80.2353027,570,43.1455257,0,10
+571,"9960 Airport Rd, Brampton, ON L6S 0C5, Canada",-79.7218027,571,43.7614613,0,1
+572,"A-Wing / B-Wing, 299 Doon Valley Dr, Kitchener, ON N2P 2N6, Canada",-80.403961,572,43.3895953,0,1
+573,"Barrie, ON L4M 6M2, Canada",-79.6615104,573,44.4162343,0,1
+574,"Fleming Building, 4413 Ontario St, Beamsville, ON L0R 1B3, Canada",-79.476277,574,43.172022,0,12
+575,"Grimsby, ON, Canada",-79.5624195,575,43.1942126,1,1
+576,"Lockport Way, Hamilton, ON L8E, Canada",-79.6328871,576,43.2191119,1,1
+577,"Oak Ridges Medical Centre, 13291 Yonge St, Richmond Hill, ON L4E 4L6, Canada",-79.4555338,577,43.9517893,0,2
+578,"Orchardview Village Square, 155 Main St E, Grimsby, ON L3M 0A3, Canada",-79.5439232,578,43.188604,1,9
+579,"Unit #608, 1187 Fischer-Hallman Rd, Kitchener, ON N2E 4H9, Canada",-80.5019476,579,43.4063451,0,3
+580,"Unit A106, 490 York Rd, Guelph, ON N1E 6V1, Canada",-80.2255722,580,43.5517897,0,4
+581,"Westmount Place, 50 Westmount Rd N, Waterloo, ON N2L 6N9, Canada",-80.5370735,581,43.4616605,0,2

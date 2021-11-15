@@ -18,7 +18,9 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of HamONdest is to compile all potential destinations (Schools, municipally-owned land, parks, libraries, etc.) and their estimated 'demands' in Hamilton, Ontario, Canada all in one data-package to facilitate the calculation of accessibility and mobility measures in the transportation planning context. The majority of data is sourced from [Hamilton's Open Data Portal](https://open.hamilton.ca/) and is augmented with additional open data from higher levels of government (provincial and federal), predicted values, and/or data from [OpenStreetMap](https://www.openstreetmap.org).
+The goal of HamONdest is to compile all potential destinations (Schools, municipally-owned land, health care and residential care facilities, etc.) and their estimated 'supplies' in Hamilton, Ontario, Canada all in one data-package to facilitate the calculation of accessibility and mobility measures in the transportation planning context. The majority of data is sourced from [Hamilton's Open Data Portal](https://open.hamilton.ca/) and is augmented with additional open data from higher levels of government (provincial and federal), predicted values, and/or data from [OpenStreetMap](https://www.openstreetmap.org).
+
+The HamONdest package is still a work in progress and is available [here](https://github.com/soukhova/HamONDest-package)
 
 
 ## Installation
@@ -30,26 +32,24 @@ if(!require(remotes)){
     install.packages("remotes")
     library(remotes)
 }
-remotes::install_github("soukhova/HamONdest-package")
+remotes::install_github("soukhova/HamONdest-package",
+                         build_vignettes = TRUE)
 ```
 
 ## Examples
 
-```{r libraries, eval=TRUE}
+```{r libraries, eval=TRUE, echo=FALSE}
 library(HamONdest)
 library(ggplot2)
 library(dplyr)
-
-Schools_201516_201011 <- HamONdest::Schools_201516_201011
-Schools_Catchments_201516_201011 <- HamONdest::Schools_Catchments_201516_201011
-Ham_CityBound <- HamONdest::Ham_CityBound
+library(sf)
 ```
-
 
 The data package contains the following destinations in Hamilton, Ontario.
 
-Elementary and Secondary Public and Public Catholic Schools in 2011, size based on on-the-ground-capacity (OTGC)
-```{r schools 2011, eval=TRUE}
+### Schools
+Elementary and Secondary Public and Public Catholic Schools in **2011**, size based on on-the-ground-capacity (OTGC)
+```{r schools-2011, eval=TRUE}
 ggplot() +
   geom_sf(data = Ham_CityBound,
           size = 0.5,
@@ -63,8 +63,8 @@ ggplot() +
   scale_color_distiller(palette = "Spectral")
 ```
 
-Elementary and Secondary Public and Public Catholic Schools in 2016, size based on on-the-ground-capacity (OTGC)
-``` {r schools 2016, eval=TRUE}
+Elementary and Secondary Public and Public Catholic Schools in **2016**, size based on on-the-ground-capacity (OTGC)
+``` {r schools-2016, eval=TRUE}
 ggplot() +
   geom_sf(data = Ham_CityBound,
           size = 0.5,
@@ -78,24 +78,54 @@ ggplot() +
   scale_color_distiller(palette = "Spectral")
 ```
 
-The change in Elementary and Secondary Public and Public Catholic Schools between 2011 and 2016.
-```{r schools changed 2011 and 2016, eval=TRUE, warning=FALSE}
+### Municipally-Owned Properties (Parks, Open Space, Vacant Land, + Properties with civil services like fire stations, police station, community centres, etc.)
+Up-to-date City-Owned Property with person destination potential. Sourced from Open Data Hamilton.
+```{r city-owned-properties, eval=TRUE, warning=FALSE}
 ggplot() +
   geom_sf(data = Ham_CityBound,
           size = 0.5,
           alpha = 0.5,
           color  = "black",
           fill = "white")+
-  geom_sf(data = Schools_201516_201011 %>% filter(Status != "NoChange"),
-          aes(col = Status, size = Level),
+  geom_sf(data = City_Owned_Property,
+          aes(col = CATEGORY_TYPE),
           shape = 1) 
 ```
 
-Coordinate system and projection
-```{r coordinates, eval=TRUE}
-sf::st_crs(Schools_201516_201011)
+### Health and community care service providers (Clincs, Hospitals, Residential Care Facilties, Community )
+
+All Health and community care service providers as sourced from City of Hamilton Open Data and Ontario GeoHub:
+```{r all-care-facilities, eval=TRUE, warning=FALSE}
+ggplot() +
+  geom_sf(data = Ham_CityBound,
+          size = 0.5,
+          alpha = 0.5,
+          color  = "black",
+          fill = "white")+
+  geom_sf(data = Care_Facilities,
+          aes(col = Type),
+          shape = 1) 
+```
+Let's see locations for a specific, service provider type, like Hospital:
+```{r hospitals, eval=TRUE, warning=FALSE}
+ggplot() +
+  geom_sf(data = Ham_CityBound,
+          size = 0.5,
+          alpha = 0.5,
+          color  = "black",
+          fill = "white")+
+  geom_sf(data = Care_Facilities %>% filter(Type == "Hospital"),
+          color = 2,
+          shape = 1)
 ```
 
 ## More Information 
 
-This data package is still a work in progress.
+Coordinate system of all data:
+```{r coordinates, eval=TRUE}
+sf::st_crs(Schools_201516_201011)
+```
+
+This data package is still a work in progress. See additional visualizations and uses in the Vignettes. 
+
+

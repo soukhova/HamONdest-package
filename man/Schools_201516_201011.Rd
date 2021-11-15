@@ -31,7 +31,7 @@ A simple feature (sf) point object containing 177 rows and 19 variables :
 \source{
 School name, catchment ID, system, level, year, status are sourced from spatial points provided directly by the Hamilton Wentworth District School Board (HWDSB) and the Hamilton Wentworth Catholic District School Board (HWCDSB) for the respective academic years (2010-2011 and 2015-2016).
 
-Historical Enrollment: sourced from Ontario Open Data "Ontario public schools enrolment" (https://data.ontario.ca/dataset/ontario-public-schools-enrolment). Accessed: November 7, 2021
+Historical Enrollment: sourced from "Ontario public schools enrolment" \href{https://data.ontario.ca/dataset/ontario-public-schools-enrolment}{Ontario Open Data}. Accessed: November 7, 2021
 
 Footprint area: sourced from spatial polygons from DMTI Spatial Inc. using GeoScholars (retrieved January 17, 2021) and  OpenStreetMaps (retrieved January 17, 2021)
 }

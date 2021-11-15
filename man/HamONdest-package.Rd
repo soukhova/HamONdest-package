@@ -11,7 +11,7 @@ The goal of HamONdest is to compile all potential destinations (Schools, parks, 
 The goal of HamONdest is to compile all potential destinations (Schools, parks, municipally-owned land, libraries, etc.) in Hamilton, Ontario, Canada all in one data-package to facilitate the calculation of accessibility and mobility measures in the transportation planning context.
 }
 \references{
-\url{https://github.com/soukhova/HamONdest}
+\url{https://github.com/soukhova/HamONdest-package}
 }
 \author{
 \strong{Maintainer}: Anastasia Soukhov \email{soukhoa@mcmaster.ca}

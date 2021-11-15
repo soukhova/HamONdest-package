@@ -8,14 +8,14 @@
 A simple feature (sf) polygon object containing 1180 rows and 22 variables. All variables correspond to an ID associated with the associated DA (dissemination area), CD (census division), CSD (census subdivision), CCS (census consolidated subdivision), ER (economic region), CMA (census metropolitan area), sac (Statistical Area Classification), CT (census tract), PR (Province). These IDs are persistent and can be used to join an area to the nation-wide Statistics Canada Census data for 2011 and 2016 respectively.
 }
 \source{
-filtered the "Boundary files" retrieved from Statistics Canada (https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-eng.cfm) accessed November 8 2021.
+filtered the "Boundary files" retrieved from \href{https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-eng.cfm}{Statistics Canada} accessed November 8 2021.
 }
 \usage{
 data(HamCMA_DABound_2016)
 }
 \description{
-This object define the spatial boundary of the City of Hamilton.
+This object defines the spatial boundaries of all dissemination areas (DA) in Hamilton according to the Canadian 2016 Census
 }
+\keyword{DA}
 \keyword{Hamilton}
 \keyword{boundary}
-\keyword{city}

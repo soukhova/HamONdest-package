@@ -8,7 +8,7 @@
 
 The goal of HamONdest is to compile all potential destinations (Schools,
 municipally-owned land, parks, libraries, etc.) and their estimated
-‘demands’ in Hamilton, Ontario, Canada all in one data-package to
+‘supplies’ in Hamilton, Ontario, Canada all in one data-package to
 facilitate the calculation of accessibility and mobility measures in the
 transportation planning context. The majority of data is sourced from
 [Hamilton’s Open Data Portal](https://open.hamilton.ca/) and is
@@ -25,31 +25,25 @@ if(!require(remotes)){
     install.packages("remotes")
     library(remotes)
 }
-remotes::install_github("soukhova/HamONdest-package")
+remotes::install_github("soukhova/HamONdest-package",
+                         build_vignettes = TRUE)
 ```
 
 ## Examples
 
-``` r
-library(HamONdest)
-library(ggplot2)
-library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
-
-Schools_201516_201011 <- HamONdest::Schools_201516_201011
-Schools_Catchments_201516_201011 <- HamONdest::Schools_Catchments_201516_201011
-Ham_CityBound <- HamONdest::Ham_CityBound
-```
+    #> 
+    #> Attaching package: 'dplyr'
+    #> The following objects are masked from 'package:stats':
+    #> 
+    #>     filter, lag
+    #> The following objects are masked from 'package:base':
+    #> 
+    #>     intersect, setdiff, setequal, union
 
 The data package contains the following destinations in Hamilton,
 Ontario.
+
+### Schools
 
 Elementary and Secondary Public and Public Catholic Schools in 2011,
 size based on on-the-ground-capacity (OTGC)
@@ -68,7 +62,7 @@ ggplot() +
   scale_color_distiller(palette = "Spectral")
 ```
 
-<img src="man/figures/README-schools 2011-1.png" width="100%" />
+<img src="man/figures/README-schools-2011-1.png" width="100%" />
 
 Elementary and Secondary Public and Public Catholic Schools in 2016,
 size based on on-the-ground-capacity (OTGC)
@@ -87,7 +81,61 @@ ggplot() +
   scale_color_distiller(palette = "Spectral")
 ```
 
-<img src="man/figures/README-schools 2016-1.png" width="100%" />
+<img src="man/figures/README-schools-2016-1.png" width="100%" /> \#\#\#
+Municipally-Owned Properties (Parks, Open Space, Vacant Land, +
+Properties with civil services like fire stations, police station,
+community centres, etc.) Up-to-date City-Owned Property with person
+destination potential. Sourced from Open Data Hamilton.
+
+``` r
+ggplot() +
+  geom_sf(data = Ham_CityBound,
+          size = 0.5,
+          alpha = 0.5,
+          color  = "black",
+          fill = "white")+
+  geom_sf(data = City_Owned_Property,
+          aes(col = CATEGORY),
+          shape = 1) 
+```
+
+<img src="man/figures/README-city-owned-properties-1.png" width="100%" />
+
+### Healthcare services (Clincs, Hospitals)
+
+## More Information
+
+Coordinate system of all data:
+
+``` r
+sf::st_crs(Schools_201516_201011)
+#> Coordinate Reference System:
+#>   User input: EPSG:4326 
+#>   wkt:
+#> GEOGCRS["WGS 84",
+#>     DATUM["World Geodetic System 1984",
+#>         ELLIPSOID["WGS 84",6378137,298.257223563,
+#>             LENGTHUNIT["metre",1]]],
+#>     PRIMEM["Greenwich",0,
+#>         ANGLEUNIT["degree",0.0174532925199433]],
+#>     CS[ellipsoidal,2],
+#>         AXIS["geodetic latitude (Lat)",north,
+#>             ORDER[1],
+#>             ANGLEUNIT["degree",0.0174532925199433]],
+#>         AXIS["geodetic longitude (Lon)",east,
+#>             ORDER[2],
+#>             ANGLEUNIT["degree",0.0174532925199433]],
+#>     USAGE[
+#>         SCOPE["unknown"],
+#>         AREA["World"],
+#>         BBOX[-90,-180,90,180]],
+#>     ID["EPSG",4326]]
+```
+
+This data package is still a work in progress. See additional
+visualizations and uses in the Vignettes.
+
+------------------------------------------------------------------------
 
 The change in Elementary and Secondary Public and Public Catholic
 Schools between 2011 and 2016.
@@ -104,51 +152,20 @@ ggplot() +
           shape = 1) 
 ```
 
-<img src="man/figures/README-schools changed 2011 and 2016-1.png" width="100%" />
+<img src="man/figures/README-schools-changed-2011-2016-1.png" width="100%" />
 
-Coordinate system and projection
+City-Owned Property with person destination potential
 
 ``` r
-sf::st_crs(Schools_201516_201011)
-#> Coordinate Reference System:
-#>   User input: NAD83 / UTM zone 17N 
-#>   wkt:
-#> PROJCRS["NAD83 / UTM zone 17N",
-#>     BASEGEOGCRS["NAD83",
-#>         DATUM["North American Datum 1983",
-#>             ELLIPSOID["GRS 1980",6378137,298.257222101,
-#>                 LENGTHUNIT["metre",1]]],
-#>         PRIMEM["Greenwich",0,
-#>             ANGLEUNIT["degree",0.0174532925199433]],
-#>         ID["EPSG",4269]],
-#>     CONVERSION["UTM zone 17N",
-#>         METHOD["Transverse Mercator",
-#>             ID["EPSG",9807]],
-#>         PARAMETER["Latitude of natural origin",0,
-#>             ANGLEUNIT["Degree",0.0174532925199433],
-#>             ID["EPSG",8801]],
-#>         PARAMETER["Longitude of natural origin",-81,
-#>             ANGLEUNIT["Degree",0.0174532925199433],
-#>             ID["EPSG",8802]],
-#>         PARAMETER["Scale factor at natural origin",0.9996,
-#>             SCALEUNIT["unity",1],
-#>             ID["EPSG",8805]],
-#>         PARAMETER["False easting",500000,
-#>             LENGTHUNIT["metre",1],
-#>             ID["EPSG",8806]],
-#>         PARAMETER["False northing",0,
-#>             LENGTHUNIT["metre",1],
-#>             ID["EPSG",8807]]],
-#>     CS[Cartesian,2],
-#>         AXIS["(E)",east,
-#>             ORDER[1],
-#>             LENGTHUNIT["metre",1]],
-#>         AXIS["(N)",north,
-#>             ORDER[2],
-#>             LENGTHUNIT["metre",1]],
-#>     ID["EPSG",26917]]
+ggplot() +
+  geom_sf(data = Ham_CityBound,
+          size = 0.5,
+          alpha = 0.5,
+          color  = "black",
+          fill = "white")+
+  geom_sf(data = City_Owned_Property %>% filter(CATEGORY_TYPE != "Remove" & CATEGORY_TYPE != "Parking Lots"),
+          aes(col = CATEGORY_TYPE, size = PROP_AREA),
+          shape = 1) 
 ```
 
-## More Information
-
-This data package is still a work in progress.
+<img src="man/figures/README-city-owned-properties-detail-1.png" width="100%" />
