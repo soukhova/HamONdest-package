@@ -78,7 +78,7 @@
 <!-- badges: end -->
 <p>HamONdest is a data-package which contains a growing set of potential destinations and their estimated ‘supplies’ in Hamilton, Ontario, Canada. It currently contains schools, municipally-owned land, health care and health and residential care facilities.</p>
 <p>The aim of this data-package is to facilitate the calculation of accessibility and mobility measures in the transportation planning context. The majority of data is sourced from <a href="https://open.hamilton.ca/">Hamilton’s Open Data Portal</a> and is augmented with additional open data from higher levels of government (provincial and federal), predicted values, and/or data from <a href="https://www.openstreetmap.org">OpenStreetMap</a>.</p>
-<p>The HamONdest package is still a work in progress and is available <a href="https://github.com/soukhova/HamONDest-package">here</a></p>
+<p>The HamONdest package is still a work in progress and is available <a href="https://github.com/soukhova/HamONDest-package">here</a> and the vignettes can be viewed <a href="https://soukhova.github.io/HamONdest-package/articles/HamONdest-vignette.html">here</a></p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -132,10 +132,10 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_distiller</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Spectral"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-schools-2016-1.png" width="100%"></p>
 </div>
-<div id="municipally-owned-properties-parks-open-space-vacant-land--properties-with-civil-services-like-fire-stations-police-station-community-centres-etc" class="section level3">
+<div id="municipally-owned-properties" class="section level3">
 <h3 class="hasAnchor">
-<a href="#municipally-owned-properties-parks-open-space-vacant-land--properties-with-civil-services-like-fire-stations-police-station-community-centres-etc" class="anchor"></a>Municipally-Owned Properties (Parks, Open Space, Vacant Land, + Properties with civil services like fire stations, police station, community centres, etc.)</h3>
-<p>Up-to-date City-Owned Property with person destination potential. Sourced from Open Data Hamilton.</p>
+<a href="#municipally-owned-properties" class="anchor"></a>Municipally-Owned Properties</h3>
+<p>Up-to-date City-Owned Property(Parks, Open Space, Vacant Land, + Properties with civil services like fire stations, police station, community centres, etc.) with person destination potential. Sourced from Open Data Hamilton.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Ham_CityBound</span>,
@@ -148,10 +148,10 @@
           shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> </code></pre></div>
 <p><img src="reference/figures/README-city-owned-properties-1.png" width="100%"></p>
 </div>
-<div id="health-and-community-care-service-providers-clincs-hospitals-residential-care-facilties-community-" class="section level3">
+<div id="health-and-community-care-service-providers" class="section level3">
 <h3 class="hasAnchor">
-<a href="#health-and-community-care-service-providers-clincs-hospitals-residential-care-facilties-community-" class="anchor"></a>Health and community care service providers (Clincs, Hospitals, Residential Care Facilties, Community )</h3>
-<p>All Health and community care service providers as sourced from City of Hamilton Open Data and Ontario GeoHub:</p>
+<a href="#health-and-community-care-service-providers" class="anchor"></a>Health and Community Care Service Providers</h3>
+<p>All Health and community care facilities (Clinics, Hospitals, Residential Care Facilities, Long-term Care Facilities, etc.) as sourced from City of Hamilton Open Data and Ontario GeoHub:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Ham_CityBound</span>,
