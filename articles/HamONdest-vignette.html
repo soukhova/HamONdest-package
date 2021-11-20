@@ -82,14 +82,18 @@
 
     
     
-<div id="hamondest-package-of-hamilton-destinations--all-in-one-place" class="section level1">
+<div id="hamilton-destinations---all-in-one-place" class="section level1">
 <h1 class="hasAnchor">
-<a href="#hamondest-package-of-hamilton-destinations--all-in-one-place" class="anchor"></a>HamONdest package of Hamilton Destinations- All in One Place!</h1>
-<div id="anastasia-soukhov" class="section level3">
-<h3 class="hasAnchor">
-<a href="#anastasia-soukhov" class="anchor"></a>Anastasia Soukhov</h3>
-<p>The goal of HamONdest is to compile all potential destinations (Schools, municipally-owned land, health care and residential care facilities, etc.) and their estimated ‘supplies’ in Hamilton, Ontario, Canada all in one data-package to facilitate the calculation of accessibility and mobility measures in the transportation planning context. The majority of data is sourced from <a href="https://open.hamilton.ca/">Hamilton’s Open Data Portal</a> and is augmented with additional open data from higher levels of government (provincial and federal), predicted values, and/or data from <a href="https://www.openstreetmap.org">OpenStreetMap</a>.</p>
-<p>The intention of this package is to collect up-to-date location and additional details about potential destinations/opportunities worth travelling to within the Hamilton Census Metro Area (CMA). All objects contained within this package are in the same coordinate system, carry similar field names, and will conveniently carry ‘supply’ values (i.e., capacity of the service/facility/opportunity) to facilitate accessibility calculations.</p>
+<a href="#hamilton-destinations---all-in-one-place" class="anchor"></a>Hamilton Destinations - All in One Place!</h1>
+<p>The goal of HamONdest is to compile all potential destinations in Hamilton, Ontario, Canada all in one data-package to facilitate the calculation of accessibility and mobility measures in the transportation planning context.</p>
+<p>Currently contained in the data-package:</p>
+<ul>
+<li><p>2010-2011 and 2015-2016 Schools “<a href="#the-change-in-public-and-public-catholic-schools">The Change in Public and Public-Catholic Schools</a>”,</p></li>
+<li><p>municipally-owned land “<a href="#underdeveloped-outdoor-land-where-is-it">Underdeveloped Outdoor Land: Where is it?</a>”,</p></li>
+<li><p>health care and residential care facilities “<a href="#the-density-of-care-facilities-by-ward">The Density of Care Facilities by Ward</a>”.</p></li>
+</ul>
+<p>The majority of data is sourced from <a href="https://open.hamilton.ca/">Hamilton’s Open Data Portal</a> and is augmented with additional open data from higher levels of government (provincial and federal), predicted values, and/or data from <a href="https://www.openstreetmap.org">OpenStreetMap</a>.</p>
+<p>The intention of this package is to continue collect up-to-date location and additional details about potential destinations/opportunities worth travelling to within the Hamilton Census Metro Area (CMA). All objects contained within this package are in the same coordinate system, carry similar field names, and will conveniently carry ‘supply’ values (i.e., capacity of the service/facility/opportunity) to facilitate accessibility calculations. Currently, only the 2010-2011 and 2015-2016 Schools object has an estimated ‘supply’.</p>
 <p>The HamONdest package is still a work in progress and is freely available <a href="https://github.com/soukhova/HamONDest-package">here</a>.</p>
 <p>This vignette visualizes the data contained within this package and the type of analysis which can be conducted using the data.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -97,11 +101,10 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span></code></pre></div>
-</div>
-<div id="the-change-in-elementary-and-secondary-public-and-public-catholic-schools" class="section level2">
+<div id="the-change-in-public-and-public-catholic-schools" class="section level2">
 <h2 class="hasAnchor">
-<a href="#the-change-in-elementary-and-secondary-public-and-public-catholic-schools" class="anchor"></a>The Change in Elementary and Secondary Public and Public Catholic Schools</h2>
-<p>The following plot shows the change in <em>Elementary and Secondary Public and Public Catholic Schools</em> between 2011 and 2016. <code>sum(count(Schools_201516_201011 %&gt;% filter(Status == "Expanded") %&gt;% st_drop_geometry() %&gt;% select(Status)))</code> expanded, <code>sum(count(Schools_201516_201011 %&gt;% filter(Status == "Moved") %&gt;% st_drop_geometry() %&gt;% select(Status)))</code> moved addresses, <code>sum(count(Schools_201516_201011 %&gt;% filter(Status == "New") %&gt;% st_drop_geometry() %&gt;% select(Status)))</code> were newly opened, and <code>sum(count(Schools_201516_201011 %&gt;% filter(Status == "Removed") %&gt;% st_drop_geometry() %&gt;% select(Status)))</code> were removed.</p>
+<a href="#the-change-in-public-and-public-catholic-schools" class="anchor"></a>The Change in Public and Public-Catholic Schools</h2>
+<p>The following plot shows the change in Elementary and Secondary Public and Public-Catholic Schools between 2011 and 2016 from the <em>Schools_201516_201011</em> object. <strong>10</strong> expanded, <strong>6</strong> moved addresses, <strong>3</strong> were newly opened, and <strong>14</strong> were removed.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Ham_CityBound</span>,
@@ -112,16 +115,15 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Schools_201516_201011</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Status</span> <span class="op">!=</span> <span class="st">"NoChange"</span><span class="op">)</span>,
           <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">Status</span>, size <span class="op">=</span> <span class="va">Level</span><span class="op">)</span>,
           shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> </code></pre></div>
-<pre><code>## old-style crs object detected; please recreate object with a recent sf::st_crs()
-## old-style crs object detected; please recreate object with a recent sf::st_crs()</code></pre>
-<p><img src="HamONdest-vignette_files/figure-html/schools-changed-2011-2016-1.png" width="700"> This spatial visualization demonstrates that the majority of schools that were closed are elementary, and those elementary schools are located within Downtown (Center) Hamilton.</p>
-<p>However… is this a disproportionately high number of schools which closed? How do school closures align with student population within the area? Future analysis will investigate.</p>
+<p><img src="HamONdest-vignette_files/figure-html/schools-changed-2011-2016-1.png" width="700"></p>
+<p>This spatial visualization demonstrates that the majority of schools that were closed are elementary, and those elementary schools are located within Downtown (Center) Hamilton.</p>
+<p>However… is this a disproportionately high number of schools which closed? How do school closures align with student population within the area? Future analysis will investigate these ideas.</p>
 </div>
 <div id="underdeveloped-outdoor-land-where-is-it" class="section level2">
 <h2 class="hasAnchor">
-<a href="#underdeveloped-outdoor-land-where-is-it" class="anchor"></a>Underdeveloped Outdoor Land: where is it?</h2>
-<p>The next visualization demonstrates the “Underdeveloped Outdoor” within the <em>City-Owned Property</em> dataset. The visualization scales each “Underdeveloped Outdoor” by the property areas; where larger circles represent larger property areas and smaller circles represent smaller property areas (in units of Acres).</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<a href="#underdeveloped-outdoor-land-where-is-it" class="anchor"></a>Underdeveloped Outdoor Land: Where is it?</h2>
+<p>The next visualization demonstrates the “Underdeveloped Outdoor” within the <em>City-Owned Property</em> object. The visualization scales each “Underdeveloped Outdoor” by the property areas; where larger circles represent larger property areas and smaller circles represent smaller property areas (in units of Acres).</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Ham_CityBound</span>,
           size <span class="op">=</span> <span class="fl">0.5</span>,
@@ -132,9 +134,65 @@
           <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>size <span class="op">=</span> <span class="va">PROP_AREA</span>, col <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, 
           shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>col <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
-<pre><code>## old-style crs object detected; please recreate object with a recent sf::st_crs()
-## old-style crs object detected; please recreate object with a recent sf::st_crs()</code></pre>
-<p><img src="HamONdest-vignette_files/figure-html/city-owned-properties-detail-1.png" width="700"> This visualization demonstrates that this property which is namely cemeteries with no infrastructure, flat land with mowed grass, and proposed park space appears to be concentrated in density of locations are within Hamilton Center. However, Properties with large area are seem to be located outside of Hamilton Center.</p>
+<p><img src="HamONdest-vignette_files/figure-html/city-owned-properties-detail-1.png" width="700"></p>
+<p>This visualization demonstrates that this property which is namely cemeteries with no infrastructure, flat land with mowed grass, and proposed park space appears to be concentrated in density of locations are within Hamilton Center. However, Properties with large area are seem to be located outside of Hamilton Center.</p>
+<p>Further analysis to follow.</p>
+</div>
+<div id="the-density-of-care-facilities-by-ward" class="section level2">
+<h2 class="hasAnchor">
+<a href="#the-density-of-care-facilities-by-ward" class="anchor"></a>The Density of Care Facilities by Ward</h2>
+<p>This visualization shows the density of care facilities within the <em>Care Facilities</em> object.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#join the ward boundary to the care_facilities object and filter out all "NA" wards (i.e. those not inside the Hamilton urban boundary). Remember, these are all the care facilities for the entire Hamilton CMA which is broader than just the Hamilton urban boundary.</span>
+<span class="va">Care_Facilities_Ham</span> <span class="op">&lt;-</span> <span class="va">Care_Facilities</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_join.html">st_join</a></span><span class="op">(</span><span class="va">Ham_WardBound</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">WARD</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co">#display all types contained within the care_facilities</span>
+<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">Care_Facilities_Ham</span><span class="op">$</span><span class="va">Type</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "Community or Health Support Service"    
+## [2] "Primary Health Service"                 
+## [3] "Fee-Based Independent Health Facility"  
+## [4] "Hospital"                               
+## [5] "Laboratory - Specimen Collection Centre"
+## [6] "Long-Term Care Home"                    
+## [7] "Pharmacy"                               
+## [8] "Residential Care Facility"</code></pre>
+<p>Let’s look at Long-Term Care Homes and Residential Care Facilities as they support assisted-residential living ward-density.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#filter only Long-Term Care Home OR Residential Care Facility</span>
+<span class="va">Care_Facilities_Ham</span> <span class="op">&lt;-</span> <span class="va">Care_Facilities_Ham</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Type</span> <span class="op">==</span> <span class="st">"Long-Term Care Home"</span> <span class="op">|</span> <span class="va">Type</span> <span class="op">==</span> <span class="st">"Residential Care Facility"</span><span class="op">)</span>
+
+<span class="co">#group by ward and count number of facilities within ward</span>
+<span class="va">Ward_count</span> <span class="op">&lt;-</span> <span class="va">Care_Facilities_Ham</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">WARD</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>LTC_RCF_Count <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_drop_geometry</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">Ward_count</span> </code></pre></div>
+<pre><code>##    WARD LTC_RCF_Count
+## 1     1             7
+## 2    10             7
+## 3    12             3
+## 4    13            13
+## 5    14            11
+## 6    15             1
+## 7     2            19
+## 8     3            26
+## 9     4             4
+## 10    5             3
+## 11    6             2
+## 12    7             4
+## 13    8             4
+## 14    9             4</code></pre>
+<p>Displayed above is the count of Long-Term and Residential Care Facilities per ward. Notice there is no count for Ward 11: this means there are no LTC/RCF facilities here. Let’s merge this count to the Ward Boundaries and plot.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#merge ward_count to the Ward boundaries and keep all fields from ward_count and from the ward boundaries (this will ensure Ward 11 is retained)</span>
+<span class="va">Ward_count</span> <span class="op">&lt;-</span> <span class="va">Ward_count</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span><span class="va">Ham_WardBound</span>, by<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"WARD"</span><span class="op">)</span>, all<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>LTC_RCF_Count <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">WARD</span><span class="op">==</span><span class="st">"11"</span>, <span class="fl">0</span>, <span class="va">LTC_RCF_Count</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/sf.html">st_sf</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p>Now let’s plot the wards and the count of how many long term care and residential care facilities are contained within each ward.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#plot</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Ward_count</span>,
+          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">LTC_RCF_Count</span><span class="op">)</span><span class="op">)</span><span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_fill_viridis_c</a></span><span class="op">(</span>trans <span class="op">=</span> <span class="st">"sqrt"</span>, alpha <span class="op">=</span> <span class="fl">.8</span><span class="op">)</span></code></pre></div>
+<p><img src="HamONdest-vignette_files/figure-html/care-facilities-detailed-1.png" width="700"></p>
+<p>There is a high concentration of LTC and/or RCF within two wards in downtown Hamilton. There are low or no LTC or RCF located within the most peripheral wards (with exception to Ward 13).</p>
+<p>Why is this distribution so uneven? Does this align with where people who will be in need live? How would this density look different if adjusted to population? To area? To a smaller boundary (DA?)?</p>
 <p>Further analysis to follow.</p>
 </div>
 </div>
