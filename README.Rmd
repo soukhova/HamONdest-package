@@ -22,7 +22,7 @@ HamONdest is a data-package which contains a growing set of potential destinatio
 
 The aim of this data-package is to facilitate the calculation of accessibility and mobility measures in the transportation planning context. The majority of data is sourced from [Hamilton's Open Data Portal](https://open.hamilton.ca/) and is augmented with additional open data from higher levels of government (provincial and federal), predicted values, and/or data from [OpenStreetMap](https://www.openstreetmap.org).
 
-The HamONdest package is still a work in progress and is available [here](https://github.com/soukhova/HamONDest-package)
+The HamONdest package is still a work in progress and is available [here](https://github.com/soukhova/HamONDest-package) and the vignettes can be viewed [here](https://soukhova.github.io/HamONdest-package/articles/HamONdest-vignette.html)
 
 
 ## Installation
@@ -50,7 +50,6 @@ library(sf)
 The data package contains the following destinations in Hamilton, Ontario.
 
 ### Schools
-
 Elementary and Secondary Public and Public Catholic Schools in **2011**, size based on on-the-ground-capacity (OTGC)
 ```{r schools-2011, eval=TRUE, message=FALSE, warning=FALSE}
 ggplot() +
@@ -81,9 +80,8 @@ ggplot() +
   scale_color_distiller(palette = "Spectral")
 ```
 
-### Municipally-Owned Properties (Parks, Open Space, Vacant Land, + Properties with civil services like fire stations, police station, community centres, etc.)
-
-Up-to-date City-Owned Property with person destination potential. Sourced from Open Data Hamilton.
+### Municipally-Owned Properties
+Up-to-date City-Owned Property(Parks, Open Space, Vacant Land, + Properties with civil services like fire stations, police station, community centres, etc.) with person destination potential. Sourced from Open Data Hamilton.
 ```{r city-owned-properties, eval=TRUE, message=FALSE, warning=FALSE}
 ggplot() +
   geom_sf(data = Ham_CityBound,
@@ -96,9 +94,8 @@ ggplot() +
           shape = 1) 
 ```
 
-### Health and community care service providers (Clincs, Hospitals, Residential Care Facilties, Community )
-
-All Health and community care service providers as sourced from City of Hamilton Open Data and Ontario GeoHub:
+### Health and Community Care Service Providers
+All Health and community care facilities (Clinics, Hospitals, Residential Care Facilities, Long-term Care Facilities, etc.) as sourced from City of Hamilton Open Data and Ontario GeoHub:
 ```{r all-care-facilities, eval=TRUE, warning=FALSE}
 ggplot() +
   geom_sf(data = Ham_CityBound,
@@ -125,7 +122,6 @@ ggplot() +
 ```
 
 ## More Information 
-
 Coordinate system of all objects contained in this data-package is as shown:
 ```{r coordinates, eval=TRUE}
 sf::st_crs(Schools_201516_201011)

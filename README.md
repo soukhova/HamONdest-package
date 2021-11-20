@@ -20,7 +20,9 @@ predicted values, and/or data from
 [OpenStreetMap](https://www.openstreetmap.org).
 
 The HamONdest package is still a work in progress and is available
-[here](https://github.com/soukhova/HamONDest-package)
+[here](https://github.com/soukhova/HamONDest-package) and the vignettes
+can be viewed
+[here](https://soukhova.github.io/HamONdest-package/articles/HamONdest-vignette.html)
 
 ## Installation
 
@@ -87,10 +89,12 @@ ggplot() +
 
 <img src="man/figures/README-schools-2016-1.png" width="100%" />
 
-### Municipally-Owned Properties (Parks, Open Space, Vacant Land, + Properties with civil services like fire stations, police station, community centres, etc.)
+### Municipally-Owned Properties
 
-Up-to-date City-Owned Property with person destination potential.
-Sourced from Open Data Hamilton.
+Up-to-date City-Owned Property(Parks, Open Space, Vacant Land, +
+Properties with civil services like fire stations, police station,
+community centres, etc.) with person destination potential. Sourced from
+Open Data Hamilton.
 
 ``` r
 ggplot() +
@@ -106,10 +110,11 @@ ggplot() +
 
 <img src="man/figures/README-city-owned-properties-1.png" width="100%" />
 
-### Health and community care service providers (Clincs, Hospitals, Residential Care Facilties, Community )
+### Health and Community Care Service Providers
 
-All Health and community care service providers as sourced from City of
-Hamilton Open Data and Ontario GeoHub:
+All Health and community care facilities (Clinics, Hospitals,
+Residential Care Facilities, Long-term Care Facilities, etc.) as sourced
+from City of Hamilton Open Data and Ontario GeoHub:
 
 ``` r
 ggplot() +
