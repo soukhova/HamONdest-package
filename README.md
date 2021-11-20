@@ -6,12 +6,14 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of HamONdest is to compile all potential destinations (Schools,
-municipally-owned land, health care and residential care facilities,
-etc.) and their estimated ‘supplies’ in Hamilton, Ontario, Canada all in
-one data-package to facilitate the calculation of accessibility and
-mobility measures in the transportation planning context. The majority
-of data is sourced from [Hamilton’s Open Data
+HamONdest is a data-package which contains a growing set of potential
+destinations and their estimated ‘supplies’ in Hamilton, Ontario,
+Canada. It currently contains schools, municipally-owned land, health
+care and health and residential care facilities.
+
+The aim of this data-package is to facilitate the calculation of
+accessibility and mobility measures in the transportation planning
+context. The majority of data is sourced from [Hamilton’s Open Data
 Portal](https://open.hamilton.ca/) and is augmented with additional open
 data from higher levels of government (provincial and federal),
 predicted values, and/or data from
@@ -62,8 +64,6 @@ ggplot() +
           shape = 1,
           size = 3) +
   scale_color_distiller(palette = "Spectral")
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
 ```
 
 <img src="man/figures/README-schools-2011-1.png" width="100%" />
@@ -83,8 +83,6 @@ ggplot() +
           shape = 1,
           size = 3) +
   scale_color_distiller(palette = "Spectral")
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
 ```
 
 <img src="man/figures/README-schools-2016-1.png" width="100%" />
@@ -104,8 +102,6 @@ ggplot() +
   geom_sf(data = City_Owned_Property,
           aes(col = CATEGORY_TYPE),
           shape = 1) 
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
 ```
 
 <img src="man/figures/README-city-owned-properties-1.png" width="100%" />
@@ -130,8 +126,9 @@ ggplot() +
 ```
 
 <img src="man/figures/README-all-care-facilities-1.png" width="100%" />
-Let’s see locations for a specific, service provider type, like
-Hospital:
+
+For example, locations to a specific service provider type can be
+viewed. Below is a plot of Hospitals:
 
 ``` r
 ggplot() +
@@ -151,7 +148,8 @@ ggplot() +
 
 ## More Information
 
-Coordinate system of all data:
+Coordinate system of all objects contained in this data-package is as
+shown:
 
 ``` r
 sf::st_crs(Schools_201516_201011)
@@ -179,4 +177,4 @@ sf::st_crs(Schools_201516_201011)
 ```
 
 This data package is still a work in progress. See additional
-visualizations and uses in the Vignettes.
+visualizations in the Vignettes.

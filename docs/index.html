@@ -76,7 +76,8 @@
 <a href="#hamondest" class="anchor"></a>HamONdest</h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>The goal of HamONdest is to compile all potential destinations (Schools, municipally-owned land, health care and residential care facilities, etc.) and their estimated ‘supplies’ in Hamilton, Ontario, Canada all in one data-package to facilitate the calculation of accessibility and mobility measures in the transportation planning context. The majority of data is sourced from <a href="https://open.hamilton.ca/">Hamilton’s Open Data Portal</a> and is augmented with additional open data from higher levels of government (provincial and federal), predicted values, and/or data from <a href="https://www.openstreetmap.org">OpenStreetMap</a>.</p>
+<p>HamONdest is a data-package which contains a growing set of potential destinations and their estimated ‘supplies’ in Hamilton, Ontario, Canada. It currently contains schools, municipally-owned land, health care and health and residential care facilities.</p>
+<p>The aim of this data-package is to facilitate the calculation of accessibility and mobility measures in the transportation planning context. The majority of data is sourced from <a href="https://open.hamilton.ca/">Hamilton’s Open Data Portal</a> and is augmented with additional open data from higher levels of government (provincial and federal), predicted values, and/or data from <a href="https://www.openstreetmap.org">OpenStreetMap</a>.</p>
 <p>The HamONdest package is still a work in progress and is available <a href="https://github.com/soukhova/HamONDest-package">here</a></p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -114,9 +115,7 @@
           <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">OTGC2011</span><span class="op">)</span>,
           shape <span class="op">=</span> <span class="fl">1</span>,
           size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_distiller</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Spectral"</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_distiller</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Spectral"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-schools-2011-1.png" width="100%"></p>
 <p>Elementary and Secondary Public and Public Catholic Schools in <strong>2016</strong>, size based on on-the-ground-capacity (OTGC)</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -130,9 +129,7 @@
           <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">OTGC2016</span><span class="op">)</span>,
           shape <span class="op">=</span> <span class="fl">1</span>,
           size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_distiller</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Spectral"</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_distiller</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Spectral"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-schools-2016-1.png" width="100%"></p>
 </div>
 <div id="municipally-owned-properties-parks-open-space-vacant-land--properties-with-civil-services-like-fire-stations-police-station-community-centres-etc" class="section level3">
@@ -148,9 +145,7 @@
           fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">City_Owned_Property</span>,
           <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">CATEGORY_TYPE</span><span class="op">)</span>,
-          shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> 
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></code></pre></div>
+          shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> </code></pre></div>
 <p><img src="reference/figures/README-city-owned-properties-1.png" width="100%"></p>
 </div>
 <div id="health-and-community-care-service-providers-clincs-hospitals-residential-care-facilties-community-" class="section level3">
@@ -169,7 +164,8 @@
           shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> 
 <span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></code></pre></div>
-<p><img src="reference/figures/README-all-care-facilities-1.png" width="100%"> Let’s see locations for a specific, service provider type, like Hospital:</p>
+<p><img src="reference/figures/README-all-care-facilities-1.png" width="100%"></p>
+<p>For example, locations to a specific service provider type can be viewed. Below is a plot of Hospitals:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Ham_CityBound</span>,
@@ -188,7 +184,7 @@
 <div id="more-information" class="section level2">
 <h2 class="hasAnchor">
 <a href="#more-information" class="anchor"></a>More Information</h2>
-<p>Coordinate system of all data:</p>
+<p>Coordinate system of all objects contained in this data-package is as shown:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">Schools_201516_201011</span><span class="op">)</span>
 <span class="co">#&gt; Coordinate Reference System:</span>
@@ -212,7 +208,7 @@
 <span class="co">#&gt;         AREA["World"],</span>
 <span class="co">#&gt;         BBOX[-90,-180,90,180]],</span>
 <span class="co">#&gt;     ID["EPSG",4326]]</span></code></pre></div>
-<p>This data package is still a work in progress. See additional visualizations and uses in the Vignettes.</p>
+<p>This data package is still a work in progress. See additional visualizations in the Vignettes.</p>
 </div>
 </div>
   </div>
